@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FitLife Onboarding</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/main.js" defer></script>
+</head>
+
+<body class="onboarding-page">
+  <div class="card shadow-xl animate-slideup">
+    <!-- Step 1: Welcome -->
+    <div class="step active" id="step1">
+      <h2 class="title">👋 Welcome to FitLife!</h2>
+      <p class="subtitle">We’ll personalize your fitness experience to match your goals.</p>
+      <button class="btn w-full mt-4" onclick="nextStep()">Get Started</button>
+    </div>
+
+    <!-- Step 2: Goals -->
+    <div class="step hidden" id="step2">
+      <h2 class="title">What’s your main goal?</h2>
+      <p class="subtitle">Choose the fitness path that best fits your lifestyle.</p>
+      <div class="grid gap-3 mt-4">
+        <div class="option" onclick="selectOption(this, 'goal')">Lose Weight</div>
+        <div class="option" onclick="selectOption(this, 'goal')">Build Muscle</div>
+        <div class="option" onclick="selectOption(this, 'goal')">Stay Fit</div>
+      </div>
+      <div class="nav-buttons mt-6">
+        <button class="btn-secondary" onclick="prevStep()">Back</button>
+        <button class="btn" onclick="nextStep()">Next</button>
+      </div>
+    </div>
+
+    <!-- Step 3: Level -->
+    <div class="step hidden" id="step3">
+      <h2 class="title">What’s your fitness level?</h2>
+      <p class="subtitle">Pick the one that describes you best.</p>
+      <div class="grid gap-3 mt-4">
+        <div class="option" onclick="selectOption(this, 'level')">Beginner</div>
+        <div class="option" onclick="selectOption(this, 'level')">Intermediate</div>
+        <div class="option" onclick="selectOption(this, 'level')">Advanced</div>
+      </div>
+      <div class="nav-buttons mt-6">
+        <button class="btn-secondary" onclick="prevStep()">Back</button>
+        <button class="btn" onclick="nextStep()">Next</button>
+      </div>
+    </div>
+
+    <!-- Step 4: Preferences -->
+    <div class="step hidden" id="step4">
+      <h2 class="title">Preferred Workout Type</h2>
+      <p class="subtitle">Let’s find what energizes you most.</p>
+      <div class="grid gap-3 mt-4">
+        <div class="option" onclick="selectOption(this, 'workout')">Cardio</div>
+        <div class="option" onclick="selectOption(this, 'workout')">Strength</div>
+        <div class="option" onclick="selectOption(this, 'workout')">Yoga</div>
+      </div>
+      <div class="nav-buttons mt-6">
+        <button class="btn-secondary" onclick="prevStep()">Back</button>
+        <button class="btn" onclick="nextStep()">Next</button>
+      </div>
+    </div>
+
+    <!-- Step 5: Schedule -->
+    <div class="step hidden" id="step5">
+      <h2 class="title">Your Workout Schedule</h2>
+      <p class="subtitle">Select your training days and preferred time.</p>
+
+      <div class="grid grid-cols-3 gap-2 mb-4 mt-3">
+        <div class="day" onclick="toggleDay(this)">Mon</div>
+        <div class="day" onclick="toggleDay(this)">Tue</div>
+        <div class="day" onclick="toggleDay(this)">Wed</div>
+        <div class="day" onclick="toggleDay(this)">Thu</div>
+        <div class="day" onclick="toggleDay(this)">Fri</div>
+        <div class="day" onclick="toggleDay(this)">Sat</div>
+        <div class="day" onclick="toggleDay(this)">Sun</div>
+      </div>
+
+      <label class="font-semibold mb-2 block">Preferred Workout Time</label>
+      <input id="time" type="time" class="input-time" />
+
+      <div class="nav-buttons mt-6">
+        <button class="btn-secondary" onclick="prevStep()">Back</button>
+        <button class="btn" onclick="nextStep()">Next</button>
+      </div>
+    </div>
+
+    <!-- Step 6: Summary -->
+    <div class="step hidden" id="step6">
+      <h2 class="title">🎯 You’re All Set!</h2>
+      <div id="summary" class="summary-box"></div>
+      <button class="btn w-full mt-4" onclick="finish()">Finish</button>
+    </div>
+  </div>
+</body>
+</html>

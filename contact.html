@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>FITTCHECK — Contact</title>
+  <link rel="stylesheet" href="css/style.css" />
+    <script src="js/main.js"></script>
+
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="logo" href="index.html">FITTCHECK</a>
+      <nav class="main-nav">
+        <a href="index.html">Home</a>
+        <a href="classes.html">Classes</a>
+        <a href="trainers.html">Trainers</a>
+        <a class="active" href="contact.html">Contact</a>
+      </nav>
+      <button class="menu-toggle" aria-label="Toggle menu">☰</button>
+    </div>
+  </header>
+
+  <main class="container contact-page">
+    <section class="page-intro">
+      <h1>Contact Us</h1>
+      <p>Have questions? Drop us a message and we'll get back to you within one business day.</p>
+    </section>
+
+    <section class="contact-grid">
+      <form id="contactForm" class="contact-form">
+        <label>
+          Name
+          <input type="text" id="name" required />
+        </label>
+        <label>
+          Email
+          <input type="email" id="email" required />
+        </label>
+        <label>
+          Message
+          <textarea id="message" rows="5" required></textarea>
+        </label>
+        <button class="btn primary" type="submit">Send Message</button>
+        <p id="formMsg" class="form-msg" aria-live="polite"></p>
+      </form>
+
+      <div class="contact-details">
+        <h3>Visit or Call</h3>
+        <p>123 Example St, City</p>
+        <p>(02) 1234-5678</p>
+        <p><a href="mailto:hello@fittcheck.ph">hello@fittcheck.ph</a></p>
+        <h4>Opening Hours</h4>
+        <p>Mon–Sun: 5:00 AM – 11:00 PM</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div>
+        <h3>FITTCHECK</h3>
+        <p>Simple. Smart. Strong.</p>
+      </div>
+      <div>
+        <h4>Quick Links</h4>
+        <nav class="footer-nav">
+          <a href="index.html">Home</a>
+          <a href="classes.html">Classes</a>
+          <a href="trainers.html">Trainers</a>
+        </nav>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <address>
+        Balingasag Brgy 2 <br/>
+          (+63)- 923456789<br/>
+          <a href="mailto:hello@fittcheck.ph">hello@fittcheck.ph</a>
+        </address>
+      </div>
+    </div>
+    <div class="footer-bottom container">
+      <small>© <span id="year4"></span> FITTCHECK. All rights reserved.</small>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,596 @@
+/* =========================================
+   GLOBAL BASE STYLES (for index, trainers, contact)
+========================================= */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --accent: #669bcf;
+  --accent-dark: #214e86;
+  --muted: #666;
+  --bg: #f6f8fb;
+  --card: #ffffff;
+  --radius: 12px;
+  --container: 1100px;
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+}
+
+html,
+body {
+  background-image: url("../pictures/tesst.png");
+  height: 100%;
+
+  color: #222;
+
+}
+
+.container {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 1.25rem;
+}
+
+/* Header */
+.site-header {
+  background: rgba(255, 255, 255, 0.95);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.04);
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.logo {
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-decoration: none;
+  color: var(--accent-dark);
+  font-size: 1.25rem;
+}
+
+.main-nav {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.main-nav a {
+  text-decoration: none;
+  color: var(--muted);
+  padding: 0.5rem 0.6rem;
+  border-radius: 8px;
+}
+
+.main-nav a:hover,
+.main-nav a.active {
+  color: var(--accent-dark);
+  background: rgba(43, 108, 176, 0.06);
+}
+
+/* Mobile Menu Toggle */
+.menu-toggle {
+  display: none;
+  background: none;
+  border: 0;
+  font-size: 1.25rem;
+  cursor: pointer;
+}
+
+/* Hero */
+.hero {
+  padding: 2.5rem 0;
+}
+
+.hero-inner {
+  display: grid;
+  grid-template-columns: 1fr 420px;
+  gap: 2rem;
+  align-items: center;
+}
+
+.hero-text h1 {
+  font-size: 2.1rem;
+  margin-bottom: 0.5rem;
+  color: var(--accent-dark);
+}
+
+.hero-text p {
+  color: var(--muted);
+  margin-bottom: 1rem;
+}
+
+.hero-image img {
+  width: 100%;
+  border-radius: 14px;
+  box-shadow: 0 10px 30px rgba(16, 24, 40, 0.08);
+}
+
+/* Buttons */
+.btn {
+  display: inline-block;
+  padding: 0.6rem 1rem;
+  text-decoration: none;
+  border-radius: 10px;
+  border: 1px solid transparent;
+  font-weight: 600;
+  background: transparent;
+  color: var(--accent-dark);
+  transition: all 0.3s ease;
+}
+
+.btn.primary {
+  background: var(--accent);
+  color: #fff;
+  box-shadow: 0 6px 18px rgba(43, 108, 176, 0.18);
+}
+
+.btn.ghost {
+  border-color: rgba(0, 0, 0, 0.06);
+  color: var(--accent-dark);
+  background: transparent;
+}
+
+/* Features */
+.features {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.feature {
+  background: var(--card);
+  border-radius: 12px;
+  padding: 1rem;
+  flex: 1;
+  box-shadow: 0 8px 18px rgba(16, 24, 40, 0.04);
+}
+
+/* Plans */
+.plans h2 {
+  margin-bottom: 1rem;
+  color: var(--accent-dark);
+}
+
+.plan-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.plan {
+  background: var(--card);
+  padding: 1rem;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 8px 18px rgba(16, 24, 40, 0.04);
+}
+
+.plan.recommended {
+  transform: translateY(-8px);
+  border: 2px solid rgba(43, 108, 176, 0.12);
+}
+
+.price {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 0.5rem 0;
+  color: var(--accent-dark);
+}
+
+/* Cards / Classes */
+.classes-preview .cards {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.card {
+  background: var(--card);
+  border-radius: 12px;
+  overflow: hidden;
+  width: 100%;
+  box-shadow: 0 8px 18px rgba(16, 24, 40, 0.04);
+}
+
+.card img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  display: block;
+}
+
+.card h4 {
+  padding: 0.75rem 1rem 0 1rem;
+}
+
+.card p {
+  padding: 0 1rem 1rem 1rem;
+  color: var(--muted);
+}
+
+/* CTA */
+.cta {
+  background: linear-gradient(90deg, rgba(43, 108, 176, 0.08), rgba(43, 108, 176, 0.02));
+  padding: 1.5rem;
+  margin-top: 1.5rem;
+  border-radius: 12px;
+  text-align: center;
+}
+
+/* Footer */
+.site-footer {
+  margin-top: 2rem;
+  padding: 1.5rem 0;
+  color: var(--muted);
+}
+
+.footer-inner {
+  display: flex;
+  gap: 2rem;
+  justify-content: space-between;
+}
+
+.footer-nav a {
+  text-decoration: none;
+  color: var(--muted);
+  display: block;
+  margin: 0.25rem 0;
+}
+
+/* Responsive */
+@media (max-width: 980px) {
+  .hero-inner {
+    grid-template-columns: 1fr;
+  }
+
+  .plan-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .container {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 720px) {
+  .main-nav {
+    display: none;
+    position: absolute;
+    right: 1rem;
+    top: 66px;
+    background: white;
+    box-shadow: 0 6px 20px rgba(16, 24, 40, 0.08);
+    border-radius: 8px;
+    padding: 0.5rem;
+    flex-direction: column;
+  }
+
+  .main-nav.show {
+    display: flex;
+  }
+
+  .menu-toggle {
+    display: inline-block;
+  }
+}
+
+/* =========================================
+   LOGIN PAGE STYLES (Fixed Alignment)
+========================================= */
+body.login-page {
+  background-image: url("../pictures/image.png");
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Inter", sans-serif;
+  margin: 0;
+
+}
+
+.login-container {
+  width: 100%;
+  max-width: 400px;
+  padding: 20px;
+}
+
+.login-box {
+  background: #ffffff;
+  border-radius: 1rem;
+  padding: 2.5rem 2rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+  animation: fadeInUp 0.7s ease both;
+  text-align: center;
+  /* keep title centered */
+}
+
+/* Headings stay centered */
+.login-box h1 {
+  color: #1e3a8a;
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+}
+
+.login-box p {
+  color: #4b5563;
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Form labels and inputs aligned left */
+.login-box form {
+  text-align: left;
+  /* ✅ this fixes the alignment */
+}
+
+.login-box label {
+  display: block;
+  margin-bottom: 0.4rem;
+  font-weight: 600;
+  color: #374151;
+}
+
+.login-box input[type="email"],
+.login-box input[type="password"] {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  color: #374151;
+  background-color: #f9fafb;
+  transition: all 0.3s ease;
+}
+
+.login-box input:focus {
+  border-color: #3b82f6;
+  outline: none;
+  box-shadow: 0 0 5px rgba(59, 130, 246, 0.3);
+}
+
+/* Login button */
+.btn-login {
+  width: 100%;
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  color: #fff;
+  border: 0.5rem;
+  border-radius: 10px;
+  padding: 0.75rem;
+
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.register-container .btn-login {
+  top: -15px;
+
+}
+
+.btn-login:hover {
+  background: linear-gradient(135deg, #2563eb, #1e40af);
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 8px 25px rgba(37, 99, 235, 0.4);
+}
+
+/* Optional: fade-up animation */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(25px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+/* =========================================
+   ONBOARDING PAGE STYLES
+========================================= */
+body.onboarding-page {
+  background: linear-gradient(135deg, #93c5fd, #3b82f6);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Inter', sans-serif;
+  padding: 1rem;
+}
+
+.card {
+  background: white;
+  border-radius: 1rem;
+  padding: 2.5rem;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+  max-width: 480px;
+  width: 100%;
+  text-align: center;
+  animation: cardEntry 0.9s ease forwards;
+}
+
+.title {
+  color: #1e3a8a;
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.subtitle {
+  color: #4b5563;
+  font-size: 0.95rem;
+}
+
+/* Step Visibility */
+.step {
+  display: none;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.5s ease;
+}
+
+.step.active {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Option & Day Buttons */
+.option,
+.day {
+  border: 2px solid #e5e7eb;
+  border-radius: 0.75rem;
+  padding: 1rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 500;
+  color: #374151;
+  background: #f9fafb;
+}
+
+.option:hover,
+.day:hover {
+  border-color: #3b82f6;
+  background: #eff6ff;
+  transform: scale(1.05);
+}
+
+.option.selected,
+.day.selected {
+  border-color: #2563eb;
+  background-color: #2563eb;
+  color: white;
+  transform: scale(1.05);
+}
+
+/* Input Time */
+.input-time {
+  width: 100%;
+  padding: 0.6rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  background: #f9fafb;
+  font-size: 0.95rem;
+  color: #374151;
+}
+
+/* Navigation Buttons */
+.nav-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+/* Summary Box */
+.summary-box {
+  text-align: left;
+  background: #f9fafb;
+  border-radius: 0.75rem;
+  padding: 1rem;
+  line-height: 1.6;
+  color: #374151;
+  border: 1px solid #e5e7eb;
+}
+
+/* Buttons - Animated */
+.btn {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  color: #fff;
+  border: none;
+  border-radius: 9999px;
+  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+  animation: pulseGlow 2s infinite ease-in-out;
+  transition: all 0.3s ease;
+}
+
+.btn:hover {
+  background: linear-gradient(135deg, #2563eb, #1e40af);
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 10px 25px rgba(37, 99, 235, 0.4);
+}
+
+@keyframes pulseGlow {
+
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.5);
+    transform: scale(1);
+  }
+
+  50% {
+    box-shadow: 0 0 25px 5px rgba(59, 130, 246, 0.3);
+    transform: scale(1.05);
+  }
+}
+
+.btn-secondary {
+  background: #f3f4f6;
+  color: #374151;
+  border: 2px solid #e5e7eb;
+  border-radius: 9999px;
+  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+  background: #e5e7eb;
+  transform: translateY(-2px);
+}
+
+/* =========================================
+   PERSONALIZED RECOMMENDATION BOX (Homepage)
+========================================= */
+.recommendation-box {
+  background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+  padding: 1.25rem 1.5rem;
+  border-radius: 1rem;
+  box-shadow: 0 5px 20px rgba(59, 130, 246, 0.15);
+  margin-bottom: 1.5rem;
+  animation: fadeIn 0.6s ease;
+}
+
+.recommendation-box h3 {
+  color: #1e3a8a;
+  margin-bottom: 0.5rem;
+  font-size: 1.2rem;
+}
+
+.recommendation-box p {
+  color: #1f2937;
+  margin: 0.25rem 0;
+  font-size: 0.95rem;
+}
+
+.recommendation-box .btn {
+  display: inline-block;
+  margin-top: 0.75rem;
+}
+
+.register-container {
+  padding: 20px;
+  width: 450px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
