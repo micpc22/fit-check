@@ -1,63 +1,727 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>FITTCHECK — Classes</title>
-  <link rel="stylesheet" href="css/style.css" />
-  <script src="js/main.js"></script>
+  <style>
+    /* Reset & Base Styles */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
+    :root {
+      --accent: #669bcf;
+      --accent-dark: #8ab9f7;
+      --muted: #a0a8b5;
+      --bg: #0e1621;
+      --card: #1b2430;
+      --success: #4ade80;
+      --warning: #fbbf24;
+      --danger: #f87171;
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+
+    html, body {
+      background-color: var(--bg);
+      min-height: 100%;
+      color: #fff;
+    }
+
+    /* Header Styles */
+    .site-header {
+      background: rgba(14, 22, 33, 0.95);
+      backdrop-filter: blur(8px);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+    }
+
+    .header-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 1rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      color: #ffffff;
+      text-decoration: none;
+      letter-spacing: 0.05em;
+      font-size: 1.25rem;
+      font-weight: 600;
+    }
+
+    .main-nav {
+      display: none;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    .main-nav.desktop {
+      display: flex;
+    }
+
+    .main-nav a {
+      color: #d1d5db;
+      text-decoration: none;
+      padding: 0.5rem 0.75rem;
+      border-radius: 0.5rem;
+      transition: all 0.3s;
+      font-size: 0.95rem;
+      font-weight: 500;
+    }
+
+    .main-nav a:hover, .main-nav a.active {
+      color: #8ab9f7;
+      background: rgba(102, 155, 207, 0.15);
+    }
+
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    .main-nav.mobile {
+      display: none;
+      flex-direction: column;
+      background: #1b2430;
+      position: absolute;
+      top: 100%;
+      right: 1.25rem;
+      width: 200px;
+      border-radius: 0.5rem;
+      padding: 1rem;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+      gap: 0.5rem;
+    }
+
+    .main-nav.mobile.show {
+      display: flex;
+    }
+
+    /* Container */
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 1.25rem;
+    }
+
+    /* Page Header */
+    .page-header {
+      background: linear-gradient(135deg, #1b2430 0%, #0e1621 100%);
+      padding: 3rem 0 2rem;
+      border-bottom: 2px solid var(--accent);
+    }
+
+    .page-header h1 {
+      color: var(--accent-dark);
+      font-size: 2.5rem;
+      margin-bottom: 0.75rem;
+      text-align: center;
+    }
+
+    .page-header p {
+      color: var(--muted);
+      text-align: center;
+      max-width: 600px;
+      margin: 0 auto 2rem;
+      line-height: 1.6;
+    }
+
+    /* Stats Bar */
+    .stats-bar {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .stat-card {
+      background: rgba(102, 155, 207, 0.1);
+      border: 1px solid var(--accent);
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      text-align: center;
+    }
+
+    .stat-number {
+      font-size: 2rem;
+      font-weight: bold;
+      color: var(--accent-dark);
+      display: block;
+    }
+
+    .stat-label {
+      color: var(--muted);
+      font-size: 0.9rem;
+      margin-top: 0.25rem;
+    }
+
+    /* Filter Section */
+    .filter-section {
+      background: rgba(27, 36, 48, 0.5);
+      padding: 1.5rem 0;
+      position: sticky;
+      top: 73px;
+      z-index: 40;
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .filter-controls {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .search-and-view {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .search-box {
+      flex: 1;
+      position: relative;
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 0.75rem 1rem 0.75rem 2.5rem;
+      background: #1b2430;
+      border: 1px solid rgba(102, 155, 207, 0.3);
+      border-radius: 0.5rem;
+      color: white;
+      font-size: 0.95rem;
+      transition: border-color 0.3s;
+    }
+
+    .search-box input:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 0.75rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--muted);
+    }
+
+    .view-toggle {
+      display: flex;
+      gap: 0.5rem;
+      background: #1b2430;
+      padding: 0.25rem;
+      border-radius: 0.5rem;
+    }
+
+    .view-btn {
+      flex: 1;
+      padding: 0.5rem 1rem;
+      background: transparent;
+      border: none;
+      color: #d1d5db;
+      cursor: pointer;
+      border-radius: 0.375rem;
+      transition: all 0.3s;
+      font-size: 0.9rem;
+    }
+
+    .view-btn.active {
+      background: var(--accent);
+      color: white;
+    }
+
+    .filter-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .filter-tag {
+      padding: 0.5rem 1rem;
+      background: #1b2430;
+      border: 1px solid rgba(102, 155, 207, 0.3);
+      color: #d1d5db;
+      border-radius: 1.5rem;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-size: 0.85rem;
+    }
+
+    .filter-tag:hover {
+      background: rgba(102, 155, 207, 0.2);
+      border-color: var(--accent);
+    }
+
+    .filter-tag.active {
+      background: var(--accent);
+      color: white;
+      border-color: var(--accent);
+    }
+
+    /* Grid View */
+    .classes-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      padding: 2rem 0;
+    }
+
+    .class-card {
+      background: #1b2430;
+      border-radius: 1rem;
+      overflow: hidden;
+      transition: all 0.3s;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+      border: 1px solid transparent;
+    }
+
+    .class-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 24px rgba(102, 155, 207, 0.3);
+      border-color: var(--accent);
+    }
+
+    .class-image {
+      position: relative;
+      height: 200px;
+      overflow: hidden;
+    }
+
+    .class-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s;
+    }
+
+    .class-card:hover .class-image img {
+      transform: scale(1.05);
+    }
+
+    .class-badge {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      padding: 0.375rem 0.75rem;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(10px);
+      border-radius: 1rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .badge-beginner { color: var(--success); }
+    .badge-intermediate { color: var(--warning); }
+    .badge-advanced { color: var(--danger); }
+
+    .class-status {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      padding: 0.375rem 0.75rem;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(10px);
+      border-radius: 1rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .status-available { color: var(--success); }
+    .status-filling { color: var(--warning); }
+    .status-full { color: var(--danger); }
+
+    .class-content {
+      padding: 1.5rem;
+    }
+
+    .class-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+      margin-bottom: 1rem;
+    }
+
+    .class-title {
+      font-size: 1.25rem;
+      color: white;
+      margin-bottom: 0.25rem;
+    }
+
+    .class-type {
+      color: var(--accent);
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    .class-description {
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.6;
+      margin-bottom: 1.25rem;
+    }
+
+    .class-meta {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+      padding: 1rem;
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: 0.5rem;
+    }
+
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      color: #d1d5db;
+    }
+
+    .meta-icon {
+      width: 16px;
+      height: 16px;
+      color: var(--accent);
+    }
+
+    .class-footer {
+      display: flex;
+      gap: 0.75rem;
+      align-items: center;
+    }
+
+    .spots-indicator {
+      flex: 1;
+    }
+
+    .spots-text {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-bottom: 0.375rem;
+    }
+
+    .spots-bar {
+      height: 6px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .spots-fill {
+      height: 100%;
+      background: var(--accent);
+      transition: width 0.3s;
+    }
+
+    .book-btn {
+      padding: 0.625rem 1.5rem;
+      background: var(--accent);
+      color: white;
+      border: none;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-weight: 600;
+      font-size: 0.9rem;
+      white-space: nowrap;
+    }
+
+    .book-btn:hover {
+      background: var(--accent-dark);
+      transform: scale(1.05);
+    }
+
+    .book-btn:disabled {
+      background: #4b5563;
+      color: #9ca3af;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* Schedule View */
+    .schedule-view {
+      display: none;
+      padding: 2rem 0;
+    }
+
+    .schedule-view.active {
+      display: block;
+    }
+
+    .day-section {
+      margin-bottom: 2rem;
+    }
+
+    .day-header {
+      background: linear-gradient(90deg, var(--accent) 0%, transparent 100%);
+      padding: 1rem 1.5rem;
+      border-radius: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .day-name {
+      font-size: 1.5rem;
+      color: white;
+      font-weight: 600;
+    }
+
+    .time-slot {
+      background: #1b2430;
+      border-left: 4px solid var(--accent);
+      padding: 1.25rem;
+      margin-bottom: 1rem;
+      border-radius: 0.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      transition: all 0.3s;
+    }
+
+    .time-slot:hover {
+      background: rgba(102, 155, 207, 0.1);
+      transform: translateX(5px);
+    }
+
+    .slot-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+    }
+
+    .slot-time {
+      font-size: 1.25rem;
+      color: var(--accent-dark);
+      font-weight: 600;
+    }
+
+    .slot-details {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .slot-class {
+      font-size: 1.1rem;
+      color: white;
+      font-weight: 600;
+    }
+
+    .slot-info {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    .slot-info span {
+      display: flex;
+      align-items: center;
+      gap: 0.375rem;
+    }
+
+    /* Empty State */
+    .empty-state {
+      text-align: center;
+      padding: 4rem 2rem;
+    }
+
+    .empty-icon {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+      opacity: 0.5;
+    }
+
+    .empty-text {
+      color: var(--muted);
+      font-size: 1.1rem;
+    }
+
+    /* Footer */
+    .site-footer {
+      background: #000;
+      color: #9ca3af;
+      margin-top: 4rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .footer-inner {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      padding: 2rem 0;
+    }
+
+    .footer-inner h3, .footer-inner h4 {
+      color: white;
+      margin-bottom: 0.75rem;
+    }
+
+    .footer-nav {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .footer-nav a {
+      color: #9ca3af;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .footer-nav a:hover {
+      color: #8ab9f7;
+    }
+
+    address {
+      font-style: normal;
+      line-height: 1.8;
+    }
+
+    address a {
+      color: #9ca3af;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    address a:hover {
+      color: #8ab9f7;
+    }
+
+    .footer-bottom {
+      text-align: center;
+      padding: 2rem 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    /* Responsive */
+    @media (min-width: 768px) {
+      .menu-toggle { display: none; }
+      .main-nav.desktop { display: flex; }
+      .classes-grid { grid-template-columns: repeat(2, 1fr); }
+      .footer-inner { grid-template-columns: repeat(3, 1fr); }
+      .search-and-view { flex-direction: row; align-items: center; }
+      .view-toggle { width: auto; }
+    }
+
+    @media (min-width: 1024px) {
+      .classes-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    @media (max-width: 767px) {
+      .menu-toggle { display: block; }
+      .main-nav.desktop { display: none; }
+      .page-header h1 { font-size: 2rem; }
+    }
+  </style>
 </head>
 <body>
+  <!-- Header -->
   <header class="site-header">
-    <div class="container header-inner">
-      <a class="logo" href="index.html">FITTCHECK</a>
-      <nav class="main-nav" id="mainNav2">
+    <div class="header-inner">
+      <a href="index.html" class="logo">FITTCHECK</a>
+      
+      <nav class="main-nav desktop">
         <a href="index.html">Home</a>
-        <a class="active" href="classes.html">Classes</a>
+        <a href="classes.html">Classes</a>
         <a href="trainers.html">Trainers</a>
-        <a href="contact.html">Contact</a>
+        <a href="contact.html">About Us</a>
+        <a href="tracker.html">Tracker</a>
       </nav>
-      <button class="menu-toggle" id="menuToggle2" aria-label="Toggle menu">☰</button>
+
+      <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">☰</button>
+      
+      <nav class="main-nav mobile" id="mobileNav">
+        <a href="index.html">Home</a>
+        <a href="classes.html" class="active">Classes</a>
+        <a href="#">Trainers</a>
+        <a href="#">About Us</a>
+        <a href="tracker.html">Tracker</a>
+      </nav>
     </div>
   </header>
 
-  <main class="container">
-    <section class="page-intro">
-      <h1>Classes at FITTCHECK</h1>
-      <p>From beginner-friendly sessions to advanced training — our timetable fits your life.</p>
-    </section>
-
-    <section class="class-list">
-      <article class="class-item">
-        <img src="images/class1.jpg" alt="HIIT" />
-        <div>
-          <h3>HIIT Blast</h3>
-          <p>High intensity interval training to burn calories and build stamina.</p>
-          <p class="small">Mon / Wed / Fri — 6:30 AM</p>
+  <!-- Page Header -->
+  <section class="page-header">
+    <div class="container">
+      <h1>Browse Our Fitness Classes</h1>
+      <p>Choose from our wide variety of expert-led fitness classes. Book your spot and start your journey to a healthier you.</p>
+      
+      <div class="stats-bar">
+        <div class="stat-card">
+          <span class="stat-number">30+</span>
+          <span class="stat-label">Weekly Classes</span>
         </div>
-      </article>
-
-      <article class="class-item">
-        <img src="images/class2.jpg" alt="Strength" />
-        <div>
-          <h3>Strength Lab</h3>
-          <p>Progressive strength program focusing on compound lifts.</p>
-          <p class="small">Tue / Thu — 7:00 PM</p>
+        <div class="stat-card">
+          <span class="stat-number">8</span>
+          <span class="stat-label">Class Types</span>
         </div>
-      </article>
-
-      <article class="class-item">
-        <img src="images/class3.jpg" alt="Yoga" />
-        <div>
-          <h3>Flow Yoga</h3>
-          <p>Slow, mindful flow for flexibility, balance and breathwork.</p>
-          <p class="small">Sat — 9:00 AM</p>
+        <div class="stat-card">
+          <span class="stat-number">200+</span>
+          <span class="stat-label">Active Members</span>
         </div>
-      </article>
-    </section>
-  </main>
+        <div class="stat-card">
+          <span class="stat-number">12</span>
+          <span class="stat-label">Expert Trainers</span>
+        </div>
+      </div>
+    </div>
+  </section>
 
+  <!-- Filter Section -->
+  <section class="filter-section">
+    <div class="container">
+      <div class="filter-controls">
+        <div class="search-and-view">
+          <div class="search-box">
+            <svg class="search-icon" width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+            </svg>
+            <input type="text" id="searchInput" placeholder="Search classes or instructors...">
+          </div>
+          <div class="view-toggle">
+            <button class="view-btn active" data-view="grid">📋 Grid View</button>
+            <button class="view-btn" data-view="schedule">📅 Schedule View</button>
+          </div>
+        </div>
+        
+        <div class="filter-tags">
+          <button class="filter-tag active" data-filter="all">All Classes</button>
+          <button class="filter-tag" data-filter="yoga">Yoga</button>
+          <button class="filter-tag" data-filter="cardio">Cardio</button>
+          <button class="filter-tag" data-filter="strength">Strength</button>
+          <button class="filter-tag" data-filter="pilates">Pilates</button>
+          <button class="filter-tag" data-filter="dance">Dance</button>
+          <button class="filter-tag" data-filter="boxing">Boxing</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Classes Grid View -->
+  <section class="classes-grid container" id="gridView"></section>
+
+  <!-- Schedule View -->
+  <section class="schedule-view container" id="scheduleView"></section>
+
+  <!-- Footer -->
   <footer class="site-footer">
     <div class="container footer-inner">
       <div>
@@ -69,22 +733,378 @@
         <nav class="footer-nav">
           <a href="index.html">Home</a>
           <a href="classes.html">Classes</a>
-          <a href="trainers.html">Trainers</a>
+          <a href="tracker.html">Trainers</a>
         </nav>
       </div>
       <div>
         <h4>Contact</h4>
         <address>
-        Balingasag Brgy 2 <br/>
-        <a href="mailto:hello@fittcheck.ph">hello@fittcheck.ph</a>
+          Balingasag Brgy 2<br>
+          <a href="mailto:hello@fittcheck.ph">hello@fittcheck.ph</a>
         </address>
       </div>
     </div>
     <div class="footer-bottom container">
-      <small>© <span id="year2"></span> FITTCHECK. All rights reserved.</small>
+      <small>© <span id="year"></span> FITTCHECK. All rights reserved.</small>
     </div>
   </footer>
 
-  <script src="js/main.js"></script>
+  <script>
+    // Classes Data
+    const classesData = [
+      {
+        id: 1,
+        name: 'Morning Flow Yoga',
+        type: 'yoga',
+        instructor: 'Maria Cruz',
+        time: '6:00 AM',
+        duration: '60 min',
+        difficulty: 'beginner',
+        spots: 8,
+        maxSpots: 15,
+        days: ['Monday', 'Wednesday', 'Friday'],
+        image: 'https://images.unsplash.com/photo-1619781458519-5c6115c0ee98?w=800',
+        description: 'Start your day with energizing yoga flows, breathing exercises, and meditation.'
+      },
+      {
+        id: 2,
+        name: 'Spin & Burn',
+        type: 'cardio',
+        instructor: 'Jake Santos',
+        time: '7:00 AM',
+        duration: '45 min',
+        difficulty: 'intermediate',
+        spots: 3,
+        maxSpots: 20,
+        days: ['Tuesday', 'Thursday', 'Saturday'],
+        image: 'https://images.unsplash.com/photo-1630415187908-39d6d209b15c?w=800',
+        description: 'High-intensity cycling class designed to torch calories and build cardiovascular endurance.'
+      },
+      {
+        id: 3,
+        name: 'HIIT Power',
+        type: 'strength',
+        instructor: 'Alex Tan',
+        time: '6:30 PM',
+        duration: '50 min',
+        difficulty: 'advanced',
+        spots: 5,
+        maxSpots: 12,
+        days: ['Monday', 'Wednesday', 'Friday'],
+        image: 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=800',
+        description: 'Maximum effort intervals combining strength training and conditioning for total body transformation.'
+      },
+      {
+        id: 4,
+        name: 'Core Pilates',
+        type: 'pilates',
+        instructor: 'Maria Cruz',
+        time: '9:00 AM',
+        duration: '55 min',
+        difficulty: 'beginner',
+        spots: 6,
+        maxSpots: 15,
+        days: ['Tuesday', 'Thursday'],
+        image: 'https://images.unsplash.com/photo-1602827114685-efbb2717da9f?w=800',
+        description: 'Strengthen your core and improve posture with controlled, precise movements.'
+      },
+      {
+        id: 5,
+        name: 'Boxing Bootcamp',
+        type: 'boxing',
+        instructor: 'Jake Santos',
+        time: '5:30 PM',
+        duration: '60 min',
+        difficulty: 'intermediate',
+        spots: 4,
+        maxSpots: 16,
+        days: ['Monday', 'Wednesday', 'Friday'],
+        image: 'https://images.unsplash.com/photo-1590556409324-aa1d726e5c3c?w=800',
+        description: 'Learn boxing techniques while getting an incredible full-body workout.'
+      },
+      {
+        id: 6,
+        name: 'Dance Fusion',
+        type: 'dance',
+        instructor: 'Maria Cruz',
+        time: '7:00 PM',
+        duration: '50 min',
+        difficulty: 'beginner',
+        spots: 10,
+        maxSpots: 20,
+        days: ['Tuesday', 'Thursday', 'Saturday'],
+        image: 'https://images.unsplash.com/photo-1545224144-b38cd309ef69?w=800',
+        description: 'Fun, energetic dance workout combining various styles and rhythms.'
+      },
+      {
+        id: 7,
+        name: 'Power Lifting',
+        type: 'strength',
+        instructor: 'Alex Tan',
+        time: '5:00 PM',
+        duration: '75 min',
+        difficulty: 'advanced',
+        spots: 2,
+        maxSpots: 10,
+        days: ['Tuesday', 'Thursday', 'Saturday'],
+        image: 'https://images.unsplash.com/photo-1574680096145-d05b474e2155?w=800',
+        description: 'Advanced strength training focusing on compound lifts and proper technique.'
+      },
+      {
+        id: 8,
+        name: 'Sunset Yoga',
+        type: 'yoga',
+        instructor: 'Maria Cruz',
+        time: '6:00 PM',
+        duration: '60 min',
+        difficulty: 'intermediate',
+        spots: 7,
+        maxSpots: 15,
+        days: ['Monday', 'Wednesday', 'Friday'],
+        image: 'https://images.unsplash.com/photo-1588286840104-8957b019727f?w=800',
+        description: 'Wind down your day with relaxing flows, stretches, and guided meditation.'
+      }
+    ];
+
+    // State
+    let currentFilter = 'all';
+    let searchQuery = '';
+    let currentView = 'grid';
+
+    // Helper Functions
+    function getStatus(spots, maxSpots) {
+      const ratio = spots / maxSpots;
+      if (ratio > 0.5) return { class: 'available', text: 'Available' };
+      if (ratio > 0) return { class: 'filling', text: 'Filling Fast' };
+      return { class: 'full', text: 'Fully Booked' };
+    }
+
+    function renderGridView() {
+      const grid = document.getElementById('gridView');
+      const filtered = classesData.filter(cls => {
+        const matchesType = currentFilter === 'all' || cls.type === currentFilter;
+        const matchesSearch = cls.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                             cls.instructor.toLowerCase().includes(searchQuery.toLowerCase());
+        return matchesType && matchesSearch;
+      });
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `
+          <div class="empty-state">
+            <div class="empty-icon">🔍</div>
+            <p class="empty-text">No classes found matching your criteria.</p>
+          </div>
+        `;
+        return;
+      }
+
+      grid.innerHTML = filtered.map(cls => {
+        const status = getStatus(cls.spots, cls.maxSpots);
+        const filledPercent = ((cls.maxSpots - cls.spots) / cls.maxSpots) * 100;
+        
+        return `
+          <div class="class-card">
+            <div class="class-image">
+              <img src="${cls.image}" alt="${cls.name}">
+              <span class="class-badge badge-${cls.difficulty}">${cls.difficulty}</span>
+              <span class="class-status status-${status.class}">⚡ ${status.text}</span>
+            </div>
+            <div class="class-content">
+              <div class="class-header">
+                <div>
+                  <h3 class="class-title">${cls.name}</h3>
+                  <p class="class-type">${cls.type}</p>
+                </div>
+              </div>
+              <p class="class-description">${cls.description}</p>
+              
+              <div class="class-meta">
+                <div class="meta-item">
+                  <svg class="meta-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                  </svg>
+                  <span>${cls.instructor}</span>
+                </div>
+                <div class="meta-item">
+                  <svg class="meta-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                  </svg>
+                  <span>${cls.time}</span>
+                </div>
+                <div class="meta-item">
+                  <svg class="meta-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                  </svg>
+                  <span>${cls.duration}</span>
+                </div>
+                <div class="meta-item">
+                  <svg class="meta-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                  </svg>
+                  <span>${cls.days.length} days/week</span>
+                </div>
+              </div>
+
+              <div class="class-footer">
+                <div class="spots-indicator">
+                  <p class="spots-text">${cls.spots} of ${cls.maxSpots} spots left</p>
+                  <div class="spots-bar">
+                    <div class="spots-fill" style="width: ${filledPercent}%"></div>
+                  </div>
+                </div>
+                <button class="book-btn" ${cls.spots === 0 ? 'disabled' : ''} onclick="bookClass(${cls.id})">
+                  ${cls.spots > 0 ? 'Book Now' : 'Full'}
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderScheduleView() {
+      const schedule = document.getElementById('scheduleView');
+      const weekDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+      
+      const filtered = classesData.filter(cls => {
+        const matchesType = currentFilter === 'all' || cls.type === currentFilter;
+        const matchesSearch = cls.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                             cls.instructor.toLowerCase().includes(searchQuery.toLowerCase());
+        return matchesType && matchesSearch;
+      });
+
+      if (filtered.length === 0) {
+        schedule.innerHTML = `
+          <div class="empty-state">
+            <div class="empty-icon">📅</div>
+            <p class="empty-text">No classes scheduled for your filters.</p>
+          </div>
+        `;
+        return;
+      }
+
+      const scheduleByDay = {};
+      weekDays.forEach(day => { scheduleByDay[day] = []; });
+
+      filtered.forEach(cls => {
+        cls.days.forEach(day => {
+          if (scheduleByDay[day]) {
+            scheduleByDay[day].push(cls);
+          }
+        });
+      });
+
+      schedule.innerHTML = weekDays.map(day => {
+        const classes = scheduleByDay[day].sort((a, b) => {
+          return a.time.localeCompare(b.time);
+        });
+
+        if (classes.length === 0) return '';
+
+        return `
+          <div class="day-section">
+            <div class="day-header">
+              <h2 class="day-name">${day}</h2>
+            </div>
+            ${classes.map(cls => {
+              const status = getStatus(cls.spots, cls.maxSpots);
+              return `
+                <div class="time-slot">
+                  <div class="slot-header">
+                    <div class="slot-details">
+                      <div class="slot-time">${cls.time}</div>
+                      <div class="slot-class">${cls.name}</div>
+                      <div class="slot-info">
+                        <span>
+                          <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                          </svg>
+                          ${cls.instructor}
+                        </span>
+                        <span>⏱ ${cls.duration}</span>
+                        <span>📊 ${cls.difficulty}</span>
+                        <span class="status-${status.class}">${cls.spots} spots left</span>
+                      </div>
+                    </div>
+                    <button class="book-btn" ${cls.spots === 0 ? 'disabled' : ''} onclick="bookClass(${cls.id})">
+                      ${cls.spots > 0 ? 'Book' : 'Full'}
+                    </button>
+                  </div>
+                </div>
+              `;
+            }).join('')}
+          </div>
+        `;
+      }).join('');
+    }
+
+    function updateView() {
+      const gridView = document.getElementById('gridView');
+      const scheduleView = document.getElementById('scheduleView');
+      
+      if (currentView === 'grid') {
+        gridView.style.display = 'grid';
+        scheduleView.classList.remove('active');
+        renderGridView();
+      } else {
+        gridView.style.display = 'none';
+        scheduleView.classList.add('active');
+        renderScheduleView();
+      }
+    }
+
+    // Event Listeners
+    document.querySelectorAll('.filter-tag').forEach(btn => {
+      btn.addEventListener('click', function() {
+        document.querySelectorAll('.filter-tag').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        currentFilter = this.dataset.filter;
+        updateView();
+      });
+    });
+
+    document.querySelectorAll('.view-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        currentView = this.dataset.view;
+        updateView();
+      });
+    });
+
+    document.getElementById('searchInput').addEventListener('input', function(e) {
+      searchQuery = e.target.value;
+      updateView();
+    });
+
+    function bookClass(id) {
+      const cls = classesData.find(c => c.id === id);
+      if (cls && cls.spots > 0) {
+        alert(`Booking ${cls.name} with ${cls.instructor}!\n\nTime: ${cls.time}\nDuration: ${cls.duration}\n\nYou will receive a confirmation email shortly.`);
+      }
+    }
+
+    // Mobile menu
+    const menuToggle = document.getElementById('menuToggle');
+    const mobileNav = document.getElementById('mobileNav');
+
+    menuToggle.addEventListener('click', function() {
+      mobileNav.classList.toggle('show');
+      this.textContent = mobileNav.classList.contains('show') ? '✕' : '☰';
+    });
+
+    document.addEventListener('click', function(event) {
+      if (!event.target.closest('.header-inner')) {
+        mobileNav.classList.remove('show');
+        menuToggle.textContent = '☰';
+      }
+    });
+
+    // Set year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Initial render
+    updateView();
+  </script>
 </body>
 </html>

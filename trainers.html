@@ -1,81 +1,990 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>FITTCHECK — Trainers</title>
-  <link rel="stylesheet" href="css/style.css" />
-  <script src="js/main.js"></script>
+  <style>
+    /* Reset & Base Styles */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
+    :root {
+      --accent: #669bcf;
+      --accent-dark: #8ab9f7;
+      --muted: #cbd5e1;
+      --text-primary: #f1f5f9;
+      --text-secondary: #e2e8f0;
+      --bg: #0e1621;
+      --card: #1b2430;
+      --radius: 12px;
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+
+    html, body {
+      background-color: var(--bg);
+      min-height: 100%;
+      color: var(--text-primary);
+    }
+
+    /* Header Styles */
+    .site-header {
+      background: rgba(14, 22, 33, 0.95);
+      backdrop-filter: blur(8px);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+    }
+
+    .header-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 1rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      color: #ffffff;
+      text-decoration: none;
+      letter-spacing: 0.05em;
+      font-size: 1.25rem;
+      font-weight: 600;
+    }
+
+    .main-nav {
+      display: none;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    .main-nav.desktop {
+      display: flex;
+    }
+
+    .main-nav a {
+      color: #e2e8f0;
+      text-decoration: none;
+      padding: 0.5rem 0.75rem;
+      border-radius: 0.5rem;
+      transition: all 0.3s;
+      font-size: 0.95rem;
+      font-weight: 500;
+    }
+
+    .main-nav a:hover, .main-nav a.active {
+      color: #8ab9f7;
+      background: rgba(102, 155, 207, 0.1);
+    }
+
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    .main-nav.mobile {
+      display: none;
+      flex-direction: column;
+      background: #1b2430;
+      position: absolute;
+      top: 100%;
+      right: 1.25rem;
+      width: 200px;
+      border-radius: 0.5rem;
+      padding: 1rem;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+      gap: 0.5rem;
+    }
+
+    .main-nav.mobile.show {
+      display: flex;
+    }
+
+    /* Container */
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 1.25rem;
+    }
+
+    /* Page Intro */
+    .page-intro {
+      text-align: center;
+      padding: 3rem 0 2rem;
+    }
+
+    .page-intro h1 {
+      color: var(--accent-dark);
+      margin-bottom: 1rem;
+      font-size: 2.5rem;
+    }
+
+    .page-intro p {
+      color: var(--muted);
+      font-size: 1.15rem;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* Filter Section */
+    .filter-section {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin: 2rem 0;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      padding: 0.5rem 1.5rem;
+      background: transparent;
+      border: 2px solid var(--accent);
+      color: var(--text-secondary);
+      border-radius: 2rem;
+      cursor: pointer;
+      font-size: 0.95rem;
+      font-weight: 500;
+      transition: all 0.3s;
+    }
+
+    .filter-btn:hover, .filter-btn.active {
+      background: var(--accent);
+      color: white;
+    }
+
+    /* Trainers Grid */
+    .trainers-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      padding: 2rem 0;
+    }
+
+    @media (min-width: 768px) {
+      .trainers-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .trainers-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    /* Trainer Card */
+    .trainer-card {
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: 1rem;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      transition: all 0.3s;
+      cursor: pointer;
+    }
+
+    .trainer-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(102, 155, 207, 0.2);
+      border-color: var(--accent);
+    }
+
+    .trainer-card img {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+    }
+
+    .trainer-content {
+      padding: 1.5rem;
+    }
+
+    .trainer-header {
+      margin-bottom: 1rem;
+    }
+
+    .trainer-header h3 {
+      color: var(--text-primary);
+      font-size: 1.5rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .trainer-header .title {
+      color: var(--accent-dark);
+      font-size: 0.95rem;
+      font-weight: 500;
+    }
+
+    .trainer-bio {
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+
+    .trainer-specialties {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .specialty-badge {
+      background: rgba(102, 155, 207, 0.15);
+      color: var(--accent-dark);
+      padding: 0.25rem 0.75rem;
+      border-radius: 1rem;
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
+
+    .trainer-stats {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      margin-bottom: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-value {
+      color: var(--accent-dark);
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+
+    .stat-label {
+      color: var(--muted);
+      font-size: 0.85rem;
+      margin-top: 0.25rem;
+    }
+
+    .trainer-actions {
+      display: flex;
+      gap: 0.75rem;
+    }
+
+    .btn {
+      flex: 1;
+      padding: 0.625rem 1rem;
+      border: none;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 600;
+      transition: all 0.2s;
+      text-align: center;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-dark);
+      transform: translateY(-2px);
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+    }
+
+    .btn-outline:hover {
+      background: var(--accent);
+      color: white;
+    }
+
+    /* Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      z-index: 100;
+      padding: 1rem;
+      overflow-y: auto;
+    }
+
+    .modal.show {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-content {
+      background: var(--card);
+      border-radius: 1rem;
+      max-width: 800px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .modal-header h2 {
+      color: var(--accent-dark);
+      font-size: 1.75rem;
+    }
+
+    .close-modal {
+      background: none;
+      border: none;
+      color: var(--muted);
+      font-size: 2rem;
+      cursor: pointer;
+      padding: 0;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 0.5rem;
+      transition: all 0.2s;
+    }
+
+    .close-modal:hover {
+      background: rgba(255, 255, 255, 0.05);
+      color: white;
+    }
+
+    .modal-body {
+      padding: 1.5rem;
+    }
+
+    .modal-section {
+      margin-bottom: 2rem;
+    }
+
+    .modal-section h3 {
+      color: var(--accent-dark);
+      margin-bottom: 1rem;
+      font-size: 1.25rem;
+    }
+
+    .modal-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+
+    @media (min-width: 768px) {
+      .modal-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .certification-item {
+      background: rgba(255, 255, 255, 0.02);
+      padding: 1rem;
+      border-radius: 0.5rem;
+      border-left: 3px solid var(--accent);
+    }
+
+    .certification-item .cert-name {
+      color: var(--text-primary);
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+
+    .certification-item .cert-org {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .schedule-day {
+      background: rgba(255, 255, 255, 0.02);
+      padding: 1rem;
+      border-radius: 0.5rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .schedule-day .day {
+      color: var(--accent-dark);
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .schedule-day .time {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+    }
+
+    .testimonial-item {
+      background: rgba(255, 255, 255, 0.02);
+      padding: 1.25rem;
+      border-radius: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .testimonial-text {
+      color: var(--text-secondary);
+      font-style: italic;
+      margin-bottom: 0.75rem;
+      line-height: 1.6;
+    }
+
+    .testimonial-author {
+      color: var(--accent-dark);
+      font-weight: 600;
+    }
+
+    .rating {
+      color: #fbbf24;
+      margin-bottom: 0.5rem;
+    }
+
+    /* Footer */
+    .site-footer {
+      background: #000;
+      color: #cbd5e1;
+      margin-top: 3rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .footer-inner {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      padding: 2rem 0;
+    }
+
+    .footer-inner h3, .footer-inner h4 {
+      color: white;
+      margin-bottom: 0.75rem;
+    }
+
+    .footer-nav {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .footer-nav a {
+      color: #cbd5e1;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .footer-nav a:hover {
+      color: #8ab9f7;
+    }
+
+    address {
+      font-style: normal;
+      line-height: 1.8;
+      color: #cbd5e1;
+    }
+
+    address a {
+      color: #cbd5e1;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    address a:hover {
+      color: #8ab9f7;
+    }
+
+    .footer-bottom {
+      text-align: center;
+      padding: 2rem 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      color: #cbd5e1;
+    }
+
+    /* Responsive */
+    @media (min-width: 768px) {
+      .menu-toggle {
+        display: none;
+      }
+
+      .main-nav.desktop {
+        display: flex;
+      }
+
+      .footer-inner {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media (max-width: 767px) {
+      .menu-toggle {
+        display: block;
+      }
+
+      .main-nav.desktop {
+        display: none;
+      }
+
+      .page-intro h1 {
+        font-size: 2rem;
+      }
+    }
+
+    /* Scrollbar */
+    .modal-content::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    .modal-content::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 4px;
+    }
+
+    .modal-content::-webkit-scrollbar-thumb {
+      background: var(--accent);
+      border-radius: 4px;
+    }
+  </style>
 </head>
 <body>
+  <!-- Header -->
   <header class="site-header">
-    <div class="container header-inner">
-      <a class="logo" href="index.html">FITTCHECK</a>
-      <nav class="main-nav">
+    <div class="header-inner">
+      <a href="index.html" class="logo">FITTCHECK</a>
+      
+      <!-- Desktop Navigation -->
+       <nav class="main-nav desktop">
+        <a href="#">Home</a>
+        <a href="classes.html">Classes</a>
+        <a href="trainers.html">Trainers</a>
+        <a href="contact.html">About Us</a>
+        <a href="tracker.html">Tracker</a>
+      </nav>
+      
+
+      <!-- Mobile Menu Toggle -->
+      <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">☰</button>
+      
+      <!-- Mobile Navigation -->
+      <nav class="main-nav mobile" id="mobileNav">
         <a href="index.html">Home</a>
         <a href="classes.html">Classes</a>
-        <a class="active" href="trainers.html">Trainers</a>
-        <a href="contact.html">Contact</a>
+        <a href="trainers.html" class="active">Trainers</a>
+        <a href="#">About Us</a>
+        <a href="tracker.html">Tracker</a>
       </nav>
-      <button class="menu-toggle" aria-label="Toggle menu">☰</button>
     </div>
   </header>
 
+  <!-- Main Content -->
   <main class="container">
     <section class="page-intro">
-      <h1>Meet our Trainers</h1>
-      <p>Certified coaches who design programs to help you reach your goals.</p>
+      <h1>Meet Our Expert Trainers</h1>
+      <p>Certified professionals dedicated to helping you achieve your fitness goals with personalized training and expert guidance.</p>
     </section>
 
-    <section class="trainers-grid">
-      <div class="trainer-card">
-        <img src="images/trainer1.jpg" alt="Trainer 1" />
-        <h4>Alex Perez</h4>
-        <p>Strength & conditioning coach. Specializes in hypertrophy and powerlifting prep.</p>
-      </div>
+    <!-- Filter Section -->
+    <div class="filter-section">
+      <button class="filter-btn active" data-filter="all">All Trainers</button>
+      <button class="filter-btn" data-filter="strength">Strength</button>
+      <button class="filter-btn" data-filter="cardio">Cardio</button>
+      <button class="filter-btn" data-filter="yoga">Yoga</button>
+      <button class="filter-btn" data-filter="hiit">HIIT</button>
+    </div>
 
-      <div class="trainer-card">
-        <img src="images/trainer2.jpg" alt="Trainer 2" />
-        <h4>Rina Lopez</h4>
-        <p>Group coach and yoga instructor. Focus on mobility and recovery plans.</p>
-      </div>
-
-      <div class="trainer-card">
-        <img src="images/trainer3.jpg" alt="Trainer 3" />
-        <h4>Mark Santos</h4>
-        <p>Cardio and HIIT specialist. Great for fat-loss and conditioning.</p>
-      </div>
+    <!-- Trainers Grid -->
+    <section class="trainers-grid" id="trainersGrid">
+      <!-- Trainers will be loaded here -->
     </section>
   </main>
 
+  <!-- Trainer Detail Modal -->
+  <div class="modal" id="trainerModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 id="modalTrainerName">Trainer Name</h2>
+        <button class="close-modal" id="closeModal">&times;</button>
+      </div>
+      <div class="modal-body" id="modalBody">
+        <!-- Content will be loaded here -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
   <footer class="site-footer">
     <div class="container footer-inner">
+      <!-- Brand Section -->
       <div>
-        <h3>FITTCHECK</h3>
-        <p>Simple. Smart. Strong.</p>
+        <h3>Royal Fitness</h3>
+        <p>Strong. Focused. Driven.</p>
       </div>
+
+      <!-- Quick Links -->
       <div>
         <h4>Quick Links</h4>
         <nav class="footer-nav">
           <a href="index.html">Home</a>
           <a href="classes.html">Classes</a>
           <a href="trainers.html">Trainers</a>
+          <a href="#">About Us</a>
         </nav>
       </div>
+
+      <!-- Contact -->
       <div>
         <h4>Contact</h4>
         <address>
-           Balingasag Brgy 2 <br/>
+          Balingasag Brgy 2<br>
+          (+63)-923456789<br>
           <a href="mailto:hello@fittcheck.ph">hello@fittcheck.ph</a>
         </address>
       </div>
     </div>
+    
     <div class="footer-bottom container">
-      <small>© <span id="year3"></span> FITTCHECK. All rights reserved.</small>
+      <small>© <span id="year"></span> Royal Fitness. All rights reserved.</small>
     </div>
   </footer>
 
-  <script src="js/main.js"></script>
+  <script>
+    // Trainer Data
+    const trainers = [
+      {
+        id: 1,
+        name: "Alex Perez",
+        title: "Strength & Conditioning Specialist",
+        image: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxmaXRuZXNzJTIwdHJhaW5lciUyMG1hbGV8ZW58MXx8fHwxNzYyMzkxODY2fDA&ixlib=rb-4.1.0&q=80&w=1080",
+        bio: "With over 10 years of experience in strength training and athletic conditioning, Alex helps clients build muscle, increase power, and achieve peak performance.",
+        specialties: ["Strength Training", "Powerlifting", "Athletic Performance", "Nutrition"],
+        category: ["strength"],
+        experience: "10+",
+        clients: "200+",
+        rating: 4.9,
+        certifications: [
+          { name: "NSCA-CSCS", org: "National Strength & Conditioning Association" },
+          { name: "USA Weightlifting Level 2", org: "USA Weightlifting" },
+          { name: "Precision Nutrition Level 1", org: "Precision Nutrition" }
+        ],
+        schedule: [
+          { day: "Monday - Wednesday", time: "6:00 AM - 2:00 PM" },
+          { day: "Thursday - Friday", time: "6:00 AM - 12:00 PM" },
+          { day: "Saturday", time: "8:00 AM - 12:00 PM" }
+        ],
+        testimonials: [
+          { text: "Alex transformed my training! I've gained 15lbs of muscle and feel stronger than ever.", author: "John M." },
+          { text: "Best strength coach I've worked with. His programs are challenging but effective.", author: "Sarah K." }
+        ]
+      },
+      {
+        id: 2,
+        name: "Rina Lopez",
+        title: "Yoga & Mobility Coach",
+        image: "https://images.unsplash.com/photo-1518611012118-696072aa579a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx5b2dhJTIwaW5zdHJ1Y3RvciUyMGZlbWFsZXxlbnwxfHx8fDE3NjIzOTE4NjZ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+        bio: "Rina specializes in yoga, flexibility, and mindful movement. She helps clients improve mobility, reduce stress, and find balance in their fitness journey.",
+        specialties: ["Yoga", "Flexibility", "Mindfulness", "Injury Recovery"],
+        category: ["yoga"],
+        experience: "8+",
+        clients: "150+",
+        rating: 5.0,
+        certifications: [
+          { name: "RYT-500", org: "Yoga Alliance" },
+          { name: "Therapeutic Yoga Certification", org: "American Yoga Association" },
+          { name: "Meditation Teacher Training", org: "Mindful Schools" }
+        ],
+        schedule: [
+          { day: "Monday - Friday", time: "7:00 AM - 11:00 AM" },
+          { day: "Tuesday - Thursday", time: "5:00 PM - 7:00 PM" },
+          { day: "Sunday", time: "9:00 AM - 1:00 PM" }
+        ],
+        testimonials: [
+          { text: "Rina's yoga classes are peaceful yet challenging. My flexibility has improved dramatically!", author: "Maria D." },
+          { text: "She helped me recover from a back injury through therapeutic yoga. Highly recommend!", author: "David L." }
+        ]
+      },
+      {
+        id: 3,
+        name: "Mark Santos",
+        title: "Cardio & HIIT Expert",
+        image: "https://images.unsplash.com/photo-1566241440091-ec10de8db2e1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxmaXRuZXNzJTIwdHJhaW5lciUyMG1hbGUlMjBjYXJkaW98ZW58MXx8fHwxNzYyMzkxODY2fDA&ixlib=rb-4.1.0&q=80&w=1080",
+        bio: "Mark is passionate about high-intensity training and cardiovascular fitness. He designs dynamic workouts that maximize calorie burn and boost endurance.",
+        specialties: ["HIIT", "Cardio Training", "Weight Loss", "Endurance"],
+        category: ["cardio", "hiit"],
+        experience: "7+",
+        clients: "180+",
+        rating: 4.8,
+        certifications: [
+          { name: "ACE Personal Trainer", org: "American Council on Exercise" },
+          { name: "HIIT Specialist", org: "ISSA" },
+          { name: "Running Coach Level 2", org: "RRCA" }
+        ],
+        schedule: [
+          { day: "Monday - Friday", time: "5:00 AM - 10:00 AM" },
+          { day: "Wednesday - Friday", time: "4:00 PM - 7:00 PM" },
+          { day: "Saturday", time: "7:00 AM - 11:00 AM" }
+        ],
+        testimonials: [
+          { text: "Mark's HIIT workouts are intense but fun! I've lost 20lbs in 3 months.", author: "Jennifer P." },
+          { text: "His energy is contagious. Every session pushes me to my limits in the best way.", author: "Mike R." }
+        ]
+      },
+      {
+        id: 4,
+        name: "Sofia Chen",
+        title: "Functional Fitness Coach",
+        image: "https://images.unsplash.com/photo-1594381898411-846e7d193883?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxmZW1hbGUlMjBmaXRuZXNzJTIwdHJhaW5lcnxlbnwxfHx8fDE3NjIzOTE4NjZ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+        bio: "Sofia focuses on functional movements that translate to everyday life. She helps clients build strength, balance, and coordination for long-term health.",
+        specialties: ["Functional Training", "Core Strength", "Balance", "Seniors Fitness"],
+        category: ["strength"],
+        experience: "6+",
+        clients: "120+",
+        rating: 4.9,
+        certifications: [
+          { name: "NASM-CPT", org: "National Academy of Sports Medicine" },
+          { name: "Functional Movement Screen", org: "FMS" },
+          { name: "Senior Fitness Specialist", org: "ACE" }
+        ],
+        schedule: [
+          { day: "Tuesday - Thursday", time: "8:00 AM - 1:00 PM" },
+          { day: "Friday - Saturday", time: "9:00 AM - 2:00 PM" },
+          { day: "Sunday", time: "10:00 AM - 12:00 PM" }
+        ],
+        testimonials: [
+          { text: "Sofia's approach to fitness is refreshing. I feel stronger and more mobile in my daily activities.", author: "Robert H." },
+          { text: "Great for older adults! She knows how to challenge without risking injury.", author: "Linda S." }
+        ]
+      },
+      {
+        id: 5,
+        name: "Carlos Rivera",
+        title: "Boxing & Combat Sports Coach",
+        image: "https://images.unsplash.com/photo-1552374196-1ab2a1c593e8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxib3hpbmclMjB0cmFpbmVyfGVufDF8fHx8MTc2MjM5MTg2Nnww&ixlib=rb-4.1.0&q=80&w=1080",
+        bio: "Former competitive boxer, Carlos brings real combat sports experience to his training. He teaches boxing technique, conditioning, and mental toughness.",
+        specialties: ["Boxing", "Kickboxing", "Combat Fitness", "Self-Defense"],
+        category: ["cardio", "hiit"],
+        experience: "12+",
+        clients: "160+",
+        rating: 5.0,
+        certifications: [
+          { name: "USA Boxing Coach", org: "USA Boxing" },
+          { name: "Kickboxing Instructor", org: "ISKA" },
+          { name: "Self-Defense Instructor", org: "Krav Maga Alliance" }
+        ],
+        schedule: [
+          { day: "Monday - Thursday", time: "6:00 AM - 12:00 PM" },
+          { day: "Friday", time: "6:00 AM - 10:00 AM" },
+          { day: "Saturday", time: "8:00 AM - 2:00 PM" }
+        ],
+        testimonials: [
+          { text: "Carlos is the real deal. His boxing classes are challenging and empowering!", author: "Alex T." },
+          { text: "Best workout I've ever had. I've lost weight and learned valuable self-defense skills.", author: "Emma W." }
+        ]
+      },
+      {
+        id: 6,
+        name: "Dr. Lisa Park",
+        title: "Sports Rehabilitation Specialist",
+        image: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwaHlzaW90aGVyYXBpc3QlMjBmZW1hbGV8ZW58MXx8fHwxNzYyMzkxODY2fDA&ixlib=rb-4.1.0&q=80&w=1080",
+        bio: "Dr. Park is a licensed physical therapist specializing in injury recovery and prevention. She works with clients returning from injury or managing chronic conditions.",
+        specialties: ["Injury Recovery", "Physical Therapy", "Pain Management", "Corrective Exercise"],
+        category: ["strength", "yoga"],
+        experience: "15+",
+        clients: "250+",
+        rating: 4.9,
+        certifications: [
+          { name: "Doctor of Physical Therapy", org: "APTA" },
+          { name: "Orthopedic Specialist", org: "ABPTS" },
+          { name: "Corrective Exercise Specialist", org: "NASM" }
+        ],
+        schedule: [
+          { day: "Monday - Wednesday", time: "9:00 AM - 5:00 PM" },
+          { day: "Thursday - Friday", time: "10:00 AM - 3:00 PM" },
+          { day: "By Appointment", time: "Flexible" }
+        ],
+        testimonials: [
+          { text: "Dr. Park helped me recover from a knee injury. I'm back to running pain-free!", author: "Chris B." },
+          { text: "Her expertise in rehabilitation is unmatched. Highly professional and caring.", author: "Nancy F." }
+        ]
+      }
+    ];
+
+    // Mobile menu toggle
+    const menuToggle = document.getElementById('menuToggle');
+    const mobileNav = document.getElementById('mobileNav');
+
+    menuToggle.addEventListener('click', function() {
+      mobileNav.classList.toggle('show');
+      this.textContent = mobileNav.classList.contains('show') ? '✕' : '☰';
+    });
+
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', function(event) {
+      if (!event.target.closest('.header-inner')) {
+        mobileNav.classList.remove('show');
+        menuToggle.textContent = '☰';
+      }
+    });
+
+    // Render trainers
+    function renderTrainers(filter = 'all') {
+      const grid = document.getElementById('trainersGrid');
+      const filtered = filter === 'all' 
+        ? trainers 
+        : trainers.filter(t => t.category.includes(filter));
+
+      grid.innerHTML = filtered.map(trainer => `
+        <div class="trainer-card" onclick="openTrainerModal(${trainer.id})">
+          <img src="${trainer.image}" alt="${trainer.name}">
+          <div class="trainer-content">
+            <div class="trainer-header">
+              <h3>${trainer.name}</h3>
+              <div class="title">${trainer.title}</div>
+            </div>
+            <p class="trainer-bio">${trainer.bio}</p>
+            <div class="trainer-specialties">
+              ${trainer.specialties.map(s => `<span class="specialty-badge">${s}</span>`).join('')}
+            </div>
+            <div class="trainer-stats">
+              <div class="stat-item">
+                <div class="stat-value">${trainer.experience}</div>
+                <div class="stat-label">Years Exp</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-value">${trainer.clients}</div>
+                <div class="stat-label">Clients</div>
+              </div>
+            </div>
+            <div class="trainer-actions">
+              <button class="btn btn-primary" onclick="event.stopPropagation(); bookSession(${trainer.id})">Book Session</button>
+              <button class="btn btn-outline" onclick="event.stopPropagation(); openTrainerModal(${trainer.id})">View Profile</button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // Filter functionality
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    filterButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        renderTrainers(btn.getAttribute('data-filter'));
+      });
+    });
+
+    // Modal functionality
+    function openTrainerModal(trainerId) {
+      const trainer = trainers.find(t => t.id === trainerId);
+      if (!trainer) return;
+
+      document.getElementById('modalTrainerName').textContent = trainer.name;
+      document.getElementById('modalBody').innerHTML = `
+        <div class="modal-section">
+          <img src="${trainer.image}" alt="${trainer.name}" style="width: 100%; height: 300px; object-fit: cover; border-radius: 0.75rem; margin-bottom: 1.5rem;">
+          <p style="color: var(--text-secondary); line-height: 1.7;">${trainer.bio}</p>
+        </div>
+
+        <div class="modal-section">
+          <h3>Specialties</h3>
+          <div class="trainer-specialties">
+            ${trainer.specialties.map(s => `<span class="specialty-badge">${s}</span>`).join('')}
+          </div>
+        </div>
+
+        <div class="modal-section">
+          <h3>Certifications</h3>
+          <div class="modal-grid">
+            ${trainer.certifications.map(cert => `
+              <div class="certification-item">
+                <div class="cert-name">${cert.name}</div>
+                <div class="cert-org">${cert.org}</div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+
+        <div class="modal-section">
+          <h3>Availability Schedule</h3>
+          ${trainer.schedule.map(sched => `
+            <div class="schedule-day">
+              <div class="day">${sched.day}</div>
+              <div class="time">${sched.time}</div>
+            </div>
+          `).join('')}
+        </div>
+
+        <div class="modal-section">
+          <h3>Client Testimonials</h3>
+          <div class="rating">${'⭐'.repeat(Math.floor(trainer.rating))} ${trainer.rating}/5.0</div>
+          ${trainer.testimonials.map(test => `
+            <div class="testimonial-item">
+              <div class="testimonial-text">"${test.text}"</div>
+              <div class="testimonial-author">— ${test.author}</div>
+            </div>
+          `).join('')}
+        </div>
+
+        <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+          <button class="btn btn-primary" style="flex: 1;" onclick="bookSession(${trainer.id})">Book a Session</button>
+          <button class="btn btn-outline" style="flex: 1;" onclick="contactTrainer(${trainer.id})">Contact Trainer</button>
+        </div>
+      `;
+
+      document.getElementById('trainerModal').classList.add('show');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      document.getElementById('trainerModal').classList.remove('show');
+      document.body.style.overflow = 'auto';
+    }
+
+    document.getElementById('closeModal').addEventListener('click', closeModal);
+    document.getElementById('trainerModal').addEventListener('click', (e) => {
+      if (e.target.id === 'trainerModal') closeModal();
+    });
+
+    // Booking functions
+    function bookSession(trainerId) {
+      const trainer = trainers.find(t => t.id === trainerId);
+      alert(`Booking session with ${trainer.name}!\n\nYou will be redirected to our booking system.`);
+      // In a real app, this would open a booking form or redirect to a booking page
+    }
+
+    function contactTrainer(trainerId) {
+      const trainer = trainers.find(t => t.id === trainerId);
+      alert(`Contact ${trainer.name}\n\nEmail: ${trainer.name.toLowerCase().replace(' ', '.')}@fittcheck.ph\nPhone: (+63)-923456789`);
+      // In a real app, this would open a contact form or messaging system
+    }
+
+    // Initialize
+    document.getElementById('year').textContent = new Date().getFullYear();
+    renderTrainers();
+
+    // Keyboard navigation for modal
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && document.getElementById('trainerModal').classList.contains('show')) {
+        closeModal();
+      }
+    });
+  </script>
 </body>
 </html>

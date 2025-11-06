@@ -1,0 +1,1276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FITTCHECK — Fitness Tracker</title>
+  <style>
+    /* Reset & Base Styles */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --accent: #669bcf;
+      --accent-dark: #8ab9f7;
+      --muted: #cbd5e1;
+      --text-primary: #f1f5f9;
+      --text-secondary: #e2e8f0;
+      --bg: #0e1621;
+      --card: #1b2430;
+      --radius: 12px;
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+
+    html, body {
+      background-color: var(--bg);
+      min-height: 100%;
+      color: var(--text-primary);
+    }
+
+    /* Header Styles */
+    .site-header {
+      background: rgba(14, 22, 33, 0.95);
+      backdrop-filter: blur(8px);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+    }
+
+    .header-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 1rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      color: #ffffff;
+      text-decoration: none;
+      letter-spacing: 0.05em;
+      font-size: 1.25rem;
+      font-weight: 600;
+    }
+
+    .main-nav {
+      display: none;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    .main-nav.desktop {
+      display: flex;
+    }
+
+    .main-nav a {
+      color: #e2e8f0;
+      text-decoration: none;
+      padding: 0.5rem 0.75rem;
+      border-radius: 0.5rem;
+      transition: all 0.3s;
+      font-size: 0.95rem;
+      font-weight: 500;
+    }
+
+    .main-nav a:hover, .main-nav a.active {
+      color: #8ab9f7;
+      background: rgba(102, 155, 207, 0.1);
+    }
+
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    .main-nav.mobile {
+      display: none;
+      flex-direction: column;
+      background: #1b2430;
+      position: absolute;
+      top: 100%;
+      right: 1.25rem;
+      width: 200px;
+      border-radius: 0.5rem;
+      padding: 1rem;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+      gap: 0.5rem;
+    }
+
+    .main-nav.mobile.show {
+      display: flex;
+    }
+
+    /* Container */
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 1.25rem;
+    }
+
+    /* Main Content */
+    main {
+      padding: 3rem 0;
+    }
+
+    .page-header {
+      margin-bottom: 2rem;
+    }
+
+    .page-header h1 {
+      color: var(--accent-dark);
+      margin-bottom: 0.5rem;
+      font-size: 2rem;
+    }
+
+    .page-header p {
+      color: var(--muted);
+      font-size: 1.05rem;
+    }
+
+    /* Tabs */
+    .tabs {
+      margin-bottom: 2rem;
+    }
+
+    .tab-list {
+      display: flex;
+      gap: 0.5rem;
+      background: var(--card);
+      padding: 0.5rem;
+      border-radius: 0.5rem;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      overflow-x: auto;
+    }
+
+    .tab-button {
+      padding: 0.5rem 1.5rem;
+      background: transparent;
+      border: none;
+      color: var(--text-secondary);
+      cursor: pointer;
+      border-radius: 0.375rem;
+      font-size: 0.95rem;
+      font-weight: 500;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+
+    .tab-button:hover {
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .tab-button.active {
+      background: var(--accent);
+      color: white;
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    /* Grid Layouts */
+    .grid {
+      display: grid;
+      gap: 1.5rem;
+    }
+
+    .grid-3 {
+      grid-template-columns: 1fr;
+    }
+
+    .grid-4 {
+      grid-template-columns: 1fr;
+    }
+
+    @media (min-width: 768px) {
+      .grid-3 {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      .grid-4 {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .grid-4 {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+
+    /* Card */
+    .card {
+      background: rgba(255, 255, 255, 0.02);
+      padding: 1.5rem;
+      border-radius: 0.75rem;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .card h2, .card h3 {
+      color: var(--accent-dark);
+      margin-bottom: 1.5rem;
+      font-size: 1.25rem;
+    }
+
+    /* Form Elements */
+    .form-group {
+      margin-bottom: 1rem;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      font-weight: 500;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 0.625rem 0.875rem;
+      background: var(--card);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 0.5rem;
+      color: var(--text-primary);
+      font-size: 0.95rem;
+    }
+
+    input:focus, select:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+
+    button {
+      padding: 0.625rem 1.5rem;
+      background: var(--accent);
+      color: white;
+      border: none;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      font-size: 0.95rem;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+
+    button:hover {
+      background: var(--accent-dark);
+      transform: translateY(-1px);
+    }
+
+    button.btn-outline {
+      background: transparent;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+    }
+
+    button.btn-outline:hover {
+      background: var(--accent);
+      color: white;
+    }
+
+    button.btn-full {
+      width: 100%;
+    }
+
+    /* Stats Box */
+    .stats-box {
+      background: var(--card);
+      border-left: 4px solid var(--accent);
+      border-radius: 0.5rem;
+      padding: 1rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .stats-box .label {
+      color: var(--muted);
+      font-size: 0.9rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .stats-box .value {
+      color: var(--text-primary);
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+
+    /* Entry Item */
+    .entry-item {
+      background: var(--card);
+      border-radius: 0.5rem;
+      padding: 1rem;
+      margin-bottom: 0.75rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .entry-item .info {
+      flex: 1;
+    }
+
+    .entry-item .info .title {
+      color: var(--text-primary);
+      font-weight: 500;
+      margin-bottom: 0.25rem;
+    }
+
+    .entry-item .info .details {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .entry-item .info .date {
+      color: var(--muted);
+      font-size: 0.85rem;
+      margin-top: 0.25rem;
+    }
+
+    .entry-item .delete-btn {
+      background: none;
+      border: none;
+      color: #ef4444;
+      cursor: pointer;
+      padding: 0.25rem;
+      font-size: 1rem;
+    }
+
+    .entry-item .delete-btn:hover {
+      color: #dc2626;
+    }
+
+    /* Stat Card */
+    .stat-card {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .stat-card .icon {
+      background: rgba(102, 155, 207, 0.2);
+      padding: 0.75rem;
+      border-radius: 0.5rem;
+      font-size: 1.5rem;
+    }
+
+    .stat-card .content .label {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .stat-card .content .value {
+      color: var(--text-primary);
+      font-weight: 600;
+      font-size: 1.05rem;
+    }
+
+    /* Empty State */
+    .empty-state {
+      text-align: center;
+      padding: 3rem 1rem;
+      color: var(--muted);
+    }
+
+    /* Scrollable */
+    .scrollable {
+      max-height: 500px;
+      overflow-y: auto;
+    }
+
+    .scrollable::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    .scrollable::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 4px;
+    }
+
+    .scrollable::-webkit-scrollbar-thumb {
+      background: var(--accent);
+      border-radius: 4px;
+    }
+
+    /* Goals Section */
+    .goals-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .goals-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+
+    @media (min-width: 768px) {
+      .goals-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    .goal-item .goal-label {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .goal-item .goal-value {
+      color: var(--text-primary);
+      font-size: 1.05rem;
+      font-weight: 500;
+    }
+
+    /* Footer */
+    .site-footer {
+      background: #000;
+      color: #cbd5e1;
+      margin-top: 3rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .footer-inner {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      padding: 2rem 0;
+    }
+
+    .footer-inner h3, .footer-inner h4 {
+      color: white;
+      margin-bottom: 0.75rem;
+    }
+
+    .footer-nav {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .footer-nav a {
+      color: #cbd5e1;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .footer-nav a:hover {
+      color: #8ab9f7;
+    }
+
+    address {
+      font-style: normal;
+      line-height: 1.8;
+      color: #cbd5e1;
+    }
+
+    address a {
+      color: #cbd5e1;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    address a:hover {
+      color: #8ab9f7;
+    }
+
+    .footer-bottom {
+      text-align: center;
+      padding: 2rem 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      color: #cbd5e1;
+    }
+
+    /* Activity Item */
+    .activity-item {
+      background: var(--card);
+      border-radius: 0.5rem;
+      padding: 1rem;
+      margin-bottom: 0.75rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .activity-item .description {
+      color: var(--text-primary);
+      font-weight: 500;
+    }
+
+    .activity-item .date {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .activity-item .badge {
+      color: var(--accent);
+      font-size: 0.85rem;
+      text-transform: capitalize;
+    }
+
+    /* Responsive */
+    @media (min-width: 768px) {
+      .menu-toggle {
+        display: none;
+      }
+
+      .main-nav.desktop {
+        display: flex;
+      }
+
+      .footer-inner {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media (max-width: 767px) {
+      .menu-toggle {
+        display: block;
+      }
+
+      .main-nav.desktop {
+        display: none;
+      }
+    }
+
+    /* Success/Error Messages */
+    .text-success {
+      color: #4ade80;
+    }
+
+    .text-error {
+      color: #ef4444;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    /* Hide/Show utilities */
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="logo">FITTCHECK</a>
+      
+      <nav class="main-nav desktop">
+        <a href="#">Home</a>
+        <a href="classes.html">Classes</a>
+        <a href="trainers.html">Trainers</a>
+        <a href="contact.html">About Us</a>
+        <a href="tracker.html">Tracker</a>
+      </nav>
+
+      <!-- Mobile Menu Toggle -->
+      <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">☰</button>
+      
+      <!-- Mobile Navigation -->
+      <nav class="main-nav mobile" id="mobileNav">
+        <a href="index.html">Home</a>
+        <a href="classes.html">Classes</a>
+        <a href="#">Trainers</a>
+        <a href="#">About Us</a>
+        <a href="tracker.html" class="active">Tracker</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="container">
+    <div class="page-header">
+      <h1>Fitness Tracker</h1>
+      <p>Track your calories, weight, and workouts to reach your fitness goals.</p>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tabs">
+      <div class="tab-list">
+        <button class="tab-button active" data-tab="dashboard">Dashboard</button>
+        <button class="tab-button" data-tab="calories">Calories</button>
+        <button class="tab-button" data-tab="weight">Weight</button>
+        <button class="tab-button" data-tab="workouts">Workouts</button>
+      </div>
+    </div>
+
+    <!-- Dashboard Tab -->
+    <div class="tab-content active" id="dashboard-tab">
+      <!-- Goals Section -->
+      <div class="card">
+        <div class="goals-header">
+          <h2>Your Goals</h2>
+          <div class="btn-group">
+            <button id="editGoalsBtn" class="btn-outline">Edit Goals</button>
+            <button id="saveGoalsBtn" class="btn-outline hidden">Save</button>
+            <button id="cancelGoalsBtn" class="btn-outline hidden">Cancel</button>
+          </div>
+        </div>
+        <div class="goals-grid" id="goalsGrid">
+          <div class="goal-item">
+            <div class="goal-label">Daily Calorie Goal</div>
+            <div class="goal-value" id="displayDailyCalories">2000 kcal</div>
+            <input type="number" id="inputDailyCalories" value="2000" class="hidden">
+          </div>
+          <div class="goal-item">
+            <div class="goal-label">Target Weight</div>
+            <div class="goal-value" id="displayTargetWeight">70 kg</div>
+            <input type="number" id="inputTargetWeight" value="70" step="0.1" class="hidden">
+          </div>
+          <div class="goal-item">
+            <div class="goal-label">Weekly Workout Goal</div>
+            <div class="goal-value" id="displayWeeklyWorkouts">3 workouts</div>
+            <input type="number" id="inputWeeklyWorkouts" value="3" class="hidden">
+          </div>
+        </div>
+      </div>
+
+      <!-- Stats Cards -->
+      <div class="grid grid-4" style="margin-top: 1.5rem;">
+        <div class="card">
+          <div class="stat-card">
+            <div class="icon">🔥</div>
+            <div class="content">
+              <div class="label">Today's Calories</div>
+              <div class="value" id="todayCalories">0 / 2000</div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="stat-card">
+            <div class="icon">📊</div>
+            <div class="content">
+              <div class="label">Current Weight</div>
+              <div class="value" id="currentWeight">No data</div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="stat-card">
+            <div class="icon">💪</div>
+            <div class="content">
+              <div class="label">This Week</div>
+              <div class="value" id="weeklyWorkouts">0 / 3 workouts</div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="stat-card">
+            <div class="icon">🎯</div>
+            <div class="content">
+              <div class="label">Total Entries</div>
+              <div class="value" id="totalEntries">0</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent Activity -->
+      <div class="card" style="margin-top: 1.5rem;">
+        <h3>Recent Activity</h3>
+        <div id="recentActivity">
+          <div class="empty-state">No activity yet. Start tracking to see your progress!</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Calories Tab -->
+    <div class="tab-content" id="calories-tab">
+      <div class="grid grid-3">
+        <!-- Add Entry Form -->
+        <div class="card">
+          <h2>Log Calories</h2>
+          <form id="calorieForm">
+            <div class="form-group">
+              <label for="calorieDate">Date</label>
+              <input type="date" id="calorieDate" required>
+            </div>
+            <div class="form-group">
+              <label for="calories">Total Calories</label>
+              <input type="number" id="calories" placeholder="2000" required>
+            </div>
+            <div class="form-group">
+              <label for="protein">Protein (g)</label>
+              <input type="number" id="protein" placeholder="150" required>
+            </div>
+            <div class="form-group">
+              <label for="carbs">Carbs (g)</label>
+              <input type="number" id="carbs" placeholder="200" required>
+            </div>
+            <div class="form-group">
+              <label for="fats">Fats (g)</label>
+              <input type="number" id="fats" placeholder="60" required>
+            </div>
+            <button type="submit" class="btn-full">Add Entry</button>
+          </form>
+        </div>
+
+        <!-- Today's Summary -->
+        <div class="card">
+          <h2>Today's Summary</h2>
+          <div class="stats-box">
+            <div class="label">Total Calories</div>
+            <div class="value" id="todayTotalCalories">0 / 2000 kcal</div>
+          </div>
+          <div class="stats-box">
+            <div class="label">Remaining</div>
+            <div class="value" id="remainingCalories">2000 kcal</div>
+          </div>
+          <div class="stats-box">
+            <div class="label">Total Protein</div>
+            <div class="value" id="todayProtein">0g</div>
+          </div>
+          <div class="stats-box">
+            <div class="label">Total Carbs</div>
+            <div class="value" id="todayCarbs">0g</div>
+          </div>
+          <div class="stats-box">
+            <div class="label">Total Fats</div>
+            <div class="value" id="todayFats">0g</div>
+          </div>
+        </div>
+
+        <!-- Entry History -->
+        <div class="card">
+          <h2>Recent Entries</h2>
+          <div class="scrollable" id="calorieEntries">
+            <div class="empty-state">No entries yet. Start tracking!</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Weight Tab -->
+    <div class="tab-content" id="weight-tab">
+      <div class="grid grid-3">
+        <!-- Add Entry Form -->
+        <div class="card">
+          <h2>Log Weight</h2>
+          <form id="weightForm">
+            <div class="form-group">
+              <label for="weightDate">Date</label>
+              <input type="date" id="weightDate" required>
+            </div>
+            <div class="form-group">
+              <label for="weight">Weight (kg)</label>
+              <input type="number" id="weight" placeholder="70.5" step="0.1" required>
+            </div>
+            <button type="submit" class="btn-full">Add Entry</button>
+          </form>
+
+          <!-- Stats -->
+          <div style="margin-top: 1.5rem;">
+            <div class="stats-box" id="currentWeightBox" style="display: none;">
+              <div class="label">Current Weight</div>
+              <div class="value" id="currentWeightValue">-</div>
+            </div>
+            <div class="stats-box">
+              <div class="label">Target Weight</div>
+              <div class="value" id="targetWeightValue">70 kg</div>
+            </div>
+            <div class="stats-box" id="progressBox" style="display: none;">
+              <div class="label">Progress</div>
+              <div class="value" id="progressValue">-</div>
+            </div>
+            <div class="stats-box" id="toGoalBox" style="display: none;">
+              <div class="label">To Goal</div>
+              <div class="value" id="toGoalValue">-</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Weight History -->
+        <div class="card" style="grid-column: span 2;">
+          <h2>Weight Progress</h2>
+          <div id="weightChart" class="empty-state">No data yet. Add your first weight entry!</div>
+          
+          <div style="margin-top: 1.5rem;">
+            <h3>Recent Entries</h3>
+            <div class="scrollable" style="max-height: 200px;" id="weightEntries">
+              <div class="empty-state">No entries yet.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Workouts Tab -->
+    <div class="tab-content" id="workouts-tab">
+      <div class="grid grid-3">
+        <!-- Add Entry Form -->
+        <div class="card">
+          <h2>Log Workout</h2>
+          <form id="workoutForm">
+            <div class="form-group">
+              <label for="workoutDate">Date</label>
+              <input type="date" id="workoutDate" required>
+            </div>
+            <div class="form-group">
+              <label for="workoutType">Workout Type</label>
+              <select id="workoutType" required>
+                <option value="">Select type</option>
+                <option value="Strength Training">💪 Strength Training</option>
+                <option value="Cardio">🔥 Cardio</option>
+                <option value="Yoga">🧘 Yoga</option>
+                <option value="HIIT">⚡ HIIT</option>
+                <option value="Running">🏃 Running</option>
+                <option value="Cycling">🚴 Cycling</option>
+                <option value="Swimming">🏊 Swimming</option>
+                <option value="Sports">⚽ Sports</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="duration">Duration (minutes)</label>
+              <input type="number" id="duration" placeholder="60" required>
+            </div>
+            <div class="form-group">
+              <label for="caloriesBurned">Calories Burned</label>
+              <input type="number" id="caloriesBurned" placeholder="400" required>
+            </div>
+            <button type="submit" class="btn-full">Add Workout</button>
+          </form>
+        </div>
+
+        <!-- This Week Summary -->
+        <div class="card">
+          <h2>This Week</h2>
+          <div class="stats-box">
+            <div class="label">Workouts Completed</div>
+            <div class="value" id="weekWorkouts">0 / 3 💪</div>
+          </div>
+          <div class="stats-box">
+            <div class="label">Total Duration</div>
+            <div class="value" id="weekDuration">0 minutes</div>
+          </div>
+          <div class="stats-box">
+            <div class="label">Calories Burned</div>
+            <div class="value" id="weekCaloriesBurned">0 kcal</div>
+          </div>
+          <div class="stats-box">
+            <div class="label">Average Duration</div>
+            <div class="value" id="avgDuration">0 min/workout</div>
+          </div>
+        </div>
+
+        <!-- Workout History -->
+        <div class="card">
+          <h2>Recent Workouts</h2>
+          <div class="scrollable" id="workoutEntries">
+            <div class="empty-state">No workouts logged yet. Get started!</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <!-- Brand Section -->
+      <div>
+        <h3>Royal Fitness</h3>
+        <p>Strong. Focused. Driven.</p>
+      </div>
+
+      <!-- Quick Links -->
+      <div>
+        <h4>Quick Links</h4>
+        <nav class="footer-nav">
+          <a href="index.html">Home</a>
+          <a href="classes.html">Classes</a>
+          <a href="#">Trainers</a>
+          <a href="#">About Us</a>
+        </nav>
+      </div>
+
+      <!-- Contact -->
+      <div>
+        <h4>Contact</h4>
+        <address>
+          Balingasag Brgy 2<br>
+          (+63)-923456789<br>
+          <a href="mailto:hello@fittcheck.ph">hello@fittcheck.ph</a>
+        </address>
+      </div>
+    </div>
+    
+    <div class="footer-bottom container">
+      <small>© <span id="year"></span> Royal Fitness. All rights reserved.</small>
+    </div>
+  </footer>
+
+  <script>
+    // Data Storage
+    let goals = {
+      dailyCalories: 2000,
+      targetWeight: 70,
+      weeklyWorkouts: 3
+    };
+
+    let calorieData = [];
+    let weightData = [];
+    let workoutData = [];
+
+    // Load data from localStorage
+    function loadData() {
+      const savedGoals = localStorage.getItem('fittcheck_goals');
+      const savedCalories = localStorage.getItem('fittcheck_calories');
+      const savedWeight = localStorage.getItem('fittcheck_weight');
+      const savedWorkouts = localStorage.getItem('fittcheck_workouts');
+
+      if (savedGoals) goals = JSON.parse(savedGoals);
+      if (savedCalories) calorieData = JSON.parse(savedCalories);
+      if (savedWeight) weightData = JSON.parse(savedWeight);
+      if (savedWorkouts) workoutData = JSON.parse(savedWorkouts);
+
+      updateAllDisplays();
+    }
+
+    // Save data to localStorage
+    function saveData() {
+      localStorage.setItem('fittcheck_goals', JSON.stringify(goals));
+      localStorage.setItem('fittcheck_calories', JSON.stringify(calorieData));
+      localStorage.setItem('fittcheck_weight', JSON.stringify(weightData));
+      localStorage.setItem('fittcheck_workouts', JSON.stringify(workoutData));
+    }
+
+    // Mobile menu toggle
+    const menuToggle = document.getElementById('menuToggle');
+    const mobileNav = document.getElementById('mobileNav');
+
+    menuToggle.addEventListener('click', function() {
+      mobileNav.classList.toggle('show');
+      this.textContent = mobileNav.classList.contains('show') ? '✕' : '☰';
+    });
+
+    // Tab switching
+    const tabButtons = document.querySelectorAll('.tab-button');
+    const tabContents = document.querySelectorAll('.tab-content');
+
+    tabButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const tabName = button.getAttribute('data-tab');
+        
+        tabButtons.forEach(btn => btn.classList.remove('active'));
+        tabContents.forEach(content => content.classList.remove('active'));
+        
+        button.classList.add('active');
+        document.getElementById(tabName + '-tab').classList.add('active');
+      });
+    });
+
+    // Goals editing
+    document.getElementById('editGoalsBtn').addEventListener('click', () => {
+      document.getElementById('editGoalsBtn').classList.add('hidden');
+      document.getElementById('saveGoalsBtn').classList.remove('hidden');
+      document.getElementById('cancelGoalsBtn').classList.remove('hidden');
+      
+      document.getElementById('displayDailyCalories').classList.add('hidden');
+      document.getElementById('displayTargetWeight').classList.add('hidden');
+      document.getElementById('displayWeeklyWorkouts').classList.add('hidden');
+      
+      document.getElementById('inputDailyCalories').classList.remove('hidden');
+      document.getElementById('inputTargetWeight').classList.remove('hidden');
+      document.getElementById('inputWeeklyWorkouts').classList.remove('hidden');
+    });
+
+    document.getElementById('saveGoalsBtn').addEventListener('click', () => {
+      goals.dailyCalories = parseInt(document.getElementById('inputDailyCalories').value);
+      goals.targetWeight = parseFloat(document.getElementById('inputTargetWeight').value);
+      goals.weeklyWorkouts = parseInt(document.getElementById('inputWeeklyWorkouts').value);
+      
+      saveData();
+      updateAllDisplays();
+      cancelGoalsEdit();
+    });
+
+    document.getElementById('cancelGoalsBtn').addEventListener('click', cancelGoalsEdit);
+
+    function cancelGoalsEdit() {
+      document.getElementById('editGoalsBtn').classList.remove('hidden');
+      document.getElementById('saveGoalsBtn').classList.add('hidden');
+      document.getElementById('cancelGoalsBtn').classList.add('hidden');
+      
+      document.getElementById('displayDailyCalories').classList.remove('hidden');
+      document.getElementById('displayTargetWeight').classList.remove('hidden');
+      document.getElementById('displayWeeklyWorkouts').classList.remove('hidden');
+      
+      document.getElementById('inputDailyCalories').classList.add('hidden');
+      document.getElementById('inputTargetWeight').classList.add('hidden');
+      document.getElementById('inputWeeklyWorkouts').classList.add('hidden');
+    }
+
+    // Calorie Form
+    document.getElementById('calorieForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      const entry = {
+        date: document.getElementById('calorieDate').value,
+        calories: parseInt(document.getElementById('calories').value),
+        protein: parseInt(document.getElementById('protein').value),
+        carbs: parseInt(document.getElementById('carbs').value),
+        fats: parseInt(document.getElementById('fats').value)
+      };
+      
+      calorieData.unshift(entry);
+      saveData();
+      updateAllDisplays();
+      
+      document.getElementById('calorieForm').reset();
+      document.getElementById('calorieDate').value = new Date().toISOString().split('T')[0];
+    });
+
+    // Weight Form
+    document.getElementById('weightForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      const entry = {
+        date: document.getElementById('weightDate').value,
+        weight: parseFloat(document.getElementById('weight').value)
+      };
+      
+      weightData.unshift(entry);
+      saveData();
+      updateAllDisplays();
+      
+      document.getElementById('weightForm').reset();
+      document.getElementById('weightDate').value = new Date().toISOString().split('T')[0];
+    });
+
+    // Workout Form
+    document.getElementById('workoutForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      const entry = {
+        date: document.getElementById('workoutDate').value,
+        type: document.getElementById('workoutType').value,
+        duration: parseInt(document.getElementById('duration').value),
+        caloriesBurned: parseInt(document.getElementById('caloriesBurned').value)
+      };
+      
+      workoutData.unshift(entry);
+      saveData();
+      updateAllDisplays();
+      
+      document.getElementById('workoutForm').reset();
+      document.getElementById('workoutDate').value = new Date().toISOString().split('T')[0];
+    });
+
+    // Update all displays
+    function updateAllDisplays() {
+      updateGoalsDisplay();
+      updateDashboard();
+      updateCaloriesTab();
+      updateWeightTab();
+      updateWorkoutsTab();
+    }
+
+    function updateGoalsDisplay() {
+      document.getElementById('displayDailyCalories').textContent = goals.dailyCalories + ' kcal';
+      document.getElementById('displayTargetWeight').textContent = goals.targetWeight + ' kg';
+      document.getElementById('displayWeeklyWorkouts').textContent = goals.weeklyWorkouts + ' workouts';
+      
+      document.getElementById('inputDailyCalories').value = goals.dailyCalories;
+      document.getElementById('inputTargetWeight').value = goals.targetWeight;
+      document.getElementById('inputWeeklyWorkouts').value = goals.weeklyWorkouts;
+      
+      document.getElementById('targetWeightValue').textContent = goals.targetWeight + ' kg';
+    }
+
+    function updateDashboard() {
+      const today = new Date().toISOString().split('T')[0];
+      const todayCalories = calorieData.filter(e => e.date === today).reduce((sum, e) => sum + e.calories, 0);
+      
+      const weekStart = getWeekStart(new Date());
+      const thisWeekWorkouts = workoutData.filter(e => new Date(e.date) >= weekStart).length;
+      
+      const latestWeight = weightData.length > 0 ? weightData[0].weight : null;
+      
+      document.getElementById('todayCalories').textContent = todayCalories + ' / ' + goals.dailyCalories;
+      document.getElementById('currentWeight').textContent = latestWeight ? latestWeight + ' kg' : 'No data';
+      document.getElementById('weeklyWorkouts').textContent = thisWeekWorkouts + ' / ' + goals.weeklyWorkouts + ' workouts';
+      document.getElementById('totalEntries').textContent = calorieData.length + weightData.length + workoutData.length;
+      
+      // Recent Activity
+      const activities = [
+        ...calorieData.slice(0, 2).map(e => ({ type: 'calorie', date: e.date, description: `Logged ${e.calories} calories` })),
+        ...weightData.slice(0, 2).map(e => ({ type: 'weight', date: e.date, description: `Weighed ${e.weight} kg` })),
+        ...workoutData.slice(0, 2).map(e => ({ type: 'workout', date: e.date, description: `${e.type} - ${e.duration} min` }))
+      ].sort((a, b) => new Date(b.date) - new Date(a.date)).slice(0, 5);
+      
+      const activityHtml = activities.length > 0 ? activities.map(a => `
+        <div class="activity-item">
+          <div>
+            <div class="description">${a.description}</div>
+            <div class="date">${a.date}</div>
+          </div>
+          <div class="badge">${a.type}</div>
+        </div>
+      `).join('') : '<div class="empty-state">No activity yet. Start tracking to see your progress!</div>';
+      
+      document.getElementById('recentActivity').innerHTML = activityHtml;
+    }
+
+    function updateCaloriesTab() {
+      const today = new Date().toISOString().split('T')[0];
+      const todayEntries = calorieData.filter(e => e.date === today);
+      const todayTotal = todayEntries.reduce((sum, e) => sum + e.calories, 0);
+      const remaining = goals.dailyCalories - todayTotal;
+      
+      document.getElementById('todayTotalCalories').textContent = todayTotal + ' / ' + goals.dailyCalories + ' kcal';
+      const remainingEl = document.getElementById('remainingCalories');
+      remainingEl.textContent = remaining + ' kcal';
+      remainingEl.className = 'value ' + (remaining >= 0 ? 'text-success' : 'text-error');
+      
+      document.getElementById('todayProtein').textContent = todayEntries.reduce((sum, e) => sum + e.protein, 0) + 'g';
+      document.getElementById('todayCarbs').textContent = todayEntries.reduce((sum, e) => sum + e.carbs, 0) + 'g';
+      document.getElementById('todayFats').textContent = todayEntries.reduce((sum, e) => sum + e.fats, 0) + 'g';
+      
+      const entriesHtml = calorieData.length > 0 ? calorieData.map((e, i) => `
+        <div class="entry-item">
+          <div class="info">
+            <div class="title">${e.calories} kcal</div>
+            <div class="details">P: ${e.protein}g | C: ${e.carbs}g | F: ${e.fats}g</div>
+            <div class="date">${e.date}</div>
+          </div>
+          <button class="delete-btn" onclick="deleteCalorie(${i})">🗑️</button>
+        </div>
+      `).join('') : '<div class="empty-state">No entries yet. Start tracking!</div>';
+      
+      document.getElementById('calorieEntries').innerHTML = entriesHtml;
+    }
+
+    function updateWeightTab() {
+      if (weightData.length > 0) {
+        const sorted = [...weightData].sort((a, b) => new Date(a.date) - new Date(b.date));
+        const latest = sorted[sorted.length - 1].weight;
+        const start = sorted[0].weight;
+        const change = latest - start;
+        const toGoal = goals.targetWeight - latest;
+        
+        document.getElementById('currentWeightBox').style.display = 'block';
+        document.getElementById('currentWeightValue').textContent = latest + ' kg';
+        
+        document.getElementById('progressBox').style.display = 'block';
+        const progressEl = document.getElementById('progressValue');
+        progressEl.textContent = (change > 0 ? '+' : '') + change.toFixed(1) + ' kg ' + (change < 0 ? '📉' : '📈');
+        progressEl.className = 'value ' + (change < 0 ? 'text-success' : 'text-error');
+        
+        document.getElementById('toGoalBox').style.display = 'block';
+        const toGoalEl = document.getElementById('toGoalValue');
+        toGoalEl.textContent = Math.abs(toGoal).toFixed(1) + ' kg ' + (toGoal > 0 ? 'to lose' : 'below goal');
+        toGoalEl.className = 'value ' + (toGoal > 0 ? 'text-error' : 'text-success');
+        
+        document.getElementById('weightChart').textContent = 'Weight chart would display here';
+      }
+      
+      const entriesHtml = weightData.length > 0 ? weightData.map((e, i) => `
+        <div class="entry-item">
+          <div class="info">
+            <div class="title">${e.weight} kg</div>
+            <div class="date">${e.date}</div>
+          </div>
+          <button class="delete-btn" onclick="deleteWeight(${i})">🗑️</button>
+        </div>
+      `).join('') : '<div class="empty-state">No entries yet.</div>';
+      
+      document.getElementById('weightEntries').innerHTML = entriesHtml;
+    }
+
+    function updateWorkoutsTab() {
+      const weekStart = getWeekStart(new Date());
+      const thisWeek = workoutData.filter(e => new Date(e.date) >= weekStart);
+      const weekWorkouts = thisWeek.length;
+      const weekDuration = thisWeek.reduce((sum, e) => sum + e.duration, 0);
+      const weekCalories = thisWeek.reduce((sum, e) => sum + e.caloriesBurned, 0);
+      
+      document.getElementById('weekWorkouts').textContent = weekWorkouts + ' / ' + goals.weeklyWorkouts + ' 💪';
+      document.getElementById('weekDuration').textContent = weekDuration + ' minutes';
+      document.getElementById('weekCaloriesBurned').textContent = weekCalories + ' kcal';
+      document.getElementById('avgDuration').textContent = (weekWorkouts > 0 ? Math.round(weekDuration / weekWorkouts) : 0) + ' min/workout';
+      
+      const entriesHtml = workoutData.length > 0 ? workoutData.map((e, i) => `
+        <div class="entry-item">
+          <div class="info">
+            <div class="title">${e.type}</div>
+            <div class="details">${e.duration} min | ${e.caloriesBurned} kcal burned</div>
+            <div class="date">${e.date}</div>
+          </div>
+          <button class="delete-btn" onclick="deleteWorkout(${i})">🗑️</button>
+        </div>
+      `).join('') : '<div class="empty-state">No workouts logged yet. Get started!</div>';
+      
+      document.getElementById('workoutEntries').innerHTML = entriesHtml;
+    }
+
+    // Delete functions
+    function deleteCalorie(index) {
+      if (confirm('Delete this entry?')) {
+        calorieData.splice(index, 1);
+        saveData();
+        updateAllDisplays();
+      }
+    }
+
+    function deleteWeight(index) {
+      if (confirm('Delete this entry?')) {
+        weightData.splice(index, 1);
+        saveData();
+        updateAllDisplays();
+      }
+    }
+
+    function deleteWorkout(index) {
+      if (confirm('Delete this entry?')) {
+        workoutData.splice(index, 1);
+        saveData();
+        updateAllDisplays();
+      }
+    }
+
+    // Helper function
+    function getWeekStart(date) {
+      const d = new Date(date);
+      const day = d.getDay();
+      const diff = d.getDate() - day;
+      return new Date(d.setDate(diff));
+    }
+
+    // Initialize
+    document.getElementById('year').textContent = new Date().getFullYear();
+    
+    // Set default dates to today
+    document.getElementById('calorieDate').value = new Date().toISOString().split('T')[0];
+    document.getElementById('weightDate').value = new Date().toISOString().split('T')[0];
+    document.getElementById('workoutDate').value = new Date().toISOString().split('T')[0];
+    
+    // Load data and update displays
+    loadData();
+
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', function(event) {
+      if (!event.target.closest('.header-inner')) {
+        mobileNav.classList.remove('show');
+        menuToggle.textContent = '☰';
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,47 +1,425 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Register  FITTCHECK</title>
-  <link rel="stylesheet" href="css/style.css" />
-  <script src="js/main.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register - FITTCHECK</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #f9fafb 0%, #e5e7eb 100%);
+      padding: 1rem;
+    }
+
+    .register-container {
+      width: 100%;
+      max-width: 28rem;
+    }
+
+    .register-box {
+      background: white;
+      border-radius: 1rem;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      padding: 2rem;
+    }
+
+    .register-box h1 {
+      text-align: center;
+      margin-bottom: 0.5rem;
+      color: #111827;
+    }
+
+    .register-box > p {
+      text-align: center;
+      color: #6b7280;
+      margin-bottom: 1.5rem;
+      line-height: 1.5;
+      font-size: 0.875rem;
+    }
+
+    .form-group {
+      margin-bottom: 1rem;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 1px solid #d1d5db;
+      border-radius: 0.5rem;
+      font-size: 1rem;
+      transition: all 0.2s;
+      outline: none;
+    }
+
+    input[type="text"]:focus,
+    input[type="password"]:focus {
+      border-color: #3b82f6;
+      ring: 2px solid #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+
+    .password-field {
+      position: relative;
+      margin-bottom: 1rem;
+    }
+
+    .password-field input {
+      padding-right: 3rem;
+    }
+
+    .toggle-password {
+      position: absolute;
+      right: 0.75rem;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      color: #6b7280;
+      transition: color 0.2s;
+      font-size: 1.25rem;
+      user-select: none;
+    }
+
+    .toggle-password:hover {
+      color: #374151;
+    }
+
+    #formError {
+      color: #dc2626;
+      margin-bottom: 0.5rem;
+      min-height: 18px;
+      font-size: 0.875rem;
+      text-align: center;
+    }
+
+    #formError.success {
+      color: #16a34a;
+    }
+
+    .btn-register {
+      width: 100%;
+      padding: 0.75rem;
+      background: #3b82f6;
+      color: white;
+      border: none;
+      border-radius: 0.5rem;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .btn-register:hover {
+      background: #2563eb;
+    }
+
+    .login-link {
+      margin-top: 1.5rem;
+      text-align: center;
+      color: #4b5563;
+    }
+
+    .login-link a {
+      color: #3b82f6;
+      text-decoration: none;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+
+    .login-link a:hover {
+      color: #2563eb;
+      text-decoration: underline;
+    }
+
+    /* Modal Styles */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+      animation: fadeIn 0.2s;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-content {
+      background: white;
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      max-width: 28rem;
+      width: 90%;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      animation: slideUp 0.3s;
+    }
+
+    .modal-header h2 {
+      font-size: 1.25rem;
+      margin-bottom: 0.5rem;
+      color: #111827;
+    }
+
+    .modal-body {
+      margin: 1rem 0;
+      color: #6b7280;
+      line-height: 1.5;
+    }
+
+    .modal-footer {
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.75rem;
+      margin-top: 1.5rem;
+    }
+
+    .btn-modal {
+      padding: 0.5rem 1.5rem;
+      border: none;
+      border-radius: 0.375rem;
+      cursor: pointer;
+      font-size: 0.875rem;
+      transition: background 0.2s;
+    }
+
+    .btn-modal.primary {
+      background: #3b82f6;
+      color: white;
+    }
+
+    .btn-modal.primary:hover {
+      background: #2563eb;
+    }
+
+    .btn-modal.secondary {
+      background: #e5e7eb;
+      color: #374151;
+    }
+
+    .btn-modal.secondary:hover {
+      background: #d1d5db;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes slideUp {
+      from {
+        transform: translateY(20px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+  </style>
 </head>
 
-<body class="login-page">
+<body>
   <div class="register-container">
-    <div class="login-box">
-      <h1>Create account</h1>
-      <p class="muted">Create a free account to access classes, trainers and membership management.</p>
+    <div class="register-box">
+      <h1>Create Account</h1>
+      <p>Create a free account to access classes, trainers, and membership management.</p>
 
-      <form id="registerForm" novalidate>
+      <!-- Registration Form -->
+      <form id="registerForm">
+        <div class="form-group">
+          <input
+            type="text"
+            id="fullname"
+            name="fullname"
+            placeholder="Full Name"
+            required
+          >
+        </div>
 
+        <div class="form-group">
+          <input
+            type="text"
+            id="emailOrPhone"
+            name="emailOrPhone"
+            placeholder="Email or Phone Number"
+            required
+          >
+        </div>
 
+        <!-- Password field with eye toggle -->
+        <div class="password-field">
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="Password"
+            required
+          >
+          <span class="toggle-password" data-target="password">👁️</span>
+        </div>
 
-        <input type="email" id="email" name="email" placeholder="Email or Phone Number" required>
+        <!-- Confirm password field with eye toggle -->
+        <div class="password-field">
+          <input
+            type="password"
+            id="confirmPassword"
+            name="confirmPassword"
+            placeholder="Confirm Password"
+            required
+          >
+          <span class="toggle-password" data-target="confirmPassword">👁️</span>
+        </div>
 
+        <div id="formError"></div>
 
-        <input type="password" id="password" name="password" placeholder="Password" required>
-
-
-        <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm password" required>
-
-        <div id="formError" style="color:crimson;margin-bottom:8px;min-height:18px"></div>
-
-        <button type="submit" class="btn-login">Sign Up</button>
+        <button type="submit" class="btn-register">Sign Up</button>
       </form>
-
-      <div class="links">
-        <a>Already have an account?</a>
-        <a href="login.html">Sign In</a>
+      
+      <div class="login-link">
+        Already have an account? <a href="login.html">Sign In</a>
       </div>
     </div>
   </div>
 
-  <script src="js/register.js"></script>
-  <script src="js/main.js"></script>
-</body>
+  <!-- Success Modal -->
+  <div class="modal-overlay" id="successModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Registration Successful!</h2>
+      </div>
+      <div class="modal-body">
+        Your account has been created successfully. You can now log in with your credentials.
+      </div>
+      <div class="modal-footer">
+        <button class="btn-modal secondary" id="stayBtn">Stay Here</button>
+        <button class="btn-modal primary" id="loginBtn">Go to Login</button>
+      </div>
+    </div>
+  </div>
 
+  <script>
+    // Password Toggle functionality
+    const toggleButtons = document.querySelectorAll('.toggle-password');
+    const passwordStates = {};
+
+    toggleButtons.forEach(button => {
+      const targetId = button.getAttribute('data-target');
+      passwordStates[targetId] = false;
+
+      button.addEventListener('click', function() {
+        const input = document.getElementById(targetId);
+        passwordStates[targetId] = !passwordStates[targetId];
+        
+        input.type = passwordStates[targetId] ? 'text' : 'password';
+        button.textContent = passwordStates[targetId] ? '🙈' : '👁️';
+      });
+    });
+
+    // Form validation and submission
+    const registerForm = document.getElementById('registerForm');
+    const formError = document.getElementById('formError');
+    const successModal = document.getElementById('successModal');
+
+    registerForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const fullname = document.getElementById('fullname').value.trim();
+      const emailOrPhone = document.getElementById('emailOrPhone').value.trim();
+      const password = document.getElementById('password').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+      
+      // Clear previous error
+      formError.textContent = '';
+      formError.className = '';
+
+      // Validation
+      if (!fullname || !emailOrPhone || !password || !confirmPassword) {
+        formError.textContent = 'Please fill in all fields';
+        return;
+      }
+
+      if (fullname.length < 2) {
+        formError.textContent = 'Please enter a valid full name';
+        return;
+      }
+
+      if (password.length < 6) {
+        formError.textContent = 'Password must be at least 6 characters';
+        return;
+      }
+
+      if (password !== confirmPassword) {
+        formError.textContent = 'Passwords do not match';
+        return;
+      }
+
+      // Check if email/phone already exists
+      const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers') || '[]');
+      const userExists = registeredUsers.some(user => 
+        user.email.toLowerCase() === emailOrPhone.toLowerCase() || 
+        user.phone === emailOrPhone
+      );
+
+      if (userExists) {
+        formError.textContent = 'This email or phone number is already registered';
+        return;
+      }
+
+      // Save user to localStorage
+      const newUser = {
+        fullname: fullname,
+        email: emailOrPhone.includes('@') ? emailOrPhone : '',
+        phone: !emailOrPhone.includes('@') ? emailOrPhone : '',
+        password: password // In production, never store plain passwords!
+      };
+
+      registeredUsers.push(newUser);
+      localStorage.setItem('registeredUsers', JSON.stringify(registeredUsers));
+
+      // Show success modal
+      successModal.classList.add('active');
+      
+      // Clear form
+      registerForm.reset();
+    });
+
+    // Modal actions
+    const loginBtn = document.getElementById('loginBtn');
+    const stayBtn = document.getElementById('stayBtn');
+
+    loginBtn.addEventListener('click', function() {
+      window.location.href = 'index.html';
+    });
+
+    stayBtn.addEventListener('click', function() {
+      successModal.classList.remove('active');
+    });
+
+    // Close modal when clicking outside
+    successModal.addEventListener('click', function(e) {
+      if (e.target === successModal) {
+        successModal.classList.remove('active');
+      }
+    });
+  </script>
+</body>
 </html>

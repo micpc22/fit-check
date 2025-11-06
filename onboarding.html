@@ -1,97 +1,779 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FitLife Onboarding</title>
-  <link rel="stylesheet" href="css/style.css">
-  <script src="js/main.js" defer></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitLife - Fitness App Onboarding</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.5;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            line-height: 1.3;
+        }
+
+        h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            line-height: 1.4;
+        }
+
+        h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            line-height: 1.4;
+        }
+
+        p {
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        .progress-bar {
+            background: linear-gradient(to right, rgb(147, 51, 234), rgb(59, 130, 246));
+            height: 100%;
+            border-radius: 9999px;
+            transition: width 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(to right, rgb(147, 51, 234), rgb(59, 130, 246));
+            transition: all 0.2s;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(to right, rgb(126, 34, 206), rgb(29, 78, 216));
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .card {
+            background: white;
+            border-radius: 0.75rem;
+            border: 1px solid rgb(229, 231, 235);
+            transition: all 0.2s;
+        }
+
+        .card:hover {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .card.selected {
+            border: 2px solid rgb(147, 51, 234);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .scale-animation {
+            animation: scaleIn 0.5s ease-out;
+        }
+
+        @keyframes scaleIn {
+            from {
+                transform: scale(0);
+            }
+            to {
+                transform: scale(1);
+            }
+        }
+
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .spin {
+            animation: spin 2s linear infinite;
+        }
+
+        .radio-circle {
+            width: 1.25rem;
+            height: 1.25rem;
+            border-radius: 9999px;
+            border: 2px solid rgb(209, 213, 219);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .radio-circle-lg {
+            width: 1.5rem;
+            height: 1.5rem;
+            border-radius: 9999px;
+            border: 2px solid rgb(209, 213, 219);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card.selected .radio-circle,
+        .card.selected .radio-circle-lg {
+            border-color: rgb(147, 51, 234);
+            background-color: rgb(147, 51, 234);
+        }
+
+        .card.selected .radio-circle::after {
+            content: '';
+            width: 0.5rem;
+            height: 0.5rem;
+            background: white;
+            border-radius: 9999px;
+        }
+
+        .card.selected .radio-circle-lg::after {
+            content: '';
+            width: 0.75rem;
+            height: 0.75rem;
+            background: white;
+            border-radius: 9999px;
+        }
+
+        .checkbox-circle {
+            width: 1.5rem;
+            height: 1.5rem;
+            border-radius: 9999px;
+            border: 2px solid white;
+            background: rgba(255, 255, 255, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card.selected .checkbox-circle {
+            background: rgb(147, 51, 234);
+            border-color: white;
+        }
+
+        .card.selected .checkbox-circle::after {
+            content: '';
+            width: 0.75rem;
+            height: 0.75rem;
+            background: white;
+            border-radius: 9999px;
+        }
+
+        .day-btn.selected {
+            background: linear-gradient(to bottom right, rgb(147, 51, 234), rgb(59, 130, 246)) !important;
+            color: white !important;
+            border-color: transparent !important;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            transform: scale(1.05);
+        }
+    </style>
 </head>
-
-<body class="onboarding-page">
-  <div class="card shadow-xl animate-slideup">
-    <!-- Step 1: Welcome -->
-    <div class="step active" id="step1">
-      <h2 class="title">👋 Welcome to FitLife!</h2>
-      <p class="subtitle">We’ll personalize your fitness experience to match your goals.</p>
-      <button class="btn w-full mt-4" onclick="nextStep()">Get Started</button>
+<body class="bg-gradient-to-br from-purple-50 via-white to-blue-50">
+    <!-- Progress Bar -->
+    <div id="progressBar" class="hidden fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-sm border-b border-gray-200">
+        <div class="max-w-4xl mx-auto px-6 py-4">
+            <div class="flex items-center space-x-4">
+                <button id="backBtn" class="px-3 py-2 hover:bg-gray-100 rounded-lg transition">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                    </svg>
+                </button>
+                <div class="flex-1 bg-gray-200 h-2 rounded-full overflow-hidden">
+                    <div id="progressFill" class="progress-bar" style="width: 0%"></div>
+                </div>
+                <span id="progressText" class="text-sm text-gray-600">0 of 5</span>
+            </div>
+        </div>
     </div>
 
-    <!-- Step 2: Goals -->
-    <div class="step hidden" id="step2">
-      <h2 class="title">What’s your main goal?</h2>
-      <p class="subtitle">Choose the fitness path that best fits your lifestyle.</p>
-      <div class="grid gap-3 mt-4">
-        <div class="option" onclick="selectOption(this, 'goal')">Lose Weight</div>
-        <div class="option" onclick="selectOption(this, 'goal')">Build Muscle</div>
-        <div class="option" onclick="selectOption(this, 'goal')">Stay Fit</div>
-      </div>
-      <div class="nav-buttons mt-6">
-        <button class="btn-secondary" onclick="prevStep()">Back</button>
-        <button class="btn" onclick="nextStep()">Next</button>
-      </div>
+    <!-- Step 0: Welcome -->
+    <div id="step0" class="flex flex-col items-center justify-center min-h-screen px-6">
+        <div class="max-w-md w-full space-y-8 text-center">
+            <div class="flex justify-center">
+                <div class="bg-gradient-to-br from-purple-600 to-blue-600 p-4 rounded-2xl shadow-lg">
+                    <svg class="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path>
+                    </svg>
+                </div>
+            </div>
+            
+            <div class="space-y-3">
+                <h1 class="text-purple-600">Welcome to FitLife</h1>
+                <p class="text-gray-600">
+                    Your personal fitness journey starts here. Let's customize your experience to help you reach your goals.
+                </p>
+            </div>
+
+            <div class="relative w-full h-64 rounded-2xl overflow-hidden shadow-xl">
+                <img 
+                    src="https://images.unsplash.com/photo-1734189605012-f03d97a4d98f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080" 
+                    alt="Fitness motivation" 
+                    class="w-full h-full object-cover"
+                />
+            </div>
+
+            <div class="space-y-3 pt-4">
+                <button onclick="nextStep()" class="btn-primary w-full text-white py-6 px-4 rounded-lg">
+                    Get Started
+                </button>
+                <p class="text-sm text-gray-500">Takes less than 2 minutes</p>
+            </div>
+        </div>
     </div>
 
-    <!-- Step 3: Level -->
-    <div class="step hidden" id="step3">
-      <h2 class="title">What’s your fitness level?</h2>
-      <p class="subtitle">Pick the one that describes you best.</p>
-      <div class="grid gap-3 mt-4">
-        <div class="option" onclick="selectOption(this, 'level')">Beginner</div>
-        <div class="option" onclick="selectOption(this, 'level')">Intermediate</div>
-        <div class="option" onclick="selectOption(this, 'level')">Advanced</div>
-      </div>
-      <div class="nav-buttons mt-6">
-        <button class="btn-secondary" onclick="prevStep()">Back</button>
-        <button class="btn" onclick="nextStep()">Next</button>
-      </div>
+    <!-- Step 1: Goals -->
+    <div id="step1" class="hidden flex flex-col items-center justify-center min-h-screen px-6 py-12">
+        <div class="max-w-2xl w-full space-y-8">
+            <div class="text-center space-y-3">
+                <h2>What's your main goal?</h2>
+                <p class="text-gray-600">Choose the goal that matters most to you right now</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="card p-6 cursor-pointer" onclick="selectGoal('lose-weight', this)">
+                    <div class="flex items-start space-x-4">
+                        <div class="bg-gradient-to-br from-red-500 to-orange-500 p-3 rounded-xl">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                            </svg>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="mb-1">Lose Weight</h3>
+                            <p class="text-sm text-gray-600">Burn calories and shed pounds</p>
+                        </div>
+                        <div class="radio-circle"></div>
+                    </div>
+                </div>
+
+                <div class="card p-6 cursor-pointer" onclick="selectGoal('build-muscle', this)">
+                    <div class="flex items-start space-x-4">
+                        <div class="bg-gradient-to-br from-purple-500 to-pink-500 p-3 rounded-xl">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                            </svg>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="mb-1">Build Muscle</h3>
+                            <p class="text-sm text-gray-600">Gain strength and muscle mass</p>
+                        </div>
+                        <div class="radio-circle"></div>
+                    </div>
+                </div>
+
+                <div class="card p-6 cursor-pointer" onclick="selectGoal('stay-fit', this)">
+                    <div class="flex items-start space-x-4">
+                        <div class="bg-gradient-to-br from-blue-500 to-cyan-500 p-3 rounded-xl">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                            </svg>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="mb-1">Stay Fit</h3>
+                            <p class="text-sm text-gray-600">Maintain overall health</p>
+                        </div>
+                        <div class="radio-circle"></div>
+                    </div>
+                </div>
+
+                <div class="card p-6 cursor-pointer" onclick="selectGoal('improve-endurance', this)">
+                    <div class="flex items-start space-x-4">
+                        <div class="bg-gradient-to-br from-green-500 to-emerald-500 p-3 rounded-xl">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="mb-1">Improve Endurance</h3>
+                            <p class="text-sm text-gray-600">Boost stamina and energy</p>
+                        </div>
+                        <div class="radio-circle"></div>
+                    </div>
+                </div>
+            </div>
+
+            <button id="goalBtn" onclick="saveGoalAndNext()" disabled class="btn-primary w-full text-white py-6 px-4 rounded-lg">
+                Continue
+            </button>
+        </div>
     </div>
 
-    <!-- Step 4: Preferences -->
-    <div class="step hidden" id="step4">
-      <h2 class="title">Preferred Workout Type</h2>
-      <p class="subtitle">Let’s find what energizes you most.</p>
-      <div class="grid gap-3 mt-4">
-        <div class="option" onclick="selectOption(this, 'workout')">Cardio</div>
-        <div class="option" onclick="selectOption(this, 'workout')">Strength</div>
-        <div class="option" onclick="selectOption(this, 'workout')">Yoga</div>
-      </div>
-      <div class="nav-buttons mt-6">
-        <button class="btn-secondary" onclick="prevStep()">Back</button>
-        <button class="btn" onclick="nextStep()">Next</button>
-      </div>
+    <!-- Step 2: Level -->
+    <div id="step2" class="hidden flex flex-col items-center justify-center min-h-screen px-6 py-12">
+        <div class="max-w-2xl w-full space-y-8">
+            <div class="text-center space-y-3">
+                <h2>What's your fitness level?</h2>
+                <p class="text-gray-600">We'll adjust your program to match your experience</p>
+            </div>
+
+            <div class="space-y-4">
+                <div class="card p-6 cursor-pointer" onclick="selectLevel('beginner', this)">
+                    <div class="flex items-center space-x-4">
+                        <div class="bg-green-100 p-4 rounded-xl">
+                            <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707"></path>
+                            </svg>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="mb-1">Beginner</h3>
+                            <p class="text-sm text-gray-600 mb-1">New to fitness or returning after a break</p>
+                            <p class="text-xs text-gray-500">2-3 workouts per week</p>
+                        </div>
+                        <div class="radio-circle-lg"></div>
+                    </div>
+                </div>
+
+                <div class="card p-6 cursor-pointer" onclick="selectLevel('intermediate', this)">
+                    <div class="flex items-center space-x-4">
+                        <div class="bg-blue-100 p-4 rounded-xl">
+                            <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                            </svg>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="mb-1">Intermediate</h3>
+                            <p class="text-sm text-gray-600 mb-1">Regular exercise routine established</p>
+                            <p class="text-xs text-gray-500">3-5 workouts per week</p>
+                        </div>
+                        <div class="radio-circle-lg"></div>
+                    </div>
+                </div>
+
+                <div class="card p-6 cursor-pointer" onclick="selectLevel('advanced', this)">
+                    <div class="flex items-center space-x-4">
+                        <div class="bg-red-100 p-4 rounded-xl">
+                            <svg class="w-8 h-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z"></path>
+                            </svg>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="mb-1">Advanced</h3>
+                            <p class="text-sm text-gray-600 mb-1">Experienced with consistent training</p>
+                            <p class="text-xs text-gray-500">5-7 workouts per week</p>
+                        </div>
+                        <div class="radio-circle-lg"></div>
+                    </div>
+                </div>
+            </div>
+
+            <button id="levelBtn" onclick="saveLevelAndNext()" disabled class="btn-primary w-full text-white py-6 px-4 rounded-lg">
+                Continue
+            </button>
+        </div>
     </div>
 
-    <!-- Step 5: Schedule -->
-    <div class="step hidden" id="step5">
-      <h2 class="title">Your Workout Schedule</h2>
-      <p class="subtitle">Select your training days and preferred time.</p>
+    <!-- Step 3: Preferences -->
+    <div id="step3" class="hidden flex flex-col items-center justify-center min-h-screen px-6 py-12">
+        <div class="max-w-3xl w-full space-y-8">
+            <div class="text-center space-y-3">
+                <h2>What activities do you enjoy?</h2>
+                <p class="text-gray-600">Select all that apply - we'll personalize your workouts</p>
+            </div>
 
-      <div class="grid grid-cols-3 gap-2 mb-4 mt-3">
-        <div class="day" onclick="toggleDay(this)">Mon</div>
-        <div class="day" onclick="toggleDay(this)">Tue</div>
-        <div class="day" onclick="toggleDay(this)">Wed</div>
-        <div class="day" onclick="toggleDay(this)">Thu</div>
-        <div class="day" onclick="toggleDay(this)">Fri</div>
-        <div class="day" onclick="toggleDay(this)">Sat</div>
-        <div class="day" onclick="toggleDay(this)">Sun</div>
-      </div>
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                <div class="card relative overflow-hidden cursor-pointer" onclick="toggleActivity('strength', this)">
+                    <div class="relative h-32">
+                        <img src="https://images.unsplash.com/photo-1669807164466-10a6584a067e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080" alt="Strength Training" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                        <div class="absolute top-2 right-2">
+                            <div class="checkbox-circle"></div>
+                        </div>
+                        <div class="absolute bottom-3 left-3 right-3 flex items-center space-x-2">
+                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path>
+                            </svg>
+                            <p class="text-white">Strength Training</p>
+                        </div>
+                    </div>
+                </div>
 
-      <label class="font-semibold mb-2 block">Preferred Workout Time</label>
-      <input id="time" type="time" class="input-time" />
+                <div class="card relative overflow-hidden cursor-pointer" onclick="toggleActivity('cardio', this)">
+                    <div class="relative h-32">
+                        <img src="https://images.unsplash.com/photo-1758520706103-41d01f815640?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080" alt="Cardio" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                        <div class="absolute top-2 right-2">
+                            <div class="checkbox-circle"></div>
+                        </div>
+                        <div class="absolute bottom-3 left-3 right-3 flex items-center space-x-2">
+                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                            </svg>
+                            <p class="text-white">Cardio</p>
+                        </div>
+                    </div>
+                </div>
 
-      <div class="nav-buttons mt-6">
-        <button class="btn-secondary" onclick="prevStep()">Back</button>
-        <button class="btn" onclick="nextStep()">Next</button>
-      </div>
+                <div class="card relative overflow-hidden cursor-pointer" onclick="toggleActivity('yoga', this)">
+                    <div class="relative h-32">
+                        <img src="https://images.unsplash.com/photo-1645652367526-a0ecb717650a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080" alt="Yoga" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                        <div class="absolute top-2 right-2">
+                            <div class="checkbox-circle"></div>
+                        </div>
+                        <div class="absolute bottom-3 left-3 right-3 flex items-center space-x-2">
+                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            <p class="text-white">Yoga</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card relative overflow-hidden cursor-pointer" onclick="toggleActivity('cycling', this)">
+                    <div class="relative h-32">
+                        <img src="https://images.unsplash.com/photo-1758520706103-41d01f815640?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080" alt="Cycling" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                        <div class="absolute top-2 right-2">
+                            <div class="checkbox-circle"></div>
+                        </div>
+                        <div class="absolute bottom-3 left-3 right-3 flex items-center space-x-2">
+                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                            </svg>
+                            <p class="text-white">Cycling</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card relative overflow-hidden cursor-pointer" onclick="toggleActivity('running', this)">
+                    <div class="relative h-32">
+                        <img src="https://images.unsplash.com/photo-1758520706103-41d01f815640?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080" alt="Running" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                        <div class="absolute top-2 right-2">
+                            <div class="checkbox-circle"></div>
+                        </div>
+                        <div class="absolute bottom-3 left-3 right-3 flex items-center space-x-2">
+                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                            </svg>
+                            <p class="text-white">Running</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card relative overflow-hidden cursor-pointer" onclick="toggleActivity('hiit', this)">
+                    <div class="relative h-32">
+                        <img src="https://images.unsplash.com/photo-1734189605012-f03d97a4d98f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080" alt="HIIT" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                        <div class="absolute top-2 right-2">
+                            <div class="checkbox-circle"></div>
+                        </div>
+                        <div class="absolute bottom-3 left-3 right-3 flex items-center space-x-2">
+                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                            </svg>
+                            <p class="text-white">HIIT</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button id="preferencesBtn" onclick="savePreferencesAndNext()" disabled class="btn-primary w-full text-white py-6 px-4 rounded-lg">
+                Continue
+            </button>
+        </div>
     </div>
 
-    <!-- Step 6: Summary -->
-    <div class="step hidden" id="step6">
-      <h2 class="title">🎯 You’re All Set!</h2>
-      <div id="summary" class="summary-box"></div>
-      <button class="btn w-full mt-4" onclick="finish()">Finish</button>
+    <!-- Step 4: Schedule -->
+    <div id="step4" class="hidden flex flex-col items-center justify-center min-h-screen px-6 py-12">
+        <div class="max-w-2xl w-full space-y-8">
+            <div class="text-center space-y-3">
+                <div class="flex justify-center">
+                    <div class="bg-purple-100 p-3 rounded-xl">
+                        <svg class="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                        </svg>
+                    </div>
+                </div>
+                <h2>When can you work out?</h2>
+                <p class="text-gray-600">Choose your preferred days and time</p>
+            </div>
+
+            <div class="space-y-6">
+                <div class="space-y-3">
+                    <h3>Select Days</h3>
+                    <div class="grid grid-cols-7 gap-2">
+                        <button onclick="toggleDay('monday', this)" class="day-btn p-3 bg-white hover:bg-gray-50 text-gray-700 border border-gray-200 rounded-xl transition-all">
+                            <div class="text-sm">Mon</div>
+                        </button>
+                        <button onclick="toggleDay('tuesday', this)" class="day-btn p-3 bg-white hover:bg-gray-50 text-gray-700 border border-gray-200 rounded-xl transition-all">
+                            <div class="text-sm">Tue</div>
+                        </button>
+                        <button onclick="toggleDay('wednesday', this)" class="day-btn p-3 bg-white hover:bg-gray-50 text-gray-700 border border-gray-200 rounded-xl transition-all">
+                            <div class="text-sm">Wed</div>
+                        </button>
+                        <button onclick="toggleDay('thursday', this)" class="day-btn p-3 bg-white hover:bg-gray-50 text-gray-700 border border-gray-200 rounded-xl transition-all">
+                            <div class="text-sm">Thu</div>
+                        </button>
+                        <button onclick="toggleDay('friday', this)" class="day-btn p-3 bg-white hover:bg-gray-50 text-gray-700 border border-gray-200 rounded-xl transition-all">
+                            <div class="text-sm">Fri</div>
+                        </button>
+                        <button onclick="toggleDay('saturday', this)" class="day-btn p-3 bg-white hover:bg-gray-50 text-gray-700 border border-gray-200 rounded-xl transition-all">
+                            <div class="text-sm">Sat</div>
+                        </button>
+                        <button onclick="toggleDay('sunday', this)" class="day-btn p-3 bg-white hover:bg-gray-50 text-gray-700 border border-gray-200 rounded-xl transition-all">
+                            <div class="text-sm">Sun</div>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="space-y-3">
+                    <h3>Preferred Time</h3>
+                    <div class="space-y-3">
+                        <div class="card p-4 cursor-pointer" onclick="selectTime('morning', this)">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <h4>Morning</h4>
+                                    <p class="text-sm text-gray-600">6:00 AM - 10:00 AM</p>
+                                </div>
+                                <div class="radio-circle-lg"></div>
+                            </div>
+                        </div>
+
+                        <div class="card p-4 cursor-pointer" onclick="selectTime('afternoon', this)">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <h4>Afternoon</h4>
+                                    <p class="text-sm text-gray-600">12:00 PM - 4:00 PM</p>
+                                </div>
+                                <div class="radio-circle-lg"></div>
+                            </div>
+                        </div>
+
+                        <div class="card p-4 cursor-pointer" onclick="selectTime('evening', this)">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <h4>Evening</h4>
+                                    <p class="text-sm text-gray-600">5:00 PM - 9:00 PM</p>
+                                </div>
+                                <div class="radio-circle-lg"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button id="scheduleBtn" onclick="saveScheduleAndNext()" disabled class="btn-primary w-full text-white py-6 px-4 rounded-lg">
+                Continue
+            </button>
+        </div>
     </div>
-  </div>
+
+    <!-- Step 5: Complete -->
+    <div id="step5" class="hidden flex flex-col items-center justify-center min-h-screen px-6">
+        <div class="max-w-md w-full space-y-8 text-center">
+            <div class="flex justify-center">
+                <div class="relative scale-animation">
+                    <div class="bg-gradient-to-br from-purple-600 to-blue-600 p-6 rounded-full shadow-2xl">
+                        <svg class="w-16 h-16 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <div class="absolute -top-2 -right-2 spin">
+                        <svg class="w-8 h-8 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="space-y-3">
+                <h1 class="text-purple-600">You're All Set!</h1>
+                <p class="text-gray-600">
+                    Your personalized fitness plan is ready. Let's start your transformation journey today!
+                </p>
+            </div>
+
+            <div class="bg-white rounded-2xl p-6 shadow-lg space-y-4">
+                <div class="grid grid-cols-3 gap-4">
+                    <div class="space-y-1">
+                        <div class="bg-purple-100 rounded-lg p-3">
+                            <p class="text-purple-600">Goal Set</p>
+                        </div>
+                        <p class="text-xs text-gray-600">Personalized</p>
+                    </div>
+                    <div class="space-y-1">
+                        <div class="bg-blue-100 rounded-lg p-3">
+                            <p class="text-blue-600">Plan Ready</p>
+                        </div>
+                        <p class="text-xs text-gray-600">Custom fit</p>
+                    </div>
+                    <div class="space-y-1">
+                        <div class="bg-green-100 rounded-lg p-3">
+                            <p class="text-green-600">Let's Go!</p>
+                        </div>
+                        <p class="text-xs text-gray-600">Start now</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="space-y-3 pt-4">
+                <button onclick="completeOnboarding()" class="btn-primary w-full text-white py-6 px-4 rounded-lg">
+                    Start Your Journey
+                </button>
+                <p class="text-sm text-gray-500">
+                    "The journey of a thousand miles begins with one step." - Lao Tzu
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        let currentStep = 0;
+        const totalSteps = 6;
+        const onboardingData = {
+            goal: '',
+            level: '',
+            preferences: [],
+            schedule: {
+                days: [],
+                time: ''
+            }
+        };
+
+        function updateProgress() {
+            const progress = (currentStep / (totalSteps - 1)) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+            document.getElementById('progressText').textContent = `${currentStep} of ${totalSteps - 1}`;
+            
+            const progressBar = document.getElementById('progressBar');
+            if (currentStep > 0 && currentStep < totalSteps - 1) {
+                progressBar.classList.remove('hidden');
+            } else {
+                progressBar.classList.add('hidden');
+            }
+        }
+
+        function showStep(step) {
+            for (let i = 0; i < totalSteps; i++) {
+                document.getElementById('step' + i).classList.add('hidden');
+            }
+            document.getElementById('step' + step).classList.remove('hidden');
+            updateProgress();
+        }
+
+        function nextStep() {
+            if (currentStep < totalSteps - 1) {
+                currentStep++;
+                showStep(currentStep);
+            }
+        }
+
+        function prevStep() {
+            if (currentStep > 0) {
+                currentStep--;
+                showStep(currentStep);
+            }
+        }
+
+        document.getElementById('backBtn').addEventListener('click', prevStep);
+
+        // Goal selection
+        let selectedGoal = '';
+        function selectGoal(goal, element) {
+            selectedGoal = goal;
+            document.querySelectorAll('#step1 .card').forEach(card => card.classList.remove('selected'));
+            element.classList.add('selected');
+            document.getElementById('goalBtn').disabled = false;
+        }
+
+        function saveGoalAndNext() {
+            onboardingData.goal = selectedGoal;
+            nextStep();
+        }
+
+        // Level selection
+        let selectedLevel = '';
+        function selectLevel(level, element) {
+            selectedLevel = level;
+            document.querySelectorAll('#step2 .card').forEach(card => card.classList.remove('selected'));
+            element.classList.add('selected');
+            document.getElementById('levelBtn').disabled = false;
+        }
+
+        function saveLevelAndNext() {
+            onboardingData.level = selectedLevel;
+            nextStep();
+        }
+
+        // Preferences selection
+        const selectedActivities = [];
+        function toggleActivity(activity, element) {
+            const index = selectedActivities.indexOf(activity);
+            if (index > -1) {
+                selectedActivities.splice(index, 1);
+                element.classList.remove('selected');
+            } else {
+                selectedActivities.push(activity);
+                element.classList.add('selected');
+            }
+            document.getElementById('preferencesBtn').disabled = selectedActivities.length === 0;
+        }
+
+        function savePreferencesAndNext() {
+            onboardingData.preferences = [...selectedActivities];
+            nextStep();
+        }
+
+        // Schedule selection
+        const selectedDays = [];
+        function toggleDay(day, element) {
+            const index = selectedDays.indexOf(day);
+            if (index > -1) {
+                selectedDays.splice(index, 1);
+                element.classList.remove('selected');
+            } else {
+                selectedDays.push(day);
+                element.classList.add('selected');
+            }
+            updateScheduleButton();
+        }
+
+        let selectedTime = '';
+        function selectTime(time, element) {
+            selectedTime = time;
+            document.querySelectorAll('#step4 .card').forEach(card => card.classList.remove('selected'));
+            element.classList.add('selected');
+            updateScheduleButton();
+        }
+
+        function updateScheduleButton() {
+            document.getElementById('scheduleBtn').disabled = selectedDays.length === 0 || !selectedTime;
+        }
+
+        function saveScheduleAndNext() {
+            onboardingData.schedule.days = [...selectedDays];
+            onboardingData.schedule.time = selectedTime;
+            nextStep();
+        }
+
+        function completeOnboarding() {
+            onboardingData.completed = true;
+            localStorage.setItem('fittcheck_onboarding', JSON.stringify(onboardingData));
+            window.location.href = 'index.html';
+        }
+
+        // Initialize
+        showStep(0);
+    </script>
 </body>
 </html>

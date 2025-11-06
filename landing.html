@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/indexxstyle.css">
+  <title>FITTCHECK</title>
+  <style>
+    * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+  list-style: none;
+  border: none;
+  outline: none;
+  scroll-behavior: smooth;
+  font-family: -apple-system, sans-serif;
+}
+
+:root {
+  --bg-color: #000;
+  --snd-bg-color: #111;
+  --text-color: #fff;
+  --main-color: #45ffca;
+}
+
+html {
+    font-size: 62.5%;
+    overflow-x: hidden;
+}
+
+body {
+    background: var(--bg-color);
+    color: var(--text-color);
+}
+
+section {
+    min-height: 100vh;
+    padding: 10rem 8% 2rem;
+} 
+
+/* Header Styles — same as FITTCHECK */
+.site-header {
+  background: rgba(14, 22, 33, 0.95);
+  backdrop-filter: blur(8px);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+.header-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 1rem 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  color: #ffffff;
+  text-decoration: none;
+  letter-spacing: 0.05em;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.main-nav {
+  display: none;
+  align-items: center;
+  gap: 2rem;
+}
+
+.main-nav.desktop {
+  display: flex;
+}
+
+.main-nav a {
+  color: #d1d5db;
+  text-decoration: none;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.5rem;
+  transition: all 0.3s;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.main-nav a:hover {
+  color: #8ab9f7;
+  background: rgba(102, 155, 207, 0.1);
+}
+
+.menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.main-nav.mobile {
+  display: none;
+  flex-direction: column;
+  background: #1b2430;
+  position: absolute;
+  top: 100%;
+  right: 1.25rem;
+  width: 200px;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+  gap: 0.5rem;
+}
+
+.main-nav.mobile.show {
+  display: flex;
+}
+
+    /* Container */
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 1.25rem;
+    }
+
+    /* Hero Section */
+    .hero {
+      padding: 3rem 0;
+    }
+
+    .hero-inner {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .hero-image img {
+      width: 100%;
+      border-radius: 1rem;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+    }
+
+    .recommendation-box {
+      background: #1b2430;
+      border-left: 4px solid var(--accent);
+      border-radius: 0.5rem;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .recommendation-box h3 {
+      color: var(--accent);
+      margin-bottom: 0.75rem;
+      font-size: 1.1rem;
+    }
+
+    .recommendation-box p {
+      color: #ddcdcd;
+      margin: 0.5rem 0;
+      font-size: 0.95rem;
+    }
+
+    .view-btn {
+      margin-top: 1rem;
+      padding: 0.5rem 1.25rem;
+      background: var(--accent);
+      color: white;
+      border: none;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    .view-btn:hover {
+      background: var(--accent-dark);
+      transform: scale(1.05);
+    }
+
+    .hero-text h2 {
+      color: var(--accent-dark);
+      margin-bottom: 0.5rem;
+      font-size: 1.5rem;
+    }
+
+    .hero-text p {
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+
+/*Home section code*/
+
+.home {
+    display: flex;
+    justify-content: center;
+}
+
+.home-content h3 {
+    font-size: 5rem;
+    font-weight: 700;
+}
+
+.home-content span {
+    font-size: 4rem;
+    font-weight: 550;
+}
+
+span {
+    color: var(--main-color);
+}
+
+.home-content h1 {
+    font-size: 5.6rem;
+    font-weight: 700;
+    line-height: 1.3;
+
+}
+
+.home-img img {
+    width: 45vw;
+}
+
+.home-img::before {
+    content: 'FITTNESS';
+    position: absolute;
+    top: 10%;
+    left: 30%;
+    transform: translateX(-50%);
+    font-size: 20rem;
+    font-weight: 400;
+    line-height: 20rem;
+    color: var(--text-color);
+    opacity: 0.1;
+    z-index: -1;
+}
+
+.home-content p {
+    font-size: 1.6rem;
+    margin-bottom: 2rem;
+    margin-top: 2rem;
+}
+
+.btn {
+    display: inline-block;
+    padding: 1rem 2.8rem;
+    background: var(--main-color);
+    border-radius: 1rem;
+    box-shadow: none;
+    font-size: 1.6rem;
+    color: var(--bg-color);
+    letter-spacing: 0.1rem;
+    font-weight: 600;
+    transition: 0.5s ease;
+}
+
+.btn:hover {
+    color: var(--text-color);
+    box-shadow: 0 0 1.6rem var(--main-color);
+    
+}
+  </style>
+</head>
+<body>
+
+  <!-- Header Section Code -->
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="#" class="logo">FITTCHECK</a>
+      
+      <!-- Desktop Navigation -->
+      <nav class="main-nav desktop">
+        <a href="#">Home</a>
+        <a href="classes.html">Classes</a>
+        <a href="trainers.html">Trainers</a>
+        <a href="contact.html">About Us</a>
+        <a href="tracker.html">Tracker</a>
+      </nav>
+
+      <!-- Mobile Menu Toggle -->
+      <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">☰</button>
+      
+      <!-- Mobile Navigation -->
+      <nav class="main-nav mobile" id="mobileNav">
+        <a href="#">Home</a>
+        <a href="classes.html">Classes</a>
+        <a href="trainers.html">Trainers</a>
+        <a href="contact.html">About Us</a>
+        <a href="tracker.html">Tracker</a>
+      </nav>
+    </div>
+  </header>
+   
+  <!--HOME SECTION CODE-->
+
+  <section class="home" id="home">
+    <div class="home-content">
+
+        <h3>Build Your</h3>
+        <h1>Dream Physique</h1>
+        <h3><span class="multiple-text">Bodybuilding</span></h3>
+
+<p>The gym isn’t just a place to lift weights,it’s where you lift yourself up. Every struggle, every setback, every sore muscle builds not only strength, but also discipline, confidence, and resilience.</p>
+        <a href="#" class="btn">Join Us</a>
+        
+    </div>
+
+    
+        <div class="home-img">
+            <img src="pictures/fit.png" alt="Home Image">
+        </div>
+  </section>
+
+</body>
+</html>
