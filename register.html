@@ -17,7 +17,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: linear-gradient(135deg, #f9fafb 0%, #e5e7eb 100%);
+      background-color: #0e1621;
       padding: 1rem;
     }
 
@@ -27,21 +27,22 @@
     }
 
     .register-box {
-      background: white;
+      background: #1b2430;
       border-radius: 1rem;
-      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.4);
       padding: 2rem;
+      border: 1px solid rgba(102, 155, 207, 0.2);
     }
 
     .register-box h1 {
       text-align: center;
       margin-bottom: 0.5rem;
-      color: #111827;
+      color: #8ab9f7;
     }
 
     .register-box > p {
       text-align: center;
-      color: #6b7280;
+      color: #a0a8b5;
       margin-bottom: 1.5rem;
       line-height: 1.5;
       font-size: 0.875rem;
@@ -55,18 +56,24 @@
     input[type="password"] {
       width: 100%;
       padding: 0.75rem 1rem;
-      border: 1px solid #d1d5db;
+      border: 1px solid rgba(102, 155, 207, 0.3);
       border-radius: 0.5rem;
       font-size: 1rem;
       transition: all 0.2s;
       outline: none;
+      background: #0e1621;
+      color: #fff;
+    }
+
+    input[type="text"]::placeholder,
+    input[type="password"]::placeholder {
+      color: #a0a8b5;
     }
 
     input[type="text"]:focus,
     input[type="password"]:focus {
-      border-color: #3b82f6;
-      ring: 2px solid #3b82f6;
-      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+      border-color: #669bcf;
+      box-shadow: 0 0 0 3px rgba(102, 155, 207, 0.1);
     }
 
     .password-field {
@@ -84,14 +91,14 @@
       top: 50%;
       transform: translateY(-50%);
       cursor: pointer;
-      color: #6b7280;
+      color: #a0a8b5;
       transition: color 0.2s;
       font-size: 1.25rem;
       user-select: none;
     }
 
     .toggle-password:hover {
-      color: #374151;
+      color: #8ab9f7;
     }
 
     #formError {
@@ -103,40 +110,41 @@
     }
 
     #formError.success {
-      color: #16a34a;
+      color: #45ffca;
     }
 
     .btn-register {
       width: 100%;
       padding: 0.75rem;
-      background: #3b82f6;
+      background: #669bcf;
       color: white;
       border: none;
       border-radius: 0.5rem;
       font-size: 1rem;
       cursor: pointer;
       transition: background 0.2s;
+      font-weight: 600;
     }
 
     .btn-register:hover {
-      background: #2563eb;
+      background: #8ab9f7;
     }
 
     .login-link {
       margin-top: 1.5rem;
       text-align: center;
-      color: #4b5563;
+      color: #a0a8b5;
     }
 
     .login-link a {
-      color: #3b82f6;
+      color: #669bcf;
       text-decoration: none;
       cursor: pointer;
       transition: color 0.2s;
     }
 
     .login-link a:hover {
-      color: #2563eb;
+      color: #8ab9f7;
       text-decoration: underline;
     }
 
@@ -148,7 +156,7 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background: rgba(0, 0, 0, 0.5);
+      background: rgba(0, 0, 0, 0.7);
       z-index: 1000;
       animation: fadeIn 0.2s;
     }
@@ -160,24 +168,25 @@
     }
 
     .modal-content {
-      background: white;
+      background: #1b2430;
       border-radius: 0.75rem;
       padding: 1.5rem;
       max-width: 28rem;
       width: 90%;
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
       animation: slideUp 0.3s;
+      border: 2px solid #669bcf;
     }
 
     .modal-header h2 {
       font-size: 1.25rem;
       margin-bottom: 0.5rem;
-      color: #111827;
+      color: #8ab9f7;
     }
 
     .modal-body {
       margin: 1rem 0;
-      color: #6b7280;
+      color: #a0a8b5;
       line-height: 1.5;
     }
 
@@ -195,24 +204,27 @@
       cursor: pointer;
       font-size: 0.875rem;
       transition: background 0.2s;
+      font-weight: 600;
     }
 
     .btn-modal.primary {
-      background: #3b82f6;
+      background: #669bcf;
       color: white;
     }
 
     .btn-modal.primary:hover {
-      background: #2563eb;
+      background: #8ab9f7;
     }
 
     .btn-modal.secondary {
-      background: #e5e7eb;
-      color: #374151;
+      background: transparent;
+      color: #a0a8b5;
+      border: 1px solid rgba(102, 155, 207, 0.3);
     }
 
     .btn-modal.secondary:hover {
-      background: #d1d5db;
+      background: rgba(102, 155, 207, 0.1);
+      color: #8ab9f7;
     }
 
     @keyframes fadeIn {
@@ -389,7 +401,8 @@
         fullname: fullname,
         email: emailOrPhone.includes('@') ? emailOrPhone : '',
         phone: !emailOrPhone.includes('@') ? emailOrPhone : '',
-        password: password // In production, never store plain passwords!
+        password: password,
+        registeredDate: new Date().toISOString()
       };
 
       registeredUsers.push(newUser);
@@ -407,7 +420,7 @@
     const stayBtn = document.getElementById('stayBtn');
 
     loginBtn.addEventListener('click', function() {
-      window.location.href = 'index.html';
+      window.location.href = 'login.html';
     });
 
     stayBtn.addEventListener('click', function() {
@@ -418,6 +431,14 @@
     successModal.addEventListener('click', function(e) {
       if (e.target === successModal) {
         successModal.classList.remove('active');
+      }
+    });
+
+    // Check if already logged in
+    window.addEventListener('DOMContentLoaded', function() {
+      const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+      if (isLoggedIn) {
+        window.location.href = 'index.html';
       }
     });
   </script>

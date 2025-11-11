@@ -13,11 +13,13 @@
     }
 
     :root {
-      --accent: #669bcf;
-      --accent-dark: #8ab9f7;
+      --accent: #5b9bd5;
+      --accent-dark: #7ab3e8;
+      --accent-hover: #4a8bc4;
       --muted: #a0a8b5;
       --bg: #0e1621;
       --card: #1b2430;
+      --card-hover: #212b3a;
       --radius: 12px;
       font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     }
@@ -27,6 +29,19 @@
       min-height: 100%;
       color: #fff;
     }
+
+    body {
+      background: linear-gradient(135deg, #0e1621 0%, #1a2332 100%);
+      min-height: 100vh;
+    }
+
+    /* Icon Font Styles */
+    .icon-home::before { content: "🏠"; margin-right: 0.5rem; }
+    .icon-classes::before { content: "📅"; margin-right: 0.5rem; }
+    .icon-trainers::before { content: "👥"; margin-right: 0.5rem; }
+    .icon-about::before { content: "ℹ️"; margin-right: 0.5rem; }
+    .icon-tracker::before { content: "📊"; margin-right: 0.5rem; }
+    .icon-profile::before { content: "👤"; margin-right: 0.5rem; }
 
     /* Header Styles */
     .site-header {
@@ -55,7 +70,6 @@
       font-size: 1.25rem;
       font-weight: 600;
     }
-
     .main-nav {
       display: none;
       align-items: center;
@@ -66,7 +80,7 @@
       display: flex;
     }
 
-    .main-nav a {
+    .main-nav a, .main-nav button {
       color: #d1d5db;
       text-decoration: none;
       padding: 0.5rem 0.75rem;
@@ -74,11 +88,22 @@
       transition: all 0.3s;
       font-size: 0.95rem;
       font-weight: 500;
+      background: none;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
     }
 
-    .main-nav a:hover {
-      color: #8ab9f7;
-      background: rgba(102, 155, 207, 0.1);
+    .main-nav a:hover, .main-nav a.active, .main-nav button:hover {
+      color: var(--accent-dark);
+      background: rgba(91, 155, 213, 0.15);
+    }
+
+    .main-nav a.active {
+      color: var(--accent-dark);
+      background: rgba(91, 155, 213, 0.1);
     }
 
     .menu-toggle {
@@ -93,7 +118,7 @@
     .main-nav.mobile {
       display: none;
       flex-direction: column;
-      background: #1b2430;
+      background: var(--card);
       position: absolute;
       top: 100%;
       right: 1.25rem;
@@ -106,6 +131,160 @@
 
     .main-nav.mobile.show {
       display: flex;
+    }
+
+    /* Notification Bell */
+    .notification-bell {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      z-index: 100;
+      background: var(--accent);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 3rem;
+      height: 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      transition: all 0.3s;
+    }
+
+    .notification-bell:hover {
+      background: var(--accent-dark);
+      transform: scale(1.1);
+    }
+
+    .notification-badge {
+      position: absolute;
+      top: -0.25rem;
+      right: -0.25rem;
+      background: #dc2626;
+      color: white;
+      font-size: 0.75rem;
+      border-radius: 50%;
+      width: 1.25rem;
+      height: 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .notification-panel {
+      display: none;
+      position: fixed;
+      top: 5rem;
+      right: 1rem;
+      width: 20rem;
+      max-height: 24rem;
+      background: var(--card);
+      border-radius: 0.75rem;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(91, 155, 213, 0.3);
+      z-index: 99;
+      overflow: hidden;
+    }
+
+    .notification-panel.active {
+      display: block;
+    }
+
+    .notification-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem;
+      border-bottom: 1px solid rgba(91, 155, 213, 0.2);
+    }
+
+    .notification-header h3 {
+      color: white;
+      font-size: 1rem;
+    }
+
+    .clear-all-btn {
+      color: var(--accent);
+      font-size: 0.875rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+
+    .clear-all-btn:hover {
+      color: var(--accent-dark);
+    }
+
+    .notification-list {
+      max-height: 20rem;
+      overflow-y: auto;
+    }
+
+    .notification-item {
+      padding: 1rem;
+      border-bottom: 1px solid rgba(91, 155, 213, 0.1);
+      transition: background 0.2s;
+    }
+
+    .notification-item:hover {
+      background: rgba(91, 155, 213, 0.05);
+    }
+
+    .notification-item p {
+      color: white;
+      font-size: 0.875rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .notification-item small {
+      color: var(--muted);
+      font-size: 0.75rem;
+    }
+
+    .notification-empty {
+      padding: 2rem;
+      text-align: center;
+      color: var(--muted);
+    }
+
+    /* Toast Notification */
+    .toast-container {
+      position: fixed;
+      bottom: 1rem;
+      right: 1rem;
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .toast {
+      background: var(--card);
+      border: 1px solid var(--accent);
+      border-radius: 0.5rem;
+      padding: 1rem;
+      max-width: 20rem;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+      animation: slideIn 0.3s ease-out;
+    }
+
+    @keyframes slideIn {
+      from {
+        transform: translateX(100%);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+    .toast p {
+      color: white;
+      font-size: 0.875rem;
     }
 
     /* Container */
@@ -134,21 +313,22 @@
     }
 
     .recommendation-box {
-      background: #1b2430;
+      background: linear-gradient(135deg, rgba(91, 155, 213, 0.1) 0%, rgba(91, 155, 213, 0.05) 100%);
       border-left: 4px solid var(--accent);
       border-radius: 0.5rem;
       padding: 1.5rem;
       margin-bottom: 1.5rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     }
 
     .recommendation-box h3 {
-      color: var(--accent);
+      color: var(--accent-dark);
       margin-bottom: 0.75rem;
       font-size: 1.1rem;
     }
 
     .recommendation-box p {
-      color: #ddcdcd;
+      color: #e5e7eb;
       margin: 0.5rem 0;
       font-size: 0.95rem;
     }
@@ -167,8 +347,9 @@
     }
 
     .view-btn:hover {
-      background: var(--accent-dark);
+      background: var(--accent-hover);
       transform: scale(1.05);
+      box-shadow: 0 4px 12px rgba(91, 155, 213, 0.4);
     }
 
     .hero-text h2 {
@@ -206,20 +387,20 @@
       justify-content: center;
       border: 3px solid var(--accent);
       border-radius: 1rem;
-      background: transparent;
+      background: linear-gradient(135deg, rgba(91, 155, 213, 0.05) 0%, rgba(91, 155, 213, 0.1) 100%);
       color: white;
       font-size: 1.5rem;
       font-weight: 600;
       text-decoration: none;
       cursor: pointer;
       transition: all 0.3s ease;
-      box-shadow: 0 0 15px rgba(102, 155, 207, 0.3);
+      box-shadow: 0 0 15px rgba(91, 155, 213, 0.3);
     }
 
     .program-btn:hover {
       background: var(--accent);
       transform: translateY(-5px);
-      box-shadow: 0 0 25px rgba(102, 155, 207, 0.6);
+      box-shadow: 0 0 25px rgba(91, 155, 213, 0.6);
     }
 
     .program-title {
@@ -237,9 +418,18 @@
     }
 
     .card {
-      background: rgba(255, 255, 255, 0.02);
+      background: linear-gradient(135deg, rgba(27, 36, 48, 0.8) 0%, rgba(33, 43, 58, 0.6) 100%);
       padding: 1.5rem;
       border-radius: 0.625rem;
+      border: 1px solid rgba(91, 155, 213, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .card:hover {
+      background: var(--card-hover);
+      border-color: rgba(91, 155, 213, 0.3);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
     }
 
     .card h3, .card h4 {
@@ -269,6 +459,7 @@
       height: 8rem;
       border-radius: 50%;
       margin: 0 auto 1rem;
+      border: 3px solid var(--accent);
     }
 
     section {
@@ -300,59 +491,367 @@
 
     /* Footer */
     .site-footer {
-      background: #000;
+      background: rgba(0, 0, 0, 0.5);
       color: #9ca3af;
       margin-top: 3rem;
       border-top: 1px solid rgba(255, 255, 255, 0.05);
+      padding: 1.5rem 0;
     }
 
     .footer-inner {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 2rem;
-      padding: 2rem 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
     }
 
-    .footer-inner h3, .footer-inner h4 {
+    .footer-inner h3 {
       color: white;
-      margin-bottom: 0.75rem;
+      font-size: 1rem;
+      margin: 0;
     }
 
     .footer-nav {
       display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
+      gap: 1.5rem;
     }
 
     .footer-nav a {
       color: #9ca3af;
       text-decoration: none;
       transition: color 0.3s;
+      font-size: 0.875rem;
     }
 
     .footer-nav a:hover {
-      color: #8ab9f7;
+      color: var(--accent-dark);
     }
 
-    address {
+    .footer-contact {
+      color: #9ca3af;
+      font-size: 0.875rem;
       font-style: normal;
-      line-height: 1.8;
     }
 
-    address a {
+    .footer-contact a {
       color: #9ca3af;
       text-decoration: none;
       transition: color 0.3s;
     }
 
-    address a:hover {
-      color: #8ab9f7;
+    .footer-contact a:hover {
+      color: var(--accent-dark);
     }
 
     .footer-bottom {
       text-align: center;
-      padding: 2rem 0;
+      padding: 1rem 0;
       border-top: 1px solid rgba(255, 255, 255, 0.05);
+      margin-top: 1rem;
+    }
+
+    .footer-bottom small {
+      font-size: 0.8rem;
+    }
+
+    /* Modal Styles */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.85);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      animation: fadeIn 0.3s ease-out;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    .modal-content {
+      background: var(--card);
+      border-radius: 1rem;
+      max-width: 1200px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 2rem;
+      position: relative;
+      border: 2px solid var(--accent);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
+      animation: slideUp 0.4s ease-out;
+    }
+
+    @keyframes slideUp {
+      from {
+        transform: translateY(50px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: rgba(255, 255, 255, 0.1);
+      border: none;
+      color: white;
+      font-size: 1.5rem;
+      width: 2.5rem;
+      height: 2.5rem;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-close:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: scale(1.1);
+    }
+
+    .modal-header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .modal-header h2 {
+      color: var(--accent-dark);
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .modal-header p {
+      color: var(--muted);
+    }
+
+    .exercise-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    .exercise-card {
+      background: linear-gradient(135deg, rgba(27, 36, 48, 0.9) 0%, rgba(33, 43, 58, 0.7) 100%);
+      border-radius: 0.75rem;
+      overflow: hidden;
+      border: 1px solid rgba(91, 155, 213, 0.2);
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .exercise-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(91, 155, 213, 0.3);
+      border-color: var(--accent);
+    }
+
+    .exercise-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .exercise-card-content {
+      padding: 1.25rem;
+    }
+
+    .exercise-card h4 {
+      color: var(--accent-dark);
+      margin-bottom: 0.5rem;
+      font-size: 1.1rem;
+    }
+
+    .exercise-card p {
+      color: #d1d5db;
+      font-size: 0.9rem;
+      margin-bottom: 0.75rem;
+      line-height: 1.5;
+    }
+
+    .exercise-meta {
+      display: flex;
+      gap: 1rem;
+      margin-top: 0.75rem;
+    }
+
+    .exercise-meta span {
+      color: var(--muted);
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    /* Exercise Instructions Modal */
+    .instructions-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.9);
+      z-index: 1001;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      animation: fadeIn 0.3s ease-out;
+    }
+
+    .instructions-modal.active {
+      display: flex;
+    }
+
+    .instructions-content {
+      background: var(--card);
+      border-radius: 1rem;
+      max-width: 800px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 2rem;
+      position: relative;
+      border: 2px solid var(--accent);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
+      animation: slideUp 0.4s ease-out;
+    }
+
+    .instructions-close {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: rgba(255, 255, 255, 0.1);
+      border: none;
+      color: white;
+      font-size: 1.5rem;
+      width: 2.5rem;
+      height: 2.5rem;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .instructions-close:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: scale(1.1);
+    }
+
+    .instructions-header {
+      margin-bottom: 1.5rem;
+      padding-right: 3rem;
+    }
+
+    .instructions-header h3 {
+      color: var(--accent-dark);
+      font-size: 1.75rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .instructions-header .badge {
+      display: inline-block;
+      background: rgba(91, 155, 213, 0.2);
+      color: var(--accent-dark);
+      padding: 0.25rem 0.75rem;
+      border-radius: 0.5rem;
+      font-size: 0.875rem;
+      margin-right: 0.5rem;
+    }
+
+    .instructions-image {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+      border-radius: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .instructions-section {
+      margin-bottom: 1.5rem;
+    }
+
+    .instructions-section h4 {
+      color: var(--accent-dark);
+      font-size: 1.1rem;
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .instructions-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .instructions-list li {
+      color: #d1d5db;
+      padding: 0.75rem;
+      margin-bottom: 0.5rem;
+      background: rgba(91, 155, 213, 0.05);
+      border-left: 3px solid var(--accent);
+      border-radius: 0.5rem;
+      line-height: 1.6;
+    }
+
+    .instructions-list li strong {
+      color: var(--accent-dark);
+      display: block;
+      margin-bottom: 0.25rem;
+    }
+
+    .tips-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.75rem;
+      margin-top: 0.75rem;
+    }
+
+    .tip-card {
+      background: rgba(91, 155, 213, 0.05);
+      border: 1px solid rgba(91, 155, 213, 0.2);
+      border-radius: 0.5rem;
+      padding: 1rem;
+    }
+
+    .tip-card h5 {
+      color: var(--accent-dark);
+      font-size: 0.95rem;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .tip-card p {
+      color: #d1d5db;
+      font-size: 0.9rem;
+      line-height: 1.5;
     }
 
     /* Responsive Styles */
@@ -369,8 +868,8 @@
         grid-template-columns: repeat(3, 1fr);
       }
 
-      .footer-inner {
-        grid-template-columns: repeat(3, 1fr);
+      .exercise-grid {
+        grid-template-columns: repeat(2, 1fr);
       }
     }
 
@@ -386,7 +885,11 @@
 
       .program-btn {
         width: 32vw;
-        min-width: 430px;
+        min-width: 300px;
+      }
+
+      .exercise-grid {
+        grid-template-columns: repeat(3, 1fr);
       }
     }
 
@@ -402,18 +905,89 @@
   </style>
 </head>
 <body>
+  <!-- Notification Bell -->
+  <button class="notification-bell" id="notificationBell">
+    🔔
+    <span class="notification-badge" id="notificationBadge" style="display: none;">0</span>
+  </button>
+
+  <!-- Notification Panel -->
+  <div class="notification-panel" id="notificationPanel">
+    <div class="notification-header">
+      <h3>Notifications</h3>
+      <button class="clear-all-btn" id="clearAllBtn">Clear All</button>
+    </div>
+    <div class="notification-list" id="notificationList">
+      <div class="notification-empty">No new notifications</div>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Exercise Modal -->
+  <div class="modal-overlay" id="exerciseModal">
+    <div class="modal-content">
+      <button class="modal-close" id="modalClose">✕</button>
+      <div class="modal-header">
+        <h2 id="modalTitle">Exercises</h2>
+        <p id="modalSubtitle">Select exercises to add to your routine</p>
+      </div>
+      <div class="exercise-grid" id="exerciseGrid"></div>
+    </div>
+  </div>
+
+  <!-- Exercise Instructions Modal -->
+  <div class="instructions-modal" id="instructionsModal">
+    <div class="instructions-content">
+      <button class="instructions-close" id="instructionsClose">✕</button>
+      <div class="instructions-header">
+        <h3 id="instructionsTitle"></h3>
+        <div id="instructionsMeta"></div>
+      </div>
+      <img id="instructionsImage" class="instructions-image" src="" alt="">
+      <div class="instructions-section">
+        <h4>📋 How to Perform</h4>
+        <ol class="instructions-list" id="instructionsSteps"></ol>
+      </div>
+      <div class="instructions-section">
+        <h4>💡 Tips & Common Mistakes</h4>
+        <div class="tips-grid" id="instructionsTips"></div>
+      </div>
+    </div>
+  </div>
+
   <!-- Header -->
   <header class="site-header">
     <div class="header-inner">
-      <a href="#" class="logo">FITTCHECK</a>
+      <a href="index.html" class="logo">FITTCHECK</a>
       
       <!-- Desktop Navigation -->
       <nav class="main-nav desktop">
-        <a href="#">Home</a>
-        <a href="classes.html">Classes</a>
-        <a href="trainers.html">Trainers</a>
-        <a href="contact.html">About Us</a>
-        <a href="tracker.html">Tracker</a>
+        <a href="index.html" class="active">
+       <img src="pictures/home-button 1.png" alt="Home Icon" style="width:20px; height:20px;">
+          Home
+        </a>
+        <a href="classes.html">
+          <i class="icon-classes"></i>
+          Classes
+        </a>
+        <a href="trainers.html">
+          <i class="icon-trainers"></i>
+          Trainers
+        </a>
+        <a href="contact.html">
+          <i class="icon-about"></i>
+          About Us
+        </a>
+        <a href="tracker.html">
+          <i class="icon-tracker"></i>
+          Tracker
+        </a>
+        <button onclick="window.location.href='profile.html'" style="font-family: inherit;">
+          <i class="icon-profile"></i>
+          Profile
+        </button>
       </nav>
 
       <!-- Mobile Menu Toggle -->
@@ -421,11 +995,30 @@
       
       <!-- Mobile Navigation -->
       <nav class="main-nav mobile" id="mobileNav">
-        <a href="#">Home</a>
-        <a href="classes.html">Classes</a>
-        <a href="trainers.html">Trainers</a>
-        <a href="contact.html">About Us</a>
-        <a href="tracker.html">Tracker</a>
+        <a href="index.html" class="active">
+          <i class="icon-home"></i>
+          Home
+        </a>
+        <a href="classes.html">
+          <i class="icon-classes"></i>
+          Classes
+        </a>
+        <a href="trainers.html">
+          <i class="icon-trainers"></i>
+          Trainers
+        </a>
+        <a href="contact.html">
+          <i class="icon-about"></i>
+          About Us
+        </a>
+        <a href="tracker.html">
+          <i class="icon-tracker"></i>
+          Tracker
+        </a>
+        <button onclick="window.location.href='profile.html'" style="font-family: inherit; width: 100%; justify-content: flex-start;">
+          <i class="icon-profile"></i>
+          Profile
+        </button>
       </nav>
     </div>
   </header>
@@ -456,7 +1049,7 @@
 
         <!-- Hero Image -->
         <div class="hero-image">
-          <img src="https://images.unsplash.com/photo-1661439193765-392d81462003?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhdGhsZXRlJTIwbGlmdGluZyUyMHdlaWdodHMlMjBneW18ZW58MXx8fHwxNzYyMzkxODY0fDA&ixlib=rb-4.1.0&q=80&w=1080" alt="Athlete lifting weights">
+          <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800&q=80" alt="Athlete lifting weights">
         </div>
       </div>
     </section>
@@ -465,11 +1058,11 @@
     <section class="fitness-section">
       <div class="container">
         <div class="program-options">
-          <a href="#" class="program-btn">💪 Build Muscle</a>
-          <a href="#" class="program-btn">🔥 Endurance</a>
-          <a href="#" class="program-btn">🤸‍♀️ Weight Loss</a>
+          <button class="program-btn" data-program="muscle" onclick="openExerciseModal('muscle')">💪 Build Muscle</button>
+          <button class="program-btn" data-program="endurance" onclick="openExerciseModal('endurance')">🔥 Endurance</button>
+          <button class="program-btn" data-program="weightloss" onclick="openExerciseModal('weightloss')">🤸‍♀️ Weight Loss</button>
         </div>
-        <h3 class="program-title">Select a program above to see exercises.</h3>
+        <h3 class="program-title">Click a program above to view exercises.</h3>
       </div>
     </section>
 
@@ -499,17 +1092,17 @@
         <h2 class="section-title">Our Programs</h2>
         <div class="section-grid">
           <article class="card text-center">
-            <img src="https://images.unsplash.com/photo-1669807164466-10a6584a067e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzdHJlbmd0aCUyMHRyYWluaW5nJTIwZ3ltfGVufDF8fHx8MTc2MjI3ODE3NXww&ixlib=rb-4.1.0&q=80&w=1080" alt="Strength Training">
+            <img src="https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=800&q=80" alt="Strength Training">
             <h3>Strength Training</h3>
             <p>Build lean muscle and enhance endurance with guided lifting sessions.</p>
           </article>
           <article class="card text-center">
-            <img src="https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjYXJkaW8lMjB3b3Jrb3V0JTIwZml0bmVzc3xlbnwxfHx8fDE3NjIzOTE4NjV8MA&ixlib=rb-4.1.0&q=80&w=1080" alt="Cardio Classes">
+            <img src="https://images.unsplash.com/photo-1538805060514-97d9cc17730c?w=800&q=80" alt="Cardio Classes">
             <h3>Cardio Burn</h3>
             <p>Boost stamina and burn calories with our high-intensity cardio workouts.</p>
           </article>
           <article class="card text-center">
-            <img src="https://images.unsplash.com/photo-1615303736576-075722ab0da9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx5b2dhJTIwZmxleGliaWxpdHklMjBjbGFzc3xlbnwxfHx8fDE3NjIzOTE4NjV8MA&ixlib=rb-4.1.0&q=80&w=1080" alt="Yoga Class">
+            <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=800&q=80" alt="Yoga Class">
             <h3>Yoga & Flexibility</h3>
             <p>Improve mobility and calm your mind with our professional yoga instructors.</p>
           </article>
@@ -523,17 +1116,17 @@
         <h2 class="section-title">Meet Our Trainers</h2>
         <div class="section-grid">
           <div class="card text-center">
-            <img src="https://images.unsplash.com/photo-1704223523169-52feeed90365?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwZXJzb25hbCUyMHRyYWluZXIlMjBtYWxlfGVufDF8fHx8MTc2MjM1MTg5OHww&ixlib=rb-4.1.0&q=80&w=1080" class="trainer-img" alt="Trainer Alex Tan">
+            <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&q=80" class="trainer-img" alt="Trainer Alex Tan">
             <h4>Alex Tan</h4>
             <p>Certified Strength Coach</p>
           </div>
           <div class="card text-center">
-            <img src="https://images.unsplash.com/photo-1676720372525-612a79029e9a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx5b2dhJTIwaW5zdHJ1Y3RvciUyMGZlbWFsZXxlbnwxfHx8fDE3NjIzOTE4NjZ8MA&ixlib=rb-4.1.0&q=80&w=1080" class="trainer-img" alt="Trainer Maria Cruz">
+            <img src="https://images.unsplash.com/photo-1518611012118-696072aa579a?w=400&q=80" class="trainer-img" alt="Trainer Maria Cruz">
             <h4>Maria Cruz</h4>
             <p>Yoga & Flexibility Expert</p>
           </div>
           <div class="card text-center">
-            <img src="https://images.unsplash.com/photo-1549995546-87cb41aa98a4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxmaXRuZXNzJTIwY29hY2glMjBtYWxlfGVufDF8fHx8MTc2MjM5MTg2Nnww&ixlib=rb-4.1.0&q=80&w=1080" class="trainer-img" alt="Trainer Jake Santos">
+            <img src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=400&q=80" class="trainer-img" alt="Trainer Jake Santos">
             <h4>Jake Santos</h4>
             <p>Cardio and Conditioning Coach</p>
           </div>
@@ -574,40 +1167,38 @@
   <!-- Footer -->
   <footer class="site-footer">
     <div class="container footer-inner">
-      <!-- Brand Section -->
       <div>
-        <h3>Royal Fitness</h3>
-        <p>Strong. Focused. Driven.</p>
+        <h3>FITTCHECK</h3>
       </div>
-
-      <!-- Quick Links -->
-      <div>
-        <h4>Quick Links</h4>
-        <nav class="footer-nav">
-          <a href="classes.html">Classes</a>
-          <a href="#">Home</a>
-          <a href="#">Services</a>
-          <a href="#">About Us</a>
-        </nav>
-      </div>
-
-      <!-- Contact -->
-      <div>
-        <h4>Contact</h4>
-        <address>
-          Balingasag Brgy 2<br>
-          (+63)-923456789<br>
-          <a href="mailto:hello@fittcheck.ph">hello@fittcheck.ph</a>
-        </address>
-      </div>
+      <nav class="footer-nav">
+        <a href="index.html">Home</a>
+        <a href="classes.html">Classes</a>
+        <a href="trainers.html">Trainers</a>
+        <a href="contact.html">About Us</a>
+        <a href="tracker.html">Tracker</a>
+      </nav>
+      <address class="footer-contact">
+        <a href="mailto:hello@fittcheck.ph">hello@fittcheck.ph</a>
+      </address>
     </div>
-    
     <div class="footer-bottom container">
-      <small>© <span id="year"></span> Royal Fitness. All rights reserved.</small>
+      <small>© <span id="year"></span> FITTCHECK. All rights reserved.</small>
     </div>
   </footer>
 
   <script>
+    // Check if user is logged in
+    window.addEventListener('DOMContentLoaded', function() {
+      const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+      if (!isLoggedIn) {
+        window.location.href = 'login.html';
+        return;
+      }
+
+      // Initialize notifications
+      initializeNotifications();
+    });
+
     // Mobile menu toggle
     const menuToggle = document.getElementById('menuToggle');
     const mobileNav = document.getElementById('mobileNav');
@@ -625,6 +1216,390 @@
       if (!event.target.closest('.header-inner')) {
         mobileNav.classList.remove('show');
         menuToggle.textContent = '☰';
+      }
+    });
+
+    // Notification System
+    let notifications = [];
+
+    function initializeNotifications() {
+      checkMissedExercises();
+      
+      // Check every hour
+      setInterval(checkMissedExercises, 60 * 60 * 1000);
+      
+      // Setup notification bell
+      const notificationBell = document.getElementById('notificationBell');
+      const notificationPanel = document.getElementById('notificationPanel');
+      
+      notificationBell.addEventListener('click', function(e) {
+        e.stopPropagation();
+        notificationPanel.classList.toggle('active');
+      });
+
+      // Close panel when clicking outside
+      document.addEventListener('click', function(e) {
+        if (!notificationPanel.contains(e.target) && e.target !== notificationBell) {
+          notificationPanel.classList.remove('active');
+        }
+      });
+
+      // Clear all button
+      document.getElementById('clearAllBtn').addEventListener('click', clearAllNotifications);
+    }
+
+    function checkMissedExercises() {
+      const lastExercise = localStorage.getItem('lastExerciseDate');
+      const currentDate = new Date();
+      
+      if (lastExercise) {
+        const lastExerciseDate = new Date(lastExercise);
+        const daysDiff = Math.floor((currentDate.getTime() - lastExerciseDate.getTime()) / (1000 * 60 * 60 * 24));
+        
+        if (daysDiff >= 1) {
+          const message = `You haven't exercised in ${daysDiff} day${daysDiff > 1 ? 's' : ''}! Time to get back on track! 💪`;
+          addNotification(message, 'missed-exercise');
+        }
+      } else {
+        // First time - set current date
+        localStorage.setItem('lastExerciseDate', currentDate.toISOString());
+      }
+
+      // Check for scheduled workouts
+      const scheduledWorkouts = JSON.parse(localStorage.getItem('scheduledWorkouts') || '[]');
+      const today = currentDate.toDateString();
+      
+      const missedWorkouts = scheduledWorkouts.filter(workout => {
+        const workoutDate = new Date(workout.date).toDateString();
+        return workoutDate === today && !workout.completed;
+      });
+
+      if (missedWorkouts.length > 0) {
+        const message = `You have ${missedWorkouts.length} workout${missedWorkouts.length > 1 ? 's' : ''} scheduled for today! 🏋️`;
+        addNotification(message, 'reminder');
+      }
+    }
+
+    function addNotification(message, type) {
+      const existingNotification = notifications.find(n => n.message === message);
+      if (existingNotification) return;
+
+      const notification = {
+        id: Date.now(),
+        message: message,
+        type: type,
+        timestamp: new Date()
+      };
+
+      notifications.unshift(notification);
+      updateNotificationUI();
+      showToast(message);
+    }
+
+    function updateNotificationUI() {
+      const badge = document.getElementById('notificationBadge');
+      const list = document.getElementById('notificationList');
+      
+      if (notifications.length > 0) {
+        badge.textContent = notifications.length;
+        badge.style.display = 'flex';
+        
+        list.innerHTML = notifications.map(n => `
+          <div class="notification-item">
+            <p>${n.message}</p>
+            <small>${new Date(n.timestamp).toLocaleTimeString()}</small>
+          </div>
+        `).join('');
+      } else {
+        badge.style.display = 'none';
+        list.innerHTML = '<div class="notification-empty">No new notifications</div>';
+      }
+
+      // Update clear all button visibility
+      document.getElementById('clearAllBtn').style.display = notifications.length > 0 ? 'block' : 'none';
+    }
+
+    function showToast(message) {
+      const toastContainer = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      toast.className = 'toast';
+      toast.innerHTML = `<p>🔔 ${message}</p>`;
+      
+      toastContainer.appendChild(toast);
+      
+      setTimeout(() => {
+        toast.remove();
+      }, 5000);
+    }
+
+    function clearAllNotifications() {
+      notifications = [];
+      updateNotificationUI();
+    }
+
+    // Exercise Modal
+    const exerciseModal = document.getElementById('exerciseModal');
+    const modalClose = document.getElementById('modalClose');
+    const exerciseGrid = document.getElementById('exerciseGrid');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalSubtitle = document.getElementById('modalSubtitle');
+
+    const exercises = {
+      muscle: {
+        title: '💪 Build Muscle Program',
+        subtitle: '6 Key Exercises to Build Strength and Mass',
+        exercises: [
+          {
+            name: 'Barbell Squats',
+            description: 'Build massive leg strength and muscle mass with heavy squats targeting quads, hamstrings, and glutes.',
+            sets: '4 sets',
+            reps: '8-12 reps',
+            image: 'https://images.unsplash.com/photo-1758875568800-29fb434c7b17?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080'
+          },
+          {
+            name: 'Bench Press',
+            description: 'Classic chest builder that also works shoulders and triceps. Essential for upper body mass.',
+            sets: '4 sets',
+            reps: '8-12 reps',
+            image: 'https://images.unsplash.com/photo-1651346847980-ab1c883e8cc8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080'
+          },
+          {
+            name: 'Deadlifts',
+            description: 'King of all exercises! Build total body strength targeting back, glutes, hamstrings, and core.',
+            sets: '4 sets',
+            reps: '6-10 reps',
+            image: 'https://images.unsplash.com/photo-1601106605547-7423365f86e0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080'
+          },
+          {
+            name: 'Dumbbell Rows',
+            description: 'Develop a thick, strong back with this essential pulling movement for muscle growth.',
+            sets: '3 sets',
+            reps: '10-12 reps',
+            image: 'https://images.unsplash.com/photo-1734630341082-0fec0e10126c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080'
+          },
+          {
+            name: 'Shoulder Press',
+            description: 'Build powerful shoulders and triceps with this overhead pressing movement.',
+            sets: '3 sets',
+            reps: '10-12 reps',
+            image: 'https://images.unsplash.com/photo-1630415188550-9e454489ce3a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080'
+          },
+          {
+            name: 'Pull-Ups',
+            description: 'The ultimate bodyweight exercise for building a strong, wide back and powerful arms.',
+            sets: '3 sets',
+            reps: '6-10 reps',
+            image: 'https://images.unsplash.com/photo-1701826510567-8880c3fa1e98?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080'
+          }
+        ]
+      },
+      endurance: {
+        title: '🔥 Endurance Program',
+        subtitle: '6 Key Exercises to Build Stamina and Cardiovascular Fitness',
+        exercises: [
+          {
+            name: 'Treadmill Running',
+            description: 'Build cardiovascular endurance with steady-state or interval running.',
+            sets: 'Continuous',
+            reps: '30-45 mins',
+            image: 'https://images.unsplash.com/photo-1761971974992-6df33df97c3a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080'
+          },
+          {
+            name: 'Indoor Cycling',
+            description: 'Low-impact cardio that builds leg endurance and cardiovascular fitness.',
+            sets: 'Continuous',
+            reps: '30-45 mins',
+            image: 'https://images.unsplash.com/photo-1601625193660-86f2807b024b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080'
+          },
+          {
+            name: 'Jump Rope',
+            description: 'High-intensity cardio that improves coordination, endurance, and burns calories fast.',
+            sets: '5 sets',
+            reps: '2-3 mins',
+            image: 'https://images.unsplash.com/photo-1651315283994-03ec73dc21f1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080'
+          },
+          {
+            name: 'Rowing Machine',
+            description: 'Full-body cardio that builds muscular endurance and cardiovascular capacity.',
+            sets: 'Continuous',
+            reps: '20-30 mins',
+            image: 'https://images.unsplash.com/photo-1467818488384-3a21f2b79959?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080'
+          },
+          {
+            name: 'Burpees',
+            description: 'Full-body explosive movement that builds endurance and burns maximum calories.',
+            sets: '4 sets',
+            reps: '15-20 reps',
+            image: 'https://images.unsplash.com/photo-1707608423155-7604c8124d9d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080'
+          },
+          {
+            name: 'Mountain Climbers',
+            description: 'Dynamic cardio exercise that builds core strength and cardiovascular endurance.',
+            sets: '4 sets',
+            reps: '30-45 secs',
+            image: 'https://images.unsplash.com/photo-1731176116069-86205f376088?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080'
+          }
+        ]
+      },
+      weightloss: {
+        title: '🤸‍♀️ Weight Loss Program',
+        subtitle: '6 Key Exercises to Burn Fat and Lose Weight',
+        exercises: [
+          {
+            name: 'HIIT Training',
+            description: 'High-intensity intervals that maximize calorie burn in minimal time.',
+            sets: '6 rounds',
+            reps: '30s on/30s off',
+            image: 'https://images.unsplash.com/photo-1662386392754-c0fe8e9dc7af?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080'
+          },
+          {
+            name: 'Kettlebell Swings',
+            description: 'Dynamic exercise that burns fat while building posterior chain strength.',
+            sets: '4 sets',
+            reps: '15-20 reps',
+            image: 'https://images.unsplash.com/flagged/photo-1556895368-9d1eed826c58?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080'
+          },
+          {
+            name: 'Plank Hold',
+            description: 'Core-strengthening exercise that builds stability and burns calories.',
+            sets: '3 sets',
+            reps: '45-60 secs',
+            image: 'https://images.unsplash.com/photo-1758599878868-52cced2f8154?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080'
+          },
+          {
+            name: 'Walking Lunges',
+            description: 'Lower body exercise that tones legs and glutes while burning fat.',
+            sets: '3 sets',
+            reps: '12-15/leg',
+            image: 'https://images.unsplash.com/photo-1590556409527-40916236bdd3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080'
+          },
+          {
+            name: 'Battle Ropes',
+            description: 'Total body conditioning that torches calories and builds upper body endurance.',
+            sets: '4 sets',
+            reps: '30-45 secs',
+            image: 'https://images.unsplash.com/photo-1605720789771-a7fb8ab19d04?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080'
+          },
+          {
+            name: 'Box Jumps',
+            description: 'Explosive plyometric exercise that burns fat and builds powerful legs.',
+            sets: '3 sets',
+            reps: '10-15 reps',
+            image: 'https://images.unsplash.com/photo-1599075364586-fa991041cecb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080'
+          }
+        ]
+      }
+    };
+
+    function openExerciseModal(program) {
+      const programData = exercises[program];
+      modalTitle.textContent = programData.title;
+      modalSubtitle.textContent = programData.subtitle;
+      
+      exerciseGrid.innerHTML = programData.exercises.map(exercise => `
+        <div class="exercise-card">
+          <img src="${exercise.image}" alt="${exercise.name}">
+          <div class="exercise-card-content">
+            <h4>${exercise.name}</h4>
+            <p>${exercise.description}</p>
+            <div class="exercise-meta">
+              <span>📊 ${exercise.sets}</span>
+              <span>🔢 ${exercise.reps}</span>
+            </div>
+          </div>
+        </div>
+      `).join('');
+      
+      exerciseModal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeExerciseModal() {
+      exerciseModal.classList.remove('active');
+      document.body.style.overflow = 'auto';
+    }
+
+    modalClose.addEventListener('click', closeExerciseModal);
+
+    exerciseModal.addEventListener('click', function(e) {
+      if (e.target === exerciseModal) {
+        closeExerciseModal();
+      }
+    });
+
+    // Close modal with Escape key
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && exerciseModal.classList.contains('active')) {
+        closeExerciseModal();
+      }
+    });
+
+    // Exercise Instructions Modal
+    const instructionsModal = document.getElementById('instructionsModal');
+    const instructionsClose = document.getElementById('instructionsClose');
+    const instructionsTitle = document.getElementById('instructionsTitle');
+    const instructionsMeta = document.getElementById('instructionsMeta');
+    const instructionsImage = document.getElementById('instructionsImage');
+    const instructionsSteps = document.getElementById('instructionsSteps');
+    const instructionsTips = document.getElementById('instructionsTips');
+
+    function openInstructionsModal(exercise) {
+      instructionsTitle.textContent = exercise.name;
+      instructionsMeta.innerHTML = `
+        <span class="badge">💪 ${exercise.sets}</span>
+        <span class="badge">🔢 ${exercise.reps}</span>
+      `;
+      instructionsImage.src = exercise.image;
+      instructionsImage.alt = exercise.name;
+      instructionsSteps.innerHTML = exercise.description.split('. ').map(step => `<li>${step}</li>`).join('');
+      instructionsTips.innerHTML = `
+        <div class="tip-card">
+          <h5>Tip 1</h5>
+          <p>Focus on proper form to maximize effectiveness and prevent injury.</p>
+        </div>
+        <div class="tip-card">
+          <h5>Tip 2</h5>
+          <p>Breathe deeply to maintain energy and control during the exercise.</p>
+        </div>
+        <div class="tip-card">
+          <h5>Tip 3</h5>
+          <p>Start with lighter weights and gradually increase as you build strength.</p>
+        </div>
+      `;
+      
+      instructionsModal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeInstructionsModal() {
+      instructionsModal.classList.remove('active');
+      document.body.style.overflow = 'auto';
+    }
+
+    instructionsClose.addEventListener('click', closeInstructionsModal);
+
+    instructionsModal.addEventListener('click', function(e) {
+      if (e.target === instructionsModal) {
+        closeInstructionsModal();
+      }
+    });
+
+    // Close modal with Escape key
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && instructionsModal.classList.contains('active')) {
+        closeInstructionsModal();
+      }
+    });
+
+    // Add event listeners to exercise cards
+    exerciseGrid.addEventListener('click', function(e) {
+      const card = e.target.closest('.exercise-card');
+      if (card) {
+        const exerciseName = card.querySelector('.exercise-card-content h4').textContent;
+        const exercise = exercises.muscle.exercises.find(e => e.name === exerciseName);
+        if (exercise) {
+          openInstructionsModal(exercise);
+        }
       }
     });
   </script>

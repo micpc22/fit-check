@@ -14,6 +14,9 @@
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
             line-height: 1.5;
+            background: linear-gradient(135deg, #0e1621 0%, #1a2332 100%);
+            min-height: 100vh;
+            color: #fff;
         }
 
         h1 {
@@ -67,19 +70,20 @@
         }
 
         .card {
-            background: white;
+            background: rgba(27, 36, 48, 0.6);
             border-radius: 0.75rem;
-            border: 1px solid rgb(229, 231, 235);
+            border: 1px solid rgba(91, 155, 213, 0.2);
             transition: all 0.2s;
         }
 
         .card:hover {
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            border-color: rgba(91, 155, 213, 0.4);
         }
 
         .card.selected {
             border: 2px solid rgb(147, 51, 234);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 10px 15px -3px rgba(147, 51, 234, 0.3);
         }
 
         .hidden {
@@ -116,7 +120,7 @@
             width: 1.25rem;
             height: 1.25rem;
             border-radius: 9999px;
-            border: 2px solid rgb(209, 213, 219);
+            border: 2px solid rgb(107, 114, 128);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -126,7 +130,7 @@
             width: 1.5rem;
             height: 1.5rem;
             border-radius: 9999px;
-            border: 2px solid rgb(209, 213, 219);
+            border: 2px solid rgb(107, 114, 128);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -187,20 +191,20 @@
         }
     </style>
 </head>
-<body class="bg-gradient-to-br from-purple-50 via-white to-blue-50">
+<body>
     <!-- Progress Bar -->
-    <div id="progressBar" class="hidden fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-sm border-b border-gray-200">
+    <div id="progressBar" class="hidden fixed top-0 left-0 right-0 z-50 bg-black/30 backdrop-blur-sm border-b border-gray-700">
         <div class="max-w-4xl mx-auto px-6 py-4">
             <div class="flex items-center space-x-4">
-                <button id="backBtn" class="px-3 py-2 hover:bg-gray-100 rounded-lg transition">
+                <button id="backBtn" class="px-3 py-2 hover:bg-gray-700 rounded-lg transition">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
                     </svg>
                 </button>
-                <div class="flex-1 bg-gray-200 h-2 rounded-full overflow-hidden">
+                <div class="flex-1 bg-gray-700 h-2 rounded-full overflow-hidden">
                     <div id="progressFill" class="progress-bar" style="width: 0%"></div>
                 </div>
-                <span id="progressText" class="text-sm text-gray-600">0 of 5</span>
+                <span id="progressText" class="text-sm text-gray-400">0 of 5</span>
             </div>
         </div>
     </div>
@@ -217,15 +221,15 @@
             </div>
             
             <div class="space-y-3">
-                <h1 class="text-purple-600">Welcome to FitLife</h1>
-                <p class="text-gray-600">
+                <h1 class="text-purple-400">Welcome to FITTCHECK</h1>
+                <p class="text-gray-300">
                     Your personal fitness journey starts here. Let's customize your experience to help you reach your goals.
                 </p>
             </div>
 
             <div class="relative w-full h-64 rounded-2xl overflow-hidden shadow-xl">
                 <img 
-                    src="https://images.unsplash.com/photo-1734189605012-f03d97a4d98f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080" 
+                    src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800&q=80" 
                     alt="Fitness motivation" 
                     class="w-full h-full object-cover"
                 />
@@ -235,7 +239,7 @@
                 <button onclick="nextStep()" class="btn-primary w-full text-white py-6 px-4 rounded-lg">
                     Get Started
                 </button>
-                <p class="text-sm text-gray-500">Takes less than 2 minutes</p>
+                <p class="text-sm text-gray-400">Takes less than 2 minutes</p>
             </div>
         </div>
     </div>
@@ -245,7 +249,7 @@
         <div class="max-w-2xl w-full space-y-8">
             <div class="text-center space-y-3">
                 <h2>What's your main goal?</h2>
-                <p class="text-gray-600">Choose the goal that matters most to you right now</p>
+                <p class="text-gray-400">Choose the goal that matters most to you right now</p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -258,7 +262,7 @@
                         </div>
                         <div class="flex-1">
                             <h3 class="mb-1">Lose Weight</h3>
-                            <p class="text-sm text-gray-600">Burn calories and shed pounds</p>
+                            <p class="text-sm text-gray-400">Burn calories and shed pounds</p>
                         </div>
                         <div class="radio-circle"></div>
                     </div>
@@ -273,7 +277,7 @@
                         </div>
                         <div class="flex-1">
                             <h3 class="mb-1">Build Muscle</h3>
-                            <p class="text-sm text-gray-600">Gain strength and muscle mass</p>
+                            <p class="text-sm text-gray-400">Gain strength and muscle mass</p>
                         </div>
                         <div class="radio-circle"></div>
                     </div>
@@ -288,7 +292,7 @@
                         </div>
                         <div class="flex-1">
                             <h3 class="mb-1">Stay Fit</h3>
-                            <p class="text-sm text-gray-600">Maintain overall health</p>
+                            <p class="text-sm text-gray-400">Maintain overall health</p>
                         </div>
                         <div class="radio-circle"></div>
                     </div>
@@ -303,7 +307,7 @@
                         </div>
                         <div class="flex-1">
                             <h3 class="mb-1">Improve Endurance</h3>
-                            <p class="text-sm text-gray-600">Boost stamina and energy</p>
+                            <p class="text-sm text-gray-400">Boost stamina and energy</p>
                         </div>
                         <div class="radio-circle"></div>
                     </div>
@@ -321,20 +325,20 @@
         <div class="max-w-2xl w-full space-y-8">
             <div class="text-center space-y-3">
                 <h2>What's your fitness level?</h2>
-                <p class="text-gray-600">We'll adjust your program to match your experience</p>
+                <p class="text-gray-400">We'll adjust your program to match your experience</p>
             </div>
 
             <div class="space-y-4">
                 <div class="card p-6 cursor-pointer" onclick="selectLevel('beginner', this)">
                     <div class="flex items-center space-x-4">
-                        <div class="bg-green-100 p-4 rounded-xl">
-                            <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div class="bg-green-900/50 p-4 rounded-xl">
+                            <svg class="w-8 h-8 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707"></path>
                             </svg>
                         </div>
                         <div class="flex-1">
                             <h3 class="mb-1">Beginner</h3>
-                            <p class="text-sm text-gray-600 mb-1">New to fitness or returning after a break</p>
+                            <p class="text-sm text-gray-400 mb-1">New to fitness or returning after a break</p>
                             <p class="text-xs text-gray-500">2-3 workouts per week</p>
                         </div>
                         <div class="radio-circle-lg"></div>
@@ -343,14 +347,14 @@
 
                 <div class="card p-6 cursor-pointer" onclick="selectLevel('intermediate', this)">
                     <div class="flex items-center space-x-4">
-                        <div class="bg-blue-100 p-4 rounded-xl">
-                            <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div class="bg-blue-900/50 p-4 rounded-xl">
+                            <svg class="w-8 h-8 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
                             </svg>
                         </div>
                         <div class="flex-1">
                             <h3 class="mb-1">Intermediate</h3>
-                            <p class="text-sm text-gray-600 mb-1">Regular exercise routine established</p>
+                            <p class="text-sm text-gray-400 mb-1">Regular exercise routine established</p>
                             <p class="text-xs text-gray-500">3-5 workouts per week</p>
                         </div>
                         <div class="radio-circle-lg"></div>
@@ -359,14 +363,14 @@
 
                 <div class="card p-6 cursor-pointer" onclick="selectLevel('advanced', this)">
                     <div class="flex items-center space-x-4">
-                        <div class="bg-red-100 p-4 rounded-xl">
-                            <svg class="w-8 h-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div class="bg-red-900/50 p-4 rounded-xl">
+                            <svg class="w-8 h-8 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z"></path>
                             </svg>
                         </div>
                         <div class="flex-1">
                             <h3 class="mb-1">Advanced</h3>
-                            <p class="text-sm text-gray-600 mb-1">Experienced with consistent training</p>
+                            <p class="text-sm text-gray-400 mb-1">Experienced with consistent training</p>
                             <p class="text-xs text-gray-500">5-7 workouts per week</p>
                         </div>
                         <div class="radio-circle-lg"></div>
@@ -385,7 +389,7 @@
         <div class="max-w-3xl w-full space-y-8">
             <div class="text-center space-y-3">
                 <h2>What activities do you enjoy?</h2>
-                <p class="text-gray-600">Select all that apply - we'll personalize your workouts</p>
+                <p class="text-gray-400">Select all that apply - we'll personalize your workouts</p>
             </div>
 
             <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
@@ -400,7 +404,7 @@
                             <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path>
                             </svg>
-                            <p class="text-white">Strength Training</p>
+                            <p class="text-white text-sm">Strength Training</p>
                         </div>
                     </div>
                 </div>
@@ -416,7 +420,7 @@
                             <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
                             </svg>
-                            <p class="text-white">Cardio</p>
+                            <p class="text-white text-sm">Cardio</p>
                         </div>
                     </div>
                 </div>
@@ -432,7 +436,7 @@
                             <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                             </svg>
-                            <p class="text-white">Yoga</p>
+                            <p class="text-white text-sm">Yoga</p>
                         </div>
                     </div>
                 </div>
@@ -448,7 +452,7 @@
                             <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
                             </svg>
-                            <p class="text-white">Cycling</p>
+                            <p class="text-white text-sm">Cycling</p>
                         </div>
                     </div>
                 </div>
@@ -464,7 +468,7 @@
                             <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
                             </svg>
-                            <p class="text-white">Running</p>
+                            <p class="text-white text-sm">Running</p>
                         </div>
                     </div>
                 </div>
@@ -480,7 +484,7 @@
                             <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
                             </svg>
-                            <p class="text-white">HIIT</p>
+                            <p class="text-white text-sm">HIIT</p>
                         </div>
                     </div>
                 </div>
@@ -497,39 +501,39 @@
         <div class="max-w-2xl w-full space-y-8">
             <div class="text-center space-y-3">
                 <div class="flex justify-center">
-                    <div class="bg-purple-100 p-3 rounded-xl">
-                        <svg class="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="bg-purple-900/50 p-3 rounded-xl">
+                        <svg class="w-8 h-8 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                         </svg>
                     </div>
                 </div>
                 <h2>When can you work out?</h2>
-                <p class="text-gray-600">Choose your preferred days and time</p>
+                <p class="text-gray-400">Choose your preferred days and time</p>
             </div>
 
             <div class="space-y-6">
                 <div class="space-y-3">
                     <h3>Select Days</h3>
                     <div class="grid grid-cols-7 gap-2">
-                        <button onclick="toggleDay('monday', this)" class="day-btn p-3 bg-white hover:bg-gray-50 text-gray-700 border border-gray-200 rounded-xl transition-all">
+                        <button onclick="toggleDay('Monday', this)" class="day-btn p-3 bg-gray-800/50 hover:bg-gray-700 text-gray-300 border border-gray-600 rounded-xl transition-all">
                             <div class="text-sm">Mon</div>
                         </button>
-                        <button onclick="toggleDay('tuesday', this)" class="day-btn p-3 bg-white hover:bg-gray-50 text-gray-700 border border-gray-200 rounded-xl transition-all">
+                        <button onclick="toggleDay('Tuesday', this)" class="day-btn p-3 bg-gray-800/50 hover:bg-gray-700 text-gray-300 border border-gray-600 rounded-xl transition-all">
                             <div class="text-sm">Tue</div>
                         </button>
-                        <button onclick="toggleDay('wednesday', this)" class="day-btn p-3 bg-white hover:bg-gray-50 text-gray-700 border border-gray-200 rounded-xl transition-all">
+                        <button onclick="toggleDay('Wednesday', this)" class="day-btn p-3 bg-gray-800/50 hover:bg-gray-700 text-gray-300 border border-gray-600 rounded-xl transition-all">
                             <div class="text-sm">Wed</div>
                         </button>
-                        <button onclick="toggleDay('thursday', this)" class="day-btn p-3 bg-white hover:bg-gray-50 text-gray-700 border border-gray-200 rounded-xl transition-all">
+                        <button onclick="toggleDay('Thursday', this)" class="day-btn p-3 bg-gray-800/50 hover:bg-gray-700 text-gray-300 border border-gray-600 rounded-xl transition-all">
                             <div class="text-sm">Thu</div>
                         </button>
-                        <button onclick="toggleDay('friday', this)" class="day-btn p-3 bg-white hover:bg-gray-50 text-gray-700 border border-gray-200 rounded-xl transition-all">
+                        <button onclick="toggleDay('Friday', this)" class="day-btn p-3 bg-gray-800/50 hover:bg-gray-700 text-gray-300 border border-gray-600 rounded-xl transition-all">
                             <div class="text-sm">Fri</div>
                         </button>
-                        <button onclick="toggleDay('saturday', this)" class="day-btn p-3 bg-white hover:bg-gray-50 text-gray-700 border border-gray-200 rounded-xl transition-all">
+                        <button onclick="toggleDay('Saturday', this)" class="day-btn p-3 bg-gray-800/50 hover:bg-gray-700 text-gray-300 border border-gray-600 rounded-xl transition-all">
                             <div class="text-sm">Sat</div>
                         </button>
-                        <button onclick="toggleDay('sunday', this)" class="day-btn p-3 bg-white hover:bg-gray-50 text-gray-700 border border-gray-200 rounded-xl transition-all">
+                        <button onclick="toggleDay('Sunday', this)" class="day-btn p-3 bg-gray-800/50 hover:bg-gray-700 text-gray-300 border border-gray-600 rounded-xl transition-all">
                             <div class="text-sm">Sun</div>
                         </button>
                     </div>
@@ -542,7 +546,7 @@
                             <div class="flex items-center justify-between">
                                 <div>
                                     <h4>Morning</h4>
-                                    <p class="text-sm text-gray-600">6:00 AM - 10:00 AM</p>
+                                    <p class="text-sm text-gray-400">6:00 AM - 10:00 AM</p>
                                 </div>
                                 <div class="radio-circle-lg"></div>
                             </div>
@@ -552,7 +556,7 @@
                             <div class="flex items-center justify-between">
                                 <div>
                                     <h4>Afternoon</h4>
-                                    <p class="text-sm text-gray-600">12:00 PM - 4:00 PM</p>
+                                    <p class="text-sm text-gray-400">12:00 PM - 4:00 PM</p>
                                 </div>
                                 <div class="radio-circle-lg"></div>
                             </div>
@@ -562,7 +566,7 @@
                             <div class="flex items-center justify-between">
                                 <div>
                                     <h4>Evening</h4>
-                                    <p class="text-sm text-gray-600">5:00 PM - 9:00 PM</p>
+                                    <p class="text-sm text-gray-400">5:00 PM - 9:00 PM</p>
                                 </div>
                                 <div class="radio-circle-lg"></div>
                             </div>
@@ -596,31 +600,31 @@
             </div>
             
             <div class="space-y-3">
-                <h1 class="text-purple-600">You're All Set!</h1>
-                <p class="text-gray-600">
+                <h1 class="text-purple-400">You're All Set!</h1>
+                <p class="text-gray-300">
                     Your personalized fitness plan is ready. Let's start your transformation journey today!
                 </p>
             </div>
 
-            <div class="bg-white rounded-2xl p-6 shadow-lg space-y-4">
+            <div class="bg-gray-800/50 rounded-2xl p-6 shadow-lg space-y-4">
                 <div class="grid grid-cols-3 gap-4">
                     <div class="space-y-1">
-                        <div class="bg-purple-100 rounded-lg p-3">
-                            <p class="text-purple-600">Goal Set</p>
+                        <div class="bg-purple-900/50 rounded-lg p-3">
+                            <p class="text-purple-400">Goal Set</p>
                         </div>
-                        <p class="text-xs text-gray-600">Personalized</p>
+                        <p class="text-xs text-gray-400">Personalized</p>
                     </div>
                     <div class="space-y-1">
-                        <div class="bg-blue-100 rounded-lg p-3">
-                            <p class="text-blue-600">Plan Ready</p>
+                        <div class="bg-blue-900/50 rounded-lg p-3">
+                            <p class="text-blue-400">Plan Ready</p>
                         </div>
-                        <p class="text-xs text-gray-600">Custom fit</p>
+                        <p class="text-xs text-gray-400">Custom fit</p>
                     </div>
                     <div class="space-y-1">
-                        <div class="bg-green-100 rounded-lg p-3">
-                            <p class="text-green-600">Let's Go!</p>
+                        <div class="bg-green-900/50 rounded-lg p-3">
+                            <p class="text-green-400">Let's Go!</p>
                         </div>
-                        <p class="text-xs text-gray-600">Start now</p>
+                        <p class="text-xs text-gray-400">Start now</p>
                     </div>
                 </div>
             </div>
@@ -629,7 +633,7 @@
                 <button onclick="completeOnboarding()" class="btn-primary w-full text-white py-6 px-4 rounded-lg">
                     Start Your Journey
                 </button>
-                <p class="text-sm text-gray-500">
+                <p class="text-sm text-gray-400">
                     "The journey of a thousand miles begins with one step." - Lao Tzu
                 </p>
             </div>

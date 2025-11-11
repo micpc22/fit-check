@@ -68,7 +68,7 @@
       display: flex;
     }
 
-    .main-nav a {
+    .main-nav a, .main-nav button {
       color: #e2e8f0;
       text-decoration: none;
       padding: 0.5rem 0.75rem;
@@ -76,9 +76,15 @@
       transition: all 0.3s;
       font-size: 0.95rem;
       font-weight: 500;
+      background: none;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
     }
 
-    .main-nav a:hover, .main-nav a.active {
+    .main-nav a:hover, .main-nav a.active, .main-nav button:hover {
       color: #8ab9f7;
       background: rgba(102, 155, 207, 0.1);
     }
@@ -108,6 +114,160 @@
 
     .main-nav.mobile.show {
       display: flex;
+    }
+
+    /* Notification Bell */
+    .notification-bell {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      z-index: 100;
+      background: var(--accent);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 3rem;
+      height: 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      transition: all 0.3s;
+    }
+
+    .notification-bell:hover {
+      background: var(--accent-dark);
+      transform: scale(1.1);
+    }
+
+    .notification-badge {
+      position: absolute;
+      top: -0.25rem;
+      right: -0.25rem;
+      background: #dc2626;
+      color: white;
+      font-size: 0.75rem;
+      border-radius: 50%;
+      width: 1.25rem;
+      height: 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .notification-panel {
+      display: none;
+      position: fixed;
+      top: 5rem;
+      right: 1rem;
+      width: 20rem;
+      max-height: 24rem;
+      background: var(--card);
+      border-radius: 0.75rem;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(102, 155, 207, 0.3);
+      z-index: 99;
+      overflow: hidden;
+    }
+
+    .notification-panel.active {
+      display: block;
+    }
+
+    .notification-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem;
+      border-bottom: 1px solid rgba(102, 155, 207, 0.2);
+    }
+
+    .notification-header h3 {
+      color: white;
+      font-size: 1rem;
+    }
+
+    .clear-all-btn {
+      color: var(--accent);
+      font-size: 0.875rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+
+    .clear-all-btn:hover {
+      color: var(--accent-dark);
+    }
+
+    .notification-list {
+      max-height: 20rem;
+      overflow-y: auto;
+    }
+
+    .notification-item {
+      padding: 1rem;
+      border-bottom: 1px solid rgba(102, 155, 207, 0.1);
+      transition: background 0.2s;
+    }
+
+    .notification-item:hover {
+      background: rgba(102, 155, 207, 0.05);
+    }
+
+    .notification-item p {
+      color: white;
+      font-size: 0.875rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .notification-item small {
+      color: var(--muted);
+      font-size: 0.75rem;
+    }
+
+    .notification-empty {
+      padding: 2rem;
+      text-align: center;
+      color: var(--muted);
+    }
+
+    /* Toast Notification */
+    .toast-container {
+      position: fixed;
+      bottom: 1rem;
+      right: 1rem;
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .toast {
+      background: var(--card);
+      border: 1px solid var(--accent);
+      border-radius: 0.5rem;
+      padding: 1rem;
+      max-width: 20rem;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+      animation: slideIn 0.3s ease-out;
+    }
+
+    @keyframes slideIn {
+      from {
+        transform: translateX(100%);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+    .toast p {
+      color: white;
+      font-size: 0.875rem;
     }
 
     /* Container */
@@ -491,60 +651,67 @@
     /* Footer */
     .site-footer {
       background: #000;
-      color: #cbd5e1;
+      color: #9ca3af;
       margin-top: 3rem;
       border-top: 1px solid rgba(255, 255, 255, 0.05);
+      padding: 1.5rem 0;
     }
 
     .footer-inner {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 2rem;
-      padding: 2rem 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
     }
 
-    .footer-inner h3, .footer-inner h4 {
+    .footer-inner h3 {
       color: white;
-      margin-bottom: 0.75rem;
+      font-size: 1rem;
+      margin: 0;
     }
 
     .footer-nav {
       display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
+      gap: 1.5rem;
     }
 
     .footer-nav a {
-      color: #cbd5e1;
+      color: #9ca3af;
       text-decoration: none;
       transition: color 0.3s;
+      font-size: 0.875rem;
     }
 
     .footer-nav a:hover {
       color: #8ab9f7;
     }
 
-    address {
+    .footer-contact {
+      color: #9ca3af;
+      font-size: 0.875rem;
       font-style: normal;
-      line-height: 1.8;
-      color: #cbd5e1;
     }
 
-    address a {
-      color: #cbd5e1;
+    .footer-contact a {
+      color: #9ca3af;
       text-decoration: none;
       transition: color 0.3s;
     }
 
-    address a:hover {
+    .footer-contact a:hover {
       color: #8ab9f7;
     }
 
     .footer-bottom {
       text-align: center;
-      padding: 2rem 0;
+      padding: 1rem 0;
       border-top: 1px solid rgba(255, 255, 255, 0.05);
-      color: #cbd5e1;
+      margin-top: 1rem;
+    }
+
+    .footer-bottom small {
+      font-size: 0.8rem;
     }
 
     /* Responsive */
@@ -555,10 +722,6 @@
 
       .main-nav.desktop {
         display: flex;
-      }
-
-      .footer-inner {
-        grid-template-columns: repeat(3, 1fr);
       }
     }
 
@@ -588,18 +751,57 @@
   </style>
 </head>
 <body>
-  <!-- Header -->
+  <!-- Notification Bell -->
+  <button class="notification-bell" id="notificationBell">
+    🔔
+    <span class="notification-badge" id="notificationBadge" style="display: none;">0</span>
+  </button>
+
+  <!-- Notification Panel -->
+  <div class="notification-panel" id="notificationPanel">
+    <div class="notification-header">
+      <h3>Notifications</h3>
+      <button class="clear-all-btn" id="clearAllBtn">Clear All</button>
+    </div>
+    <div class="notification-list" id="notificationList">
+      <div class="notification-empty">No new notifications</div>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+ <!-- Header -->
   <header class="site-header">
     <div class="header-inner">
       <a href="index.html" class="logo">FITTCHECK</a>
       
       <!-- Desktop Navigation -->
       <nav class="main-nav desktop">
-        <a href="index.html">Home</a>
-        <a href="classes.html">Classes</a>
-        <a href="trainers.html">Trainers</a>
-        <a href="about.html" class="active">About Us</a>
-        <a href="tracker.html">Tracker</a>
+        <a href="index.html" class="active">
+       <img src="pictures/home-button 1.png" alt="Home Icon" style="width:20px; height:20px;">
+          Home
+        </a>
+        <a href="classes.html">
+          <i class="icon-classes"></i>
+          Classes
+        </a>
+        <a href="trainers.html">
+          <i class="icon-trainers"></i>
+          Trainers
+        </a>
+        <a href="contact.html">
+          <i class="icon-about"></i>
+          About Us
+        </a>
+        <a href="tracker.html">
+          <i class="icon-tracker"></i>
+          Tracker
+        </a>
+        <button onclick="window.location.href='profile.html'" style="font-family: inherit;">
+          <i class="icon-profile"></i>
+          Profile
+        </button>
       </nav>
 
       <!-- Mobile Menu Toggle -->
@@ -607,11 +809,30 @@
       
       <!-- Mobile Navigation -->
       <nav class="main-nav mobile" id="mobileNav">
-        <a href="index.html">Home</a>
-        <a href="classes.html">Classes</a>
-        <a href="trainers.html">Trainers</a>
-        <a href="about.html" class="active">About Us</a>
-        <a href="tracker.html">Tracker</a>
+        <a href="index.html" class="active">
+          <i class="icon-home"></i>
+          Home
+        </a>
+        <a href="classes.html">
+          <i class="icon-classes"></i>
+          Classes
+        </a>
+        <a href="trainers.html">
+          <i class="icon-trainers"></i>
+          Trainers
+        </a>
+        <a href="contact.html">
+          <i class="icon-about"></i>
+          About Us
+        </a>
+        <a href="tracker.html">
+          <i class="icon-tracker"></i>
+          Tracker
+        </a>
+        <button onclick="window.location.href='profile.html'" style="font-family: inherit; width: 100%; justify-content: flex-start;">
+          <i class="icon-profile"></i>
+          Profile
+        </button>
       </nav>
     </div>
   </header>
@@ -800,40 +1021,36 @@
   <!-- Footer -->
   <footer class="site-footer">
     <div class="container footer-inner">
-      <!-- Brand Section -->
       <div>
-        <h3>Royal Fitness</h3>
-        <p>Strong. Focused. Driven.</p>
+        <h3>FITTCHECK</h3>
       </div>
-
-      <!-- Quick Links -->
-      <div>
-        <h4>Quick Links</h4>
-        <nav class="footer-nav">
-          <a href="index.html">Home</a>
-          <a href="classes.html">Classes</a>
-          <a href="trainers.html">Trainers</a>
-          <a href="about.html">About Us</a>
-        </nav>
-      </div>
-
-      <!-- Contact -->
-      <div>
-        <h4>Contact</h4>
-        <address>
-          Balingasag Brgy 2<br>
-          (+63)-923456789<br>
-          <a href="mailto:hello@fittcheck.ph">hello@fittcheck.ph</a>
-        </address>
-      </div>
+      <nav class="footer-nav">
+        <a href="index.html">Home</a>
+        <a href="classes.html">Classes</a>
+        <a href="trainers.html">Trainers</a>
+        <a href="contact.html">About Us</a>
+        <a href="tracker.html">Tracker</a>
+      </nav>
+      <address class="footer-contact">
+        <a href="mailto:hello@fittcheck.ph">hello@fittcheck.ph</a>
+      </address>
     </div>
-    
     <div class="footer-bottom container">
-      <small>© <span id="year"></span> Royal Fitness. All rights reserved.</small>
+      <small>© <span id="year"></span> FITTCHECK. All rights reserved.</small>
     </div>
   </footer>
 
   <script>
+    // Check if user is logged in
+    window.addEventListener('DOMContentLoaded', function() {
+      const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+      if (!isLoggedIn) {
+        window.location.href = 'login.html';
+        return;
+      }
+      initializeNotifications();
+    });
+
     // Mobile menu toggle
     const menuToggle = document.getElementById('menuToggle');
     const mobileNav = document.getElementById('mobileNav');
@@ -851,6 +1068,14 @@
       }
     });
 
+    // Logout function
+    function logout() {
+      if (confirm('Are you sure you want to logout?')) {
+        localStorage.removeItem('isLoggedIn');
+        window.location.href = 'login.html';
+      }
+    }
+
     // Contact form handling
     document.getElementById('contactForm').addEventListener('submit', function(e) {
       e.preventDefault();
@@ -860,15 +1085,15 @@
       const email = document.getElementById('email').value;
       const message = document.getElementById('message').value;
 
-      // Simple validation
       if (name && email && message) {
         formMessage.className = 'form-message success';
         formMessage.textContent = 'Thank you for your message! We\'ll get back to you within one business day.';
         
-        // Clear form
         this.reset();
         
-        // Hide message after 5 seconds
+        // Show success notification
+        addNotification('Message sent successfully! We\'ll get back to you soon. 📧', 'success');
+        
         setTimeout(() => {
           formMessage.style.display = 'none';
         }, 5000);
@@ -880,6 +1105,116 @@
 
     // Set current year
     document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Notification System
+    let notifications = [];
+
+    function initializeNotifications() {
+      checkMissedExercises();
+      setInterval(checkMissedExercises, 60 * 60 * 1000);
+      
+      const notificationBell = document.getElementById('notificationBell');
+      const notificationPanel = document.getElementById('notificationPanel');
+      
+      notificationBell.addEventListener('click', function(e) {
+        e.stopPropagation();
+        notificationPanel.classList.toggle('active');
+      });
+
+      document.addEventListener('click', function(e) {
+        if (!notificationPanel.contains(e.target) && e.target !== notificationBell) {
+          notificationPanel.classList.remove('active');
+        }
+      });
+
+      document.getElementById('clearAllBtn').addEventListener('click', clearAllNotifications);
+    }
+
+    function checkMissedExercises() {
+      const lastExercise = localStorage.getItem('lastExerciseDate');
+      const currentDate = new Date();
+      
+      if (lastExercise) {
+        const lastExerciseDate = new Date(lastExercise);
+        const daysDiff = Math.floor((currentDate.getTime() - lastExerciseDate.getTime()) / (1000 * 60 * 60 * 24));
+        
+        if (daysDiff >= 1) {
+          const message = `You haven't exercised in ${daysDiff} day${daysDiff > 1 ? 's' : ''}! Time to get back on track! 💪`;
+          addNotification(message, 'missed-exercise');
+        }
+      } else {
+        localStorage.setItem('lastExerciseDate', currentDate.toISOString());
+      }
+
+      const scheduledWorkouts = JSON.parse(localStorage.getItem('scheduledWorkouts') || '[]');
+      const today = currentDate.toDateString();
+      
+      const missedWorkouts = scheduledWorkouts.filter(workout => {
+        const workoutDate = new Date(workout.date).toDateString();
+        return workoutDate === today && !workout.completed;
+      });
+
+      if (missedWorkouts.length > 0) {
+        const message = `You have ${missedWorkouts.length} workout${missedWorkouts.length > 1 ? 's' : ''} scheduled for today! 🏋️`;
+        addNotification(message, 'reminder');
+      }
+    }
+
+    function addNotification(message, type) {
+      const existingNotification = notifications.find(n => n.message === message);
+      if (existingNotification) return;
+
+      const notification = {
+        id: Date.now(),
+        message: message,
+        type: type,
+        timestamp: new Date()
+      };
+
+      notifications.unshift(notification);
+      updateNotificationUI();
+      showToast(message);
+    }
+
+    function updateNotificationUI() {
+      const badge = document.getElementById('notificationBadge');
+      const list = document.getElementById('notificationList');
+      
+      if (notifications.length > 0) {
+        badge.textContent = notifications.length;
+        badge.style.display = 'flex';
+        
+        list.innerHTML = notifications.map(n => `
+          <div class="notification-item">
+            <p>${n.message}</p>
+            <small>${new Date(n.timestamp).toLocaleTimeString()}</small>
+          </div>
+        `).join('');
+      } else {
+        badge.style.display = 'none';
+        list.innerHTML = '<div class="notification-empty">No new notifications</div>';
+      }
+
+      document.getElementById('clearAllBtn').style.display = notifications.length > 0 ? 'block' : 'none';
+    }
+
+    function showToast(message) {
+      const toastContainer = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      toast.className = 'toast';
+      toast.innerHTML = `<p>🔔 ${message}</p>`;
+      
+      toastContainer.appendChild(toast);
+      
+      setTimeout(() => {
+        toast.remove();
+      }, 5000);
+    }
+
+    function clearAllNotifications() {
+      notifications = [];
+      updateNotificationUI();
+    }
 
     // Smooth scroll for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -910,7 +1245,6 @@
       });
     }, observerOptions);
 
-    // Observe elements for animation
     document.querySelectorAll('.value-card, .facility-card, .stat-item').forEach(el => {
       el.style.opacity = '0';
       el.style.transform = 'translateY(20px)';

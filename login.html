@@ -17,7 +17,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: linear-gradient(135deg, #f9fafb 0%, #e5e7eb 100%);
+      background-color: #0e1621;
       padding: 1rem;
     }
 
@@ -27,10 +27,11 @@
     }
 
     .login-box {
-      background: white;
+      background: #1b2430;
       border-radius: 1rem;
-      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.4);
       padding: 2rem;
+      border: 1px solid rgba(102, 155, 207, 0.2);
     }
 
     .logo-container {
@@ -39,9 +40,10 @@
       margin-bottom: 1.5rem;
     }
 
-    .logo-container img {
-      width: 8rem;
-      height: auto;
+    .logo-container h1 {
+      color: #ffffff;
+      letter-spacing: 0.1em;
+      font-size: 2rem;
     }
 
     .form-group {
@@ -52,18 +54,24 @@
     input[type="password"] {
       width: 100%;
       padding: 0.75rem 1rem;
-      border: 1px solid #d1d5db;
+      border: 1px solid rgba(102, 155, 207, 0.3);
       border-radius: 0.5rem;
       font-size: 1rem;
       transition: all 0.2s;
       outline: none;
+      background: #0e1621;
+      color: #fff;
+    }
+
+    input[type="text"]::placeholder,
+    input[type="password"]::placeholder {
+      color: #a0a8b5;
     }
 
     input[type="text"]:focus,
     input[type="password"]:focus {
-      border-color: #3b82f6;
-      ring: 2px solid #3b82f6;
-      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+      border-color: #669bcf;
+      box-shadow: 0 0 0 3px rgba(102, 155, 207, 0.1);
     }
 
     .password-field {
@@ -80,20 +88,20 @@
       top: 50%;
       transform: translateY(-50%);
       cursor: pointer;
-      color: #6b7280;
+      color: #a0a8b5;
       transition: color 0.2s;
       font-size: 1.25rem;
       user-select: none;
     }
 
     .toggle-password:hover {
-      color: #374151;
+      color: #8ab9f7;
     }
 
     .btn-login {
       width: 100%;
       padding: 0.75rem;
-      background: #3b82f6;
+      background: #669bcf;
       color: white;
       border: none;
       border-radius: 0.5rem;
@@ -101,10 +109,11 @@
       cursor: pointer;
       transition: background 0.2s;
       margin-top: 0.5rem;
+      font-weight: 600;
     }
 
     .btn-login:hover {
-      background: #2563eb;
+      background: #8ab9f7;
     }
 
     .links {
@@ -113,18 +122,18 @@
     }
 
     .links span {
-      color: #4b5563;
+      color: #a0a8b5;
     }
 
     .links a {
-      color: #3b82f6;
+      color: #669bcf;
       text-decoration: none;
       cursor: pointer;
       transition: color 0.2s;
     }
 
     .links a:hover {
-      color: #2563eb;
+      color: #8ab9f7;
       text-decoration: underline;
     }
 
@@ -137,7 +146,7 @@
     }
 
     .success-msg {
-      color: #16a34a;
+      color: #45ffca;
     }
 
     /* Modal Styles */
@@ -148,7 +157,7 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background: rgba(0, 0, 0, 0.5);
+      background: rgba(0, 0, 0, 0.7);
       z-index: 1000;
       animation: fadeIn 0.2s;
     }
@@ -160,24 +169,25 @@
     }
 
     .modal-content {
-      background: white;
+      background: #1b2430;
       border-radius: 0.75rem;
       padding: 1.5rem;
       max-width: 28rem;
       width: 90%;
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
       animation: slideUp 0.3s;
+      border: 2px solid #669bcf;
     }
 
     .modal-header h2 {
       font-size: 1.25rem;
       margin-bottom: 0.5rem;
-      color: #111827;
+      color: #8ab9f7;
     }
 
     .modal-body {
       margin: 1rem 0;
-      color: #6b7280;
+      color: #a0a8b5;
       line-height: 1.5;
     }
 
@@ -189,17 +199,18 @@
 
     .btn-modal {
       padding: 0.5rem 1.5rem;
-      background: #3b82f6;
+      background: #669bcf;
       color: white;
       border: none;
       border-radius: 0.375rem;
       cursor: pointer;
       font-size: 0.875rem;
       transition: background 0.2s;
+      font-weight: 600;
     }
 
     .btn-modal:hover {
-      background: #2563eb;
+      background: #8ab9f7;
     }
 
     @keyframes fadeIn {
@@ -229,7 +240,7 @@
     <div class="login-box">
       <!-- Logo -->
       <div class="logo-container">
-        <img src="pictures/FITTCHECK.png">
+        <img src="pictures/577499689_914143981773593_6507500399188280325_n 1 (1).png" alt="">
       </div>
 
       <!-- Login Form -->
@@ -283,82 +294,103 @@
     </div>
   </div>
 
-  <script>
-    // Password Toggle
-    const togglePassword = document.getElementById('togglePassword');
-    const passwordInput = document.getElementById('password');
-    let showPassword = false;
+ <script>
+  // ===============================
+  // PASSWORD TOGGLE
+  // ===============================
+  const togglePassword = document.getElementById('togglePassword');
+  const passwordInput = document.getElementById('password');
+  let showPassword = false;
 
-    togglePassword.addEventListener('click', function() {
-      showPassword = !showPassword;
-      passwordInput.type = showPassword ? 'text' : 'password';
-      togglePassword.textContent = showPassword ? '🙈' : '👁️';
-    });
+  togglePassword.addEventListener('click', function () {
+    showPassword = !showPassword;
+    passwordInput.type = showPassword ? 'text' : 'password';
+    togglePassword.textContent = showPassword ? '🙈' : '👁️';
+  });
 
-    // Form Submit
-    const loginForm = document.getElementById('loginForm');
-    const loginMsg = document.getElementById('loginMsg');
-    const modalOverlay = document.getElementById('modalOverlay');
+  // ===============================
+  // FORM SUBMIT
+  // ===============================
+  const loginForm = document.getElementById('loginForm');
+  const loginMsg = document.getElementById('loginMsg');
+  const modalOverlay = document.getElementById('modalOverlay');
 
-    loginForm.addEventListener('submit', function(e) {
-      e.preventDefault();
-      
-      const email = document.getElementById('loginEmail').value.trim();
-      const password = document.getElementById('password').value;
-      
-      loginMsg.textContent = '';
-      loginMsg.className = 'error-msg';
+  loginForm.addEventListener('submit', function (e) {
+    e.preventDefault();
 
-      // Basic validation
-      if (!email || !password) {
-        loginMsg.textContent = 'Please fill in all fields';
-        return;
-      }
+    const email = document.getElementById('loginEmail').value.trim();
+    const password = document.getElementById('password').value;
 
-      // Check if user is registered (using localStorage)
-      const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers') || '[]');
-      const userExists = registeredUsers.some(user => 
-        user.email.toLowerCase() === email.toLowerCase() || user.phone === email
-      );
+    loginMsg.textContent = '';
+    loginMsg.className = 'error-msg';
 
-      if (!userExists) {
-        // Show modal dialog
-        modalOverlay.classList.add('active');
-        return;
-      }
-
-      // If user exists, proceed with login
-      loginMsg.textContent = 'Login successful!';
-      loginMsg.classList.add('success-msg');
-    });
-
-    // Modal Actions
-    const modalBtn = document.getElementById('modalBtn');
-    const createAccountLink = document.getElementById('createAccountLink');
-
-    function showCreateAccountAlert() {
-      modalOverlay.classList.remove('active');
-      window.location.href = "register.html"; // Redirect to registration page
+    // Basic validation
+    if (!email || !password) {
+      loginMsg.textContent = 'Please fill in all fields';
+      return;
     }
 
-modalBtn.addEventListener('click', showCreateAccountAlert);
-createAccountLink.addEventListener('click', function(e) {
-  e.preventDefault();
-  showCreateAccountAlert();
-});
+    // Check for admin login
+    if (email.toLowerCase() === 'admin' && password === 'admin') {
+      loginMsg.textContent = 'Admin login successful! Redirecting...';
+      loginMsg.classList.add('success-msg');
 
-    modalBtn.addEventListener('click', showCreateAccountAlert);
-    createAccountLink.addEventListener('click', function(e) {
-      e.preventDefault();
-      showCreateAccountAlert();
-    });
+      // Store admin session
+      localStorage.setItem('userRole', 'admin');
+      localStorage.setItem('isLoggedIn', 'true');
+      localStorage.setItem('currentUserEmail', 'admin');
 
-    // Close modal when clicking outside
-    modalOverlay.addEventListener('click', function(e) {
-      if (e.target === modalOverlay) {
-        modalOverlay.classList.remove('active');
-      }
-    });
-  </script>
+      // Redirect to admin page after short delay
+      setTimeout(function () {
+        window.location.href = 'admin.html';
+      }, 1000);
+      return;
+    }
+
+    // Check if regular user is registered (using localStorage)
+    const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers') || '[]');
+    const user = registeredUsers.find(user =>
+      (user.email.toLowerCase() === email.toLowerCase() || user.phone === email) &&
+      user.password === password
+    );
+
+    if (!user) {
+      // Show modal dialog if not found
+      modalOverlay.classList.add('active');
+      return;
+    }
+
+    // If user exists, proceed with login
+    loginMsg.textContent = 'Login successful! Redirecting...';
+    loginMsg.classList.add('success-msg');
+
+    // Store user session
+    localStorage.setItem('userRole', 'user');
+    localStorage.setItem('isLoggedIn', 'true');
+    localStorage.setItem('currentUserEmail', email);
+
+    // Redirect to onboarding page after short delay
+    setTimeout(function () {
+      window.location.href = 'onboarding.html';
+    }, 1000);
+  });
+
+  // ===============================
+  // MODAL ACTIONS
+  // ===============================
+  const modalBtn = document.getElementById('modalBtn');
+
+  modalBtn.addEventListener('click', function () {
+    modalOverlay.classList.remove('active');
+    window.location.href = "register.html";
+  });
+
+  // Close modal when clicking outside
+  modalOverlay.addEventListener('click', function (e) {
+    if (e.target === modalOverlay) {
+      modalOverlay.classList.remove('active');
+    }
+  });
+</script>
 </body>
 </html>

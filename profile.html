@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile - FITTCHECK</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --accent: #669bcf;
+      --accent-dark: #8ab9f7;
+      --muted: #a0a8b5;
+      --bg: #0e1621;
+      --card: #1b2430;
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+
+    html, body {
+      background-color: var(--bg);
+      min-height: 100%;
+      color: #fff;
+    }
+
+    /* Header */
+    .site-header {
+      background: rgba(14, 22, 33, 0.95);
+      backdrop-filter: blur(8px);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+    }
+
+    .header-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 1rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      color: #ffffff;
+      text-decoration: none;
+      letter-spacing: 0.05em;
+      font-size: 1.25rem;
+      font-weight: 600;
+    }
+
+    .home-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #d1d5db;
+      text-decoration: none;
+      padding: 0.5rem 0.75rem;
+      border-radius: 0.5rem;
+      transition: all 0.3s;
+      font-size: 0.95rem;
+      font-weight: 500;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    .home-btn:hover {
+      color: #8ab9f7;
+      background: rgba(102, 155, 207, 0.15);
+    }
+
+    /* Profile Content */
+    .profile-container {
+      max-width: 64rem;
+      margin: 0 auto;
+      padding: 3rem 1.25rem;
+    }
+
+    .profile-card {
+      background: #1b2430;
+      border-radius: 1rem;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(102, 155, 207, 0.2);
+      overflow: hidden;
+    }
+
+    .profile-header {
+      background: linear-gradient(to right, #669bcf, #8ab9f7);
+      padding: 2rem;
+      text-align: center;
+    }
+
+    .profile-avatar {
+      width: 6rem;
+      height: 6rem;
+      background: white;
+      border-radius: 50%;
+      margin: 0 auto 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    }
+
+    .profile-avatar svg {
+      width: 3rem;
+      height: 3rem;
+      color: #669bcf;
+    }
+
+    .profile-header h1 {
+      color: white;
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .profile-header p {
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .profile-body {
+      padding: 2rem;
+    }
+
+    .profile-body h2 {
+      color: #8ab9f7;
+      font-size: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .info-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem;
+      background: #0e1621;
+      border-radius: 0.5rem;
+      border: 1px solid rgba(102, 155, 207, 0.2);
+      margin-bottom: 1.5rem;
+    }
+
+    .info-item svg {
+      width: 1.5rem;
+      height: 1.5rem;
+      color: #669bcf;
+      flex-shrink: 0;
+    }
+
+    .info-label {
+      color: #a0a8b5;
+      font-size: 0.875rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .info-value {
+      color: white;
+    }
+
+    .password-section {
+      padding: 1rem;
+      background: #0e1621;
+      border-radius: 0.5rem;
+      border: 1px solid rgba(102, 155, 207, 0.2);
+      margin-bottom: 1.5rem;
+    }
+
+    .password-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .password-info {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .change-password-btn {
+      color: #669bcf;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 0.875rem;
+      transition: color 0.2s;
+    }
+
+    .change-password-btn:hover {
+      color: #8ab9f7;
+    }
+
+    .password-form {
+      margin-top: 1rem;
+      display: none;
+    }
+
+    .password-form.active {
+      display: block;
+    }
+
+    .password-form input {
+      width: 100%;
+      padding: 0.5rem 1rem;
+      background: #1b2430;
+      border: 1px solid rgba(102, 155, 207, 0.3);
+      border-radius: 0.5rem;
+      color: white;
+      outline: none;
+      margin-bottom: 0.75rem;
+    }
+
+    .password-form input::placeholder {
+      color: #a0a8b5;
+    }
+
+    .password-form input:focus {
+      border-color: #669bcf;
+    }
+
+    .password-form-message {
+      font-size: 0.875rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .password-form-message.success {
+      color: #45ffca;
+    }
+
+    .password-form-message.error {
+      color: #dc2626;
+    }
+
+    .password-form-actions {
+      display: flex;
+      gap: 0.75rem;
+    }
+
+    .btn-primary {
+      padding: 0.5rem 1rem;
+      background: #669bcf;
+      color: white;
+      border: none;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .btn-primary:hover {
+      background: #8ab9f7;
+    }
+
+    .btn-secondary {
+      padding: 0.5rem 1rem;
+      background: transparent;
+      border: 1px solid rgba(102, 155, 207, 0.3);
+      color: #a0a8b5;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(102, 155, 207, 0.1);
+      color: #8ab9f7;
+    }
+
+    .logout-section {
+      margin-top: 2rem;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(102, 155, 207, 0.2);
+      text-align: center;
+    }
+
+    .btn-logout {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.5rem;
+      background: #dc2626;
+      color: white;
+      border: none;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .btn-logout:hover {
+      background: #991b1b;
+    }
+
+    .btn-logout svg {
+      width: 1.25rem;
+      height: 1.25rem;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="logo">FITTCHECK</a>
+      <button class="home-btn" onclick="window.location.href='index.html'">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+          <polyline points="9 22 9 12 15 12 15 22"></polyline>
+        </svg>
+        Home
+      </button>
+    </div>
+  </header>
+
+  <!-- Profile Content -->
+  <div class="profile-container">
+    <div class="profile-card">
+      <!-- Profile Header -->
+      <div class="profile-header">
+        <div class="profile-avatar">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+        </div>
+        <h1 id="profileName">Loading...</h1>
+        <p>Member Profile</p>
+      </div>
+
+      <!-- Profile Body -->
+      <div class="profile-body">
+        <h2>Account Information</h2>
+
+        <!-- Full Name -->
+        <div class="info-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+          <div>
+            <div class="info-label">Full Name</div>
+            <div class="info-value" id="fullName">-</div>
+          </div>
+        </div>
+
+        <!-- Email -->
+        <div class="info-item" id="emailItem" style="display: none;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+            <polyline points="22,6 12,13 2,6"></polyline>
+          </svg>
+          <div>
+            <div class="info-label">Email Address</div>
+            <div class="info-value" id="email">-</div>
+          </div>
+        </div>
+
+        <!-- Phone -->
+        <div class="info-item" id="phoneItem" style="display: none;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+          </svg>
+          <div>
+            <div class="info-label">Phone Number</div>
+            <div class="info-value" id="phone">-</div>
+          </div>
+        </div>
+
+        <!-- Registration Date -->
+        <div class="info-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+            <line x1="16" y1="2" x2="16" y2="6"></line>
+            <line x1="8" y1="2" x2="8" y2="6"></line>
+            <line x1="3" y1="10" x2="21" y2="10"></line>
+          </svg>
+          <div>
+            <div class="info-label">Member Since</div>
+            <div class="info-value" id="registrationDate">-</div>
+          </div>
+        </div>
+
+        <!-- Password Section -->
+        <div class="password-section">
+          <div class="password-header">
+            <div class="password-info">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+              </svg>
+              <div>
+                <div class="info-label">Password</div>
+                <div class="info-value">••••••••</div>
+              </div>
+            </div>
+            <button class="change-password-btn" id="changePasswordBtn">Change Password</button>
+          </div>
+
+          <!-- Password Change Form -->
+          <form class="password-form" id="passwordForm">
+            <input type="password" id="newPassword" placeholder="New Password" required>
+            <input type="password" id="confirmNewPassword" placeholder="Confirm New Password" required>
+            <div class="password-form-message" id="passwordMessage"></div>
+            <div class="password-form-actions">
+              <button type="submit" class="btn-primary">Update Password</button>
+              <button type="button" class="btn-secondary" id="cancelPasswordBtn">Cancel</button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Logout Section -->
+        <div class="logout-section">
+          <button class="btn-logout" id="logoutBtn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+              <polyline points="16 17 21 12 16 7"></polyline>
+              <line x1="21" y1="12" x2="9" y2="12"></line>
+            </svg>
+            Logout
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Check if user is logged in
+    window.addEventListener('DOMContentLoaded', function() {
+      const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+      if (!isLoggedIn) {
+        window.location.href = 'login.html';
+        return;
+      }
+
+      loadUserProfile();
+    });
+
+    function loadUserProfile() {
+      const currentUserEmail = localStorage.getItem('currentUserEmail');
+      const userRole = localStorage.getItem('userRole');
+
+      if (userRole === 'admin') {
+        document.getElementById('profileName').textContent = 'Administrator';
+        document.getElementById('fullName').textContent = 'Admin User';
+        document.getElementById('registrationDate').textContent = 'N/A';
+        return;
+      }
+
+      const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers') || '[]');
+      const currentUser = registeredUsers.find(user => 
+        user.email.toLowerCase() === currentUserEmail.toLowerCase() || 
+        user.phone === currentUserEmail
+      );
+
+      if (currentUser) {
+        document.getElementById('profileName').textContent = currentUser.fullname;
+        document.getElementById('fullName').textContent = currentUser.fullname;
+
+        if (currentUser.email) {
+          document.getElementById('emailItem').style.display = 'flex';
+          document.getElementById('email').textContent = currentUser.email;
+        }
+
+        if (currentUser.phone) {
+          document.getElementById('phoneItem').style.display = 'flex';
+          document.getElementById('phone').textContent = currentUser.phone;
+        }
+
+        if (currentUser.registeredDate) {
+          const date = new Date(currentUser.registeredDate);
+          const formattedDate = date.toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+          });
+          document.getElementById('registrationDate').textContent = formattedDate;
+        } else {
+          document.getElementById('registrationDate').textContent = 'N/A';
+        }
+      }
+    }
+
+    // Change Password functionality
+    const changePasswordBtn = document.getElementById('changePasswordBtn');
+    const passwordForm = document.getElementById('passwordForm');
+    const cancelPasswordBtn = document.getElementById('cancelPasswordBtn');
+    const passwordMessage = document.getElementById('passwordMessage');
+
+    changePasswordBtn.addEventListener('click', function() {
+      passwordForm.classList.add('active');
+      changePasswordBtn.style.display = 'none';
+    });
+
+    cancelPasswordBtn.addEventListener('click', function() {
+      passwordForm.classList.remove('active');
+      changePasswordBtn.style.display = 'block';
+      passwordForm.reset();
+      passwordMessage.textContent = '';
+      passwordMessage.className = 'password-form-message';
+    });
+
+    passwordForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const newPassword = document.getElementById('newPassword').value;
+      const confirmNewPassword = document.getElementById('confirmNewPassword').value;
+
+      passwordMessage.textContent = '';
+      passwordMessage.className = 'password-form-message';
+
+      if (newPassword.length < 6) {
+        passwordMessage.textContent = 'Password must be at least 6 characters';
+        passwordMessage.classList.add('error');
+        return;
+      }
+
+      if (newPassword !== confirmNewPassword) {
+        passwordMessage.textContent = 'Passwords do not match';
+        passwordMessage.classList.add('error');
+        return;
+      }
+
+      // Update password in localStorage
+      const currentUserEmail = localStorage.getItem('currentUserEmail');
+      const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers') || '[]');
+      const userIndex = registeredUsers.findIndex(user => 
+        user.email.toLowerCase() === currentUserEmail.toLowerCase() || 
+        user.phone === currentUserEmail
+      );
+
+      if (userIndex !== -1) {
+        registeredUsers[userIndex].password = newPassword;
+        localStorage.setItem('registeredUsers', JSON.stringify(registeredUsers));
+        
+        passwordMessage.textContent = 'Password updated successfully!';
+        passwordMessage.classList.add('success');
+        
+        setTimeout(function() {
+          passwordForm.classList.remove('active');
+          changePasswordBtn.style.display = 'block';
+          passwordForm.reset();
+          passwordMessage.textContent = '';
+          passwordMessage.className = 'password-form-message';
+        }, 2000);
+      }
+    });
+
+    // Logout functionality
+    document.getElementById('logoutBtn').addEventListener('click', function() {
+      localStorage.removeItem('isLoggedIn');
+      localStorage.removeItem('userRole');
+      localStorage.removeItem('currentUserEmail');
+      window.location.href = 'login.html';
+    });
+  </script>
+</body>
+</html>
