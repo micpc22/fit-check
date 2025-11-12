@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>FITTCHECK — Home</title>
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
   <style>
     /* Reset & Base Styles */
     * {
@@ -11,7 +12,6 @@
       margin: 0;
       padding: 0;
     }
-
     :root {
       --accent: #5b9bd5;
       --accent-dark: #7ab3e8;
@@ -23,27 +23,17 @@
       --radius: 12px;
       font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     }
-
     html, body {
       background-color: var(--bg);
       min-height: 100%;
       color: #fff;
     }
-
     body {
       background: linear-gradient(135deg, #0e1621 0%, #1a2332 100%);
       min-height: 100vh;
     }
 
-    /* Icon Font Styles */
-    .icon-home::before { content: "🏠"; margin-right: 0.5rem; }
-    .icon-classes::before { content: "📅"; margin-right: 0.5rem; }
-    .icon-trainers::before { content: "👥"; margin-right: 0.5rem; }
-    .icon-about::before { content: "ℹ️"; margin-right: 0.5rem; }
-    .icon-tracker::before { content: "📊"; margin-right: 0.5rem; }
-    .icon-profile::before { content: "👤"; margin-right: 0.5rem; }
-
-    /* Header Styles */
+    /* Header */
     .site-header {
       background: rgba(14, 22, 33, 0.95);
       backdrop-filter: blur(8px);
@@ -53,7 +43,6 @@
       border-bottom: 1px solid rgba(255, 255, 255, 0.05);
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
     }
-
     .header-inner {
       max-width: 1280px;
       margin: 0 auto;
@@ -62,24 +51,21 @@
       align-items: center;
       justify-content: space-between;
     }
-
     .logo {
-      color: #ffffff;
-      text-decoration: none;
-      letter-spacing: 0.05em;
+      color: #fff;
       font-size: 1.25rem;
       font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      text-decoration: none;
     }
     .main-nav {
       display: none;
       align-items: center;
       gap: 2rem;
     }
-
-    .main-nav.desktop {
-      display: flex;
-    }
-
+    .main-nav.desktop { display: flex; }
     .main-nav a, .main-nav button {
       color: #d1d5db;
       text-decoration: none;
@@ -95,17 +81,14 @@
       align-items: center;
       gap: 0.5rem;
     }
-
-    .main-nav a:hover, .main-nav a.active, .main-nav button:hover {
+    .main-nav a:hover, .main-nav button:hover {
       color: var(--accent-dark);
       background: rgba(91, 155, 213, 0.15);
     }
-
-    .main-nav a.active {
-      color: var(--accent-dark);
-      background: rgba(91, 155, 213, 0.1);
+    .nav-active {
+      color: var(--accent-dark) !important;
+      background: rgba(91, 155, 213, 0.15) !important;
     }
-
     .menu-toggle {
       display: none;
       background: none;
@@ -114,7 +97,6 @@
       font-size: 1.5rem;
       cursor: pointer;
     }
-
     .main-nav.mobile {
       display: none;
       flex-direction: column;
@@ -128,10 +110,7 @@
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
       gap: 0.5rem;
     }
-
-    .main-nav.mobile.show {
-      display: flex;
-    }
+    .main-nav.mobile.show { display: flex; }
 
     /* Notification Bell */
     .notification-bell {
@@ -152,7 +131,6 @@
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
       transition: all 0.3s;
     }
-
     .notification-bell:hover {
       background: var(--accent-dark);
       transform: scale(1.1);
@@ -187,7 +165,6 @@
       z-index: 99;
       overflow: hidden;
     }
-
     .notification-panel.active {
       display: block;
     }
@@ -199,12 +176,10 @@
       padding: 1rem;
       border-bottom: 1px solid rgba(91, 155, 213, 0.2);
     }
-
     .notification-header h3 {
       color: white;
       font-size: 1rem;
     }
-
     .clear-all-btn {
       color: var(--accent);
       font-size: 0.875rem;
@@ -213,37 +188,30 @@
       cursor: pointer;
       transition: color 0.2s;
     }
-
     .clear-all-btn:hover {
       color: var(--accent-dark);
     }
-
     .notification-list {
       max-height: 20rem;
       overflow-y: auto;
     }
-
     .notification-item {
       padding: 1rem;
       border-bottom: 1px solid rgba(91, 155, 213, 0.1);
       transition: background 0.2s;
     }
-
     .notification-item:hover {
       background: rgba(91, 155, 213, 0.05);
     }
-
     .notification-item p {
       color: white;
       font-size: 0.875rem;
       margin-bottom: 0.25rem;
     }
-
     .notification-item small {
       color: var(--muted);
       font-size: 0.75rem;
     }
-
     .notification-empty {
       padding: 2rem;
       text-align: center;
@@ -260,7 +228,6 @@
       flex-direction: column;
       gap: 0.5rem;
     }
-
     .toast {
       background: var(--card);
       border: 1px solid var(--accent);
@@ -270,7 +237,6 @@
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
       animation: slideIn 0.3s ease-out;
     }
-
     @keyframes slideIn {
       from {
         transform: translateX(100%);
@@ -281,7 +247,6 @@
         opacity: 1;
       }
     }
-
     .toast p {
       color: white;
       font-size: 0.875rem;
@@ -294,24 +259,21 @@
       padding: 0 1.25rem;
     }
 
-    /* Hero Section */
+    /* Hero */
     .hero {
       padding: 3rem 0;
     }
-
     .hero-inner {
       display: grid;
       grid-template-columns: 1fr;
       gap: 2rem;
       align-items: center;
     }
-
     .hero-image img {
       width: 100%;
       border-radius: 1rem;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
     }
-
     .recommendation-box {
       background: linear-gradient(135deg, rgba(91, 155, 213, 0.1) 0%, rgba(91, 155, 213, 0.05) 100%);
       border-left: 4px solid var(--accent);
@@ -320,19 +282,16 @@
       margin-bottom: 1.5rem;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     }
-
     .recommendation-box h3 {
       color: var(--accent-dark);
       margin-bottom: 0.75rem;
       font-size: 1.1rem;
     }
-
     .recommendation-box p {
       color: #e5e7eb;
       margin: 0.5rem 0;
       font-size: 0.95rem;
     }
-
     .view-btn {
       margin-top: 1rem;
       padding: 0.5rem 1.25rem;
@@ -345,39 +304,32 @@
       font-weight: 600;
       font-size: 0.95rem;
     }
-
     .view-btn:hover {
       background: var(--accent-hover);
       transform: scale(1.05);
       box-shadow: 0 4px 12px rgba(91, 155, 213, 0.4);
     }
-
     .hero-text h2 {
       color: var(--accent-dark);
       margin-bottom: 0.5rem;
       font-size: 1.5rem;
     }
-
     .hero-text p {
       color: var(--muted);
       line-height: 1.6;
     }
 
-    /* Fitness Programs */
+    /* Programs */
     .fitness-section {
       padding: 2rem 0;
       text-align: center;
     }
-
     .program-options {
       display: flex;
       flex-direction: column;
-      justify-content: center;
-      align-items: center;
       gap: 2rem;
       margin-bottom: 2rem;
     }
-
     .program-btn {
       width: 100%;
       max-width: 450px;
@@ -396,27 +348,24 @@
       transition: all 0.3s ease;
       box-shadow: 0 0 15px rgba(91, 155, 213, 0.3);
     }
-
     .program-btn:hover {
       background: var(--accent);
       transform: translateY(-5px);
       box-shadow: 0 0 25px rgba(91, 155, 213, 0.6);
     }
-
     .program-title {
       color: var(--accent-dark);
       margin-top: 1rem;
       font-size: 1.1rem;
     }
 
-    /* Features, Programs, Trainers, Testimonials */
+    /* Cards */
     .section-grid {
       display: grid;
       grid-template-columns: 1fr;
       gap: 1.5rem;
       margin-top: 1rem;
     }
-
     .card {
       background: linear-gradient(135deg, rgba(27, 36, 48, 0.8) 0%, rgba(33, 43, 58, 0.6) 100%);
       padding: 1.5rem;
@@ -424,28 +373,23 @@
       border: 1px solid rgba(91, 155, 213, 0.1);
       transition: all 0.3s ease;
     }
-
     .card:hover {
       background: var(--card-hover);
       border-color: rgba(91, 155, 213, 0.3);
       transform: translateY(-2px);
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
     }
-
     .card h3, .card h4 {
       color: #fff;
       margin-bottom: 0.5rem;
     }
-
     .card p {
       color: #dfe7ee;
       line-height: 1.6;
     }
-
     .card.text-center {
       text-align: center;
     }
-
     .card img {
       width: 100%;
       height: 12rem;
@@ -453,7 +397,6 @@
       border-radius: 0.5rem;
       margin-bottom: 1rem;
     }
-
     .card img.trainer-img {
       width: 8rem;
       height: 8rem;
@@ -462,28 +405,27 @@
       border: 3px solid var(--accent);
     }
 
+    /* Sections */
     section {
       padding: 2rem 0;
     }
-
     .section-title {
       color: var(--accent-dark);
       margin-bottom: 1.5rem;
       font-size: 1.75rem;
+      text-align: center;
     }
 
-    /* CTA Section */
+    /* CTA */
     .cta {
       padding: 3rem 0;
       text-align: center;
     }
-
     .cta h2 {
       color: var(--accent-dark);
       margin-bottom: 0.75rem;
       font-size: 1.75rem;
     }
-
     .cta p {
       color: var(--muted);
       font-size: 1.05rem;
@@ -497,7 +439,6 @@
       border-top: 1px solid rgba(255, 255, 255, 0.05);
       padding: 1.5rem 0;
     }
-
     .footer-inner {
       display: flex;
       justify-content: space-between;
@@ -505,64 +446,53 @@
       flex-wrap: wrap;
       gap: 1rem;
     }
-
     .footer-inner h3 {
       color: white;
       font-size: 1rem;
       margin: 0;
     }
-
     .footer-nav {
       display: flex;
       gap: 1.5rem;
     }
-
     .footer-nav a {
       color: #9ca3af;
       text-decoration: none;
       transition: color 0.3s;
       font-size: 0.875rem;
     }
-
     .footer-nav a:hover {
       color: var(--accent-dark);
     }
-
     .footer-contact {
       color: #9ca3af;
       font-size: 0.875rem;
       font-style: normal;
     }
-
     .footer-contact a {
       color: #9ca3af;
       text-decoration: none;
       transition: color 0.3s;
     }
-
     .footer-contact a:hover {
       color: var(--accent-dark);
     }
-
     .footer-bottom {
       text-align: center;
       padding: 1rem 0;
       border-top: 1px solid rgba(255, 255, 255, 0.05);
       margin-top: 1rem;
     }
-
     .footer-bottom small {
       font-size: 0.8rem;
     }
 
-    /* Modal Styles */
-    .modal-overlay {
+    /* Modals */
+    .modal-overlay,
+    .instructions-modal {
       display: none;
       position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
+      top: 0; left: 0; width: 100%; height: 100%;
       background: rgba(0, 0, 0, 0.85);
       z-index: 1000;
       align-items: center;
@@ -570,21 +500,16 @@
       padding: 1rem;
       animation: fadeIn 0.3s ease-out;
     }
-
-    .modal-overlay.active {
+    .modal-overlay.active,
+    .instructions-modal.active {
       display: flex;
     }
-
     @keyframes fadeIn {
-      from {
-        opacity: 0;
-      }
-      to {
-        opacity: 1;
-      }
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
-
-    .modal-content {
+    .modal-content,
+    .instructions-content {
       background: var(--card);
       border-radius: 1rem;
       max-width: 1200px;
@@ -597,22 +522,14 @@
       box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
       animation: slideUp 0.4s ease-out;
     }
-
     @keyframes slideUp {
-      from {
-        transform: translateY(50px);
-        opacity: 0;
-      }
-      to {
-        transform: translateY(0);
-        opacity: 1;
-      }
+      from { transform: translateY(50px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
     }
-
-    .modal-close {
+    .modal-close,
+    .instructions-close {
       position: absolute;
-      top: 1rem;
-      right: 1rem;
+      top: 1rem; right: 1rem;
       background: rgba(255, 255, 255, 0.1);
       border: none;
       color: white;
@@ -626,33 +543,28 @@
       align-items: center;
       justify-content: center;
     }
-
-    .modal-close:hover {
+    .modal-close:hover,
+    .instructions-close:hover {
       background: rgba(255, 255, 255, 0.2);
       transform: scale(1.1);
     }
-
     .modal-header {
       text-align: center;
       margin-bottom: 2rem;
     }
-
     .modal-header h2 {
       color: var(--accent-dark);
       font-size: 2rem;
       margin-bottom: 0.5rem;
     }
-
     .modal-header p {
       color: var(--muted);
     }
-
     .exercise-grid {
       display: grid;
       grid-template-columns: 1fr;
       gap: 1.5rem;
     }
-
     .exercise-card {
       background: linear-gradient(135deg, rgba(27, 36, 48, 0.9) 0%, rgba(33, 43, 58, 0.7) 100%);
       border-radius: 0.75rem;
@@ -661,42 +573,35 @@
       transition: all 0.3s ease;
       cursor: pointer;
     }
-
     .exercise-card:hover {
       transform: translateY(-5px);
       box-shadow: 0 10px 30px rgba(91, 155, 213, 0.3);
       border-color: var(--accent);
     }
-
     .exercise-card img {
       width: 100%;
       height: 200px;
       object-fit: cover;
     }
-
     .exercise-card-content {
       padding: 1.25rem;
     }
-
     .exercise-card h4 {
       color: var(--accent-dark);
       margin-bottom: 0.5rem;
       font-size: 1.1rem;
     }
-
     .exercise-card p {
       color: #d1d5db;
       font-size: 0.9rem;
       margin-bottom: 0.75rem;
       line-height: 1.5;
     }
-
     .exercise-meta {
       display: flex;
       gap: 1rem;
       margin-top: 0.75rem;
     }
-
     .exercise-meta span {
       color: var(--muted);
       font-size: 0.85rem;
@@ -705,74 +610,16 @@
       gap: 0.25rem;
     }
 
-    /* Exercise Instructions Modal */
-    .instructions-modal {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: rgba(0, 0, 0, 0.9);
-      z-index: 1001;
-      align-items: center;
-      justify-content: center;
-      padding: 1rem;
-      animation: fadeIn 0.3s ease-out;
-    }
-
-    .instructions-modal.active {
-      display: flex;
-    }
-
-    .instructions-content {
-      background: var(--card);
-      border-radius: 1rem;
-      max-width: 800px;
-      width: 100%;
-      max-height: 90vh;
-      overflow-y: auto;
-      padding: 2rem;
-      position: relative;
-      border: 2px solid var(--accent);
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
-      animation: slideUp 0.4s ease-out;
-    }
-
-    .instructions-close {
-      position: absolute;
-      top: 1rem;
-      right: 1rem;
-      background: rgba(255, 255, 255, 0.1);
-      border: none;
-      color: white;
-      font-size: 1.5rem;
-      width: 2.5rem;
-      height: 2.5rem;
-      border-radius: 50%;
-      cursor: pointer;
-      transition: all 0.2s;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .instructions-close:hover {
-      background: rgba(255, 255, 255, 0.2);
-      transform: scale(1.1);
-    }
-
+    /* Instructions Modal */
     .instructions-header {
       margin-bottom: 1.5rem;
       padding-right: 3rem;
     }
-
     .instructions-header h3 {
       color: var(--accent-dark);
       font-size: 1.75rem;
       margin-bottom: 0.5rem;
     }
-
     .instructions-header .badge {
       display: inline-block;
       background: rgba(91, 155, 213, 0.2);
@@ -782,7 +629,6 @@
       font-size: 0.875rem;
       margin-right: 0.5rem;
     }
-
     .instructions-image {
       width: 100%;
       height: 250px;
@@ -790,11 +636,9 @@
       border-radius: 0.75rem;
       margin-bottom: 1.5rem;
     }
-
     .instructions-section {
       margin-bottom: 1.5rem;
     }
-
     .instructions-section h4 {
       color: var(--accent-dark);
       font-size: 1.1rem;
@@ -803,12 +647,10 @@
       align-items: center;
       gap: 0.5rem;
     }
-
     .instructions-list {
       list-style: none;
       padding: 0;
     }
-
     .instructions-list li {
       color: #d1d5db;
       padding: 0.75rem;
@@ -818,27 +660,18 @@
       border-radius: 0.5rem;
       line-height: 1.6;
     }
-
-    .instructions-list li strong {
-      color: var(--accent-dark);
-      display: block;
-      margin-bottom: 0.25rem;
-    }
-
     .tips-grid {
       display: grid;
       grid-template-columns: 1fr;
       gap: 0.75rem;
       margin-top: 0.75rem;
     }
-
     .tip-card {
       background: rgba(91, 155, 213, 0.05);
       border: 1px solid rgba(91, 155, 213, 0.2);
       border-radius: 0.5rem;
       padding: 1rem;
     }
-
     .tip-card h5 {
       color: var(--accent-dark);
       font-size: 0.95rem;
@@ -847,71 +680,37 @@
       align-items: center;
       gap: 0.5rem;
     }
-
     .tip-card p {
       color: #d1d5db;
       font-size: 0.9rem;
       line-height: 1.5;
     }
 
-    /* Responsive Styles */
+    /* Responsive */
     @media (min-width: 768px) {
-      .menu-toggle {
-        display: none;
-      }
-
-      .main-nav.desktop {
-        display: flex;
-      }
-
-      .section-grid {
-        grid-template-columns: repeat(3, 1fr);
-      }
-
-      .exercise-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
+      .menu-toggle { display: none; }
+      .main-nav.desktop { display: flex; }
+      .section-grid { grid-template-columns: repeat(3, 1fr); }
+      .exercise-grid { grid-template-columns: repeat(2, 1fr); }
+      .hero-inner { grid-template-columns: 1fr 420px; }
     }
-
     @media (min-width: 1024px) {
-      .hero-inner {
-        grid-template-columns: 1fr 420px;
-      }
-
-      .program-options {
-        flex-direction: row;
-        gap: 4rem;
-      }
-
-      .program-btn {
-        width: 32vw;
-        min-width: 300px;
-      }
-
-      .exercise-grid {
-        grid-template-columns: repeat(3, 1fr);
-      }
+      .program-options { flex-direction: row; gap: 4rem; }
+      .program-btn { width: 32vw; min-width: 300px; }
+      .exercise-grid { grid-template-columns: repeat(3, 1fr); }
     }
-
     @media (max-width: 767px) {
-      .menu-toggle {
-        display: block;
-      }
-
-      .main-nav.desktop {
-        display: none;
-      }
+      .menu-toggle { display: block; }
+      .main-nav.desktop { display: none; }
     }
   </style>
-</head>
+</head> 
 <body>
-  <!-- Notification Bell -->
+  <!-- 🔔 Notifications -->
   <button class="notification-bell" id="notificationBell">
-    🔔
+    <i class='bx bxs-bell'></i>
     <span class="notification-badge" id="notificationBadge" style="display: none;">0</span>
   </button>
-
-  <!-- Notification Panel -->
   <div class="notification-panel" id="notificationPanel">
     <div class="notification-header">
       <h3>Notifications</h3>
@@ -921,11 +720,9 @@
       <div class="notification-empty">No new notifications</div>
     </div>
   </div>
-
-  <!-- Toast Container -->
   <div class="toast-container" id="toastContainer"></div>
 
-  <!-- Exercise Modal -->
+  <!-- Modals -->
   <div class="modal-overlay" id="exerciseModal">
     <div class="modal-content">
       <button class="modal-close" id="modalClose">✕</button>
@@ -937,7 +734,6 @@
     </div>
   </div>
 
-  <!-- Exercise Instructions Modal -->
   <div class="instructions-modal" id="instructionsModal">
     <div class="instructions-content">
       <button class="instructions-close" id="instructionsClose">✕</button>
@@ -957,79 +753,37 @@
     </div>
   </div>
 
-  <!-- Header -->
+  <!-- 🧭 HEADER -->
   <header class="site-header">
     <div class="header-inner">
-      <a href="index.html" class="logo">FITTCHECK</a>
-      
-      <!-- Desktop Navigation -->
+      <a href="index.html" class="logo">
+        <i class='bx bxs-dumbbell'></i> FITTCHECK
+      </a>
       <nav class="main-nav desktop">
-        <a href="index.html" class="active">
-       <img src="pictures/home-button 1.png" alt="Home Icon" style="width:20px; height:20px;">
-          Home
-        </a>
-        <a href="classes.html">
-          <i class="icon-classes"></i>
-          Classes
-        </a>
-        <a href="trainers.html">
-          <i class="icon-trainers"></i>
-          Trainers
-        </a>
-        <a href="contact.html">
-          <i class="icon-about"></i>
-          About Us
-        </a>
-        <a href="tracker.html">
-          <i class="icon-tracker"></i>
-          Tracker
-        </a>
-        <button onclick="window.location.href='profile.html'" style="font-family: inherit;">
-          <i class="icon-profile"></i>
-          Profile
-        </button>
+        <a href="index.html" id="nav-home"><i class='bx bx-home'></i> Home</a>
+        <a href="classes.html" id="nav-classes"><i class='bx bx-dumbbell'></i> Classes</a>
+        <a href="trainers.html" id="nav-trainers"><i class='bx bx-user-check'></i> Trainers</a>
+        <a href="contact.html" id="nav-about"><i class='bx bx-info-circle'></i> About Us</a>
+        <a href="tracker.html" id="nav-tracker"><i class='bx bx-trending-up'></i> Tracker</a>
+        <button onclick="window.location.href='profile.html'" id="nav-profile"><i class='bx bx-user'></i> Profile</button>
       </nav>
-
-      <!-- Mobile Menu Toggle -->
-      <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">☰</button>
-      
-      <!-- Mobile Navigation -->
+      <button class="menu-toggle" id="menuToggle">☰</button>
       <nav class="main-nav mobile" id="mobileNav">
-        <a href="index.html" class="active">
-          <i class="icon-home"></i>
-          Home
-        </a>
-        <a href="classes.html">
-          <i class="icon-classes"></i>
-          Classes
-        </a>
-        <a href="trainers.html">
-          <i class="icon-trainers"></i>
-          Trainers
-        </a>
-        <a href="contact.html">
-          <i class="icon-about"></i>
-          About Us
-        </a>
-        <a href="tracker.html">
-          <i class="icon-tracker"></i>
-          Tracker
-        </a>
-        <button onclick="window.location.href='profile.html'" style="font-family: inherit; width: 100%; justify-content: flex-start;">
-          <i class="icon-profile"></i>
-          Profile
-        </button>
+        <a href="index.html" id="nav-home-mobile"><i class='bx bx-home'></i> Home</a>
+        <a href="classes.html" id="nav-classes-mobile"><i class='bx bx-dumbbell'></i> Classes</a>
+        <a href="trainers.html" id="nav-trainers-mobile"><i class='bx bx-user-check'></i> Trainers</a>
+        <a href="contact.html" id="nav-about-mobile"><i class='bx bx-info-circle'></i> About Us</a>
+        <a href="tracker.html" id="nav-tracker-mobile"><i class='bx bx-trending-up'></i> Tracker</a>
+        <button onclick="window.location.href='profile.html'" id="nav-profile-mobile"><i class='bx bx-user'></i> Profile</button>
       </nav>
     </div>
   </header>
 
   <main>
-    <!-- Hero Section -->
+    <!-- Hero -->
     <section class="hero">
       <div class="container hero-inner">
-        <!-- Hero Text with Recommendation Box -->
         <div class="hero-text">
-          <!-- Recommendation Box -->
           <div class="recommendation-box">
             <h3>🏋️ Personalized Recommendation</h3>
             <p><strong>Goal:</strong> Not set</p>
@@ -1039,78 +793,50 @@
             <p><strong>Time:</strong> Anytime</p>
             <button class="view-btn">View Recommended Classes</button>
           </div>
-
-          <!-- Fitness Header -->
-          <div>
-            <h2>Choose Your Fitness Program</h2>
-            <p>Select a training focus to get personalized exercises designed to match your goals.</p>
-          </div>
+          <h2>Choose Your Fitness Program</h2>
+          <p>Select a training focus to get personalized exercises designed to match your goals.</p>
         </div>
-
-        <!-- Hero Image -->
         <div class="hero-image">
           <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800&q=80" alt="Athlete lifting weights">
         </div>
       </div>
     </section>
 
-    <!-- Fitness Program Buttons -->
+    <!-- Programs -->
     <section class="fitness-section">
       <div class="container">
         <div class="program-options">
-          <button class="program-btn" data-program="muscle" onclick="openExerciseModal('muscle')">💪 Build Muscle</button>
-          <button class="program-btn" data-program="endurance" onclick="openExerciseModal('endurance')">🔥 Endurance</button>
-          <button class="program-btn" data-program="weightloss" onclick="openExerciseModal('weightloss')">🤸‍♀️ Weight Loss</button>
+          <button class="program-btn" onclick="openExerciseModal('muscle')">💪 Build Muscle</button>
+          <button class="program-btn" onclick="openExerciseModal('endurance')">🔥 Endurance</button>
+          <button class="program-btn" onclick="openExerciseModal('weightloss')">🤸‍♀️ Weight Loss</button>
         </div>
         <h3 class="program-title">Click a program above to view exercises.</h3>
       </div>
     </section>
 
-    <!-- Features Section -->
+    <!-- Features -->
     <section>
       <div class="container">
+        <h2 class="section-title">Why Choose Us</h2>
         <div class="section-grid">
-          <article class="card">
-            <h3>24/7 Access</h3>
-            <p>Train anytime with complete freedom and secure entry.</p>
-          </article>
-          <article class="card">
-            <h3>Personal Coaching</h3>
-            <p>Get expert advice from certified trainers to reach your goals faster.</p>
-          </article>
-          <article class="card">
-            <h3>Progress Tracking</h3>
-            <p>Monitor your growth with smart analytics and visual tracking tools.</p>
-          </article>
+          <div class="card"><h3>24/7 Access</h3><p>Train anytime with complete freedom and secure entry.</p></div>
+          <div class="card"><h3>Personal Coaching</h3><p>Get expert advice from certified trainers to reach your goals faster.</p></div>
+          <div class="card"><h3>Progress Tracking</h3><p>Monitor your growth with smart analytics and visual tracking tools.</p></div>
         </div>
       </div>
     </section>
 
-    <!-- Our Programs Section -->
+    <!-- Programs (Dynamic from localStorage) -->
     <section>
       <div class="container">
         <h2 class="section-title">Our Programs</h2>
-        <div class="section-grid">
-          <article class="card text-center">
-            <img src="https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=800&q=80" alt="Strength Training">
-            <h3>Strength Training</h3>
-            <p>Build lean muscle and enhance endurance with guided lifting sessions.</p>
-          </article>
-          <article class="card text-center">
-            <img src="https://images.unsplash.com/photo-1538805060514-97d9cc17730c?w=800&q=80" alt="Cardio Classes">
-            <h3>Cardio Burn</h3>
-            <p>Boost stamina and burn calories with our high-intensity cardio workouts.</p>
-          </article>
-          <article class="card text-center">
-            <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=800&q=80" alt="Yoga Class">
-            <h3>Yoga & Flexibility</h3>
-            <p>Improve mobility and calm your mind with our professional yoga instructors.</p>
-          </article>
+        <div class="section-grid" id="our-programs-container">
+          <!-- Programs will be loaded here dynamically -->
         </div>
       </div>
     </section>
 
-    <!-- Trainers Section -->
+    <!-- Trainers -->
     <section>
       <div class="container">
         <h2 class="section-title">Meet Our Trainers</h2>
@@ -1134,28 +860,17 @@
       </div>
     </section>
 
-    <!-- Testimonials Section -->
+    <!-- Testimonials (Dynamic from localStorage) -->
     <section>
       <div class="container">
         <h2 class="section-title">What Our Members Say</h2>
-        <div class="section-grid">
-          <article class="card">
-            <p>"FITTCHECK helped me transform my body and mindset. Highly recommended!"</p>
-            <h4>— John D.</h4>
-          </article>
-          <article class="card">
-            <p>"The trainers here truly care about your progress. The best gym in town!"</p>
-            <h4>— Sarah P.</h4>
-          </article>
-          <article class="card">
-            <p>"Great atmosphere, clean facilities, and motivating people everywhere!"</p>
-            <h4>— Michael L.</h4>
-          </article>
+        <div class="section-grid" id="testimonials-container">
+          <!-- Testimonials will load here -->
         </div>
       </div>
     </section>
 
-    <!-- Call to Action -->
+    <!-- CTA -->
     <section class="cta">
       <div class="container">
         <h2>Ready to Start Your Fitness Journey?</h2>
@@ -1167,9 +882,7 @@
   <!-- Footer -->
   <footer class="site-footer">
     <div class="container footer-inner">
-      <div>
-        <h3>FITTCHECK</h3>
-      </div>
+      <h3>FITTCHECK</h3>
       <nav class="footer-nav">
         <a href="index.html">Home</a>
         <a href="classes.html">Classes</a>
@@ -1177,9 +890,7 @@
         <a href="contact.html">About Us</a>
         <a href="tracker.html">Tracker</a>
       </nav>
-      <address class="footer-contact">
-        <a href="mailto:hello@fittcheck.ph">hello@fittcheck.ph</a>
-      </address>
+      <address class="footer-contact"><a href="mailto:hello@fittcheck.ph">hello@fittcheck.ph</a></address>
     </div>
     <div class="footer-bottom container">
       <small>© <span id="year"></span> FITTCHECK. All rights reserved.</small>
@@ -1187,123 +898,71 @@
   </footer>
 
   <script>
-    // Check if user is logged in
-    window.addEventListener('DOMContentLoaded', function() {
-      const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
-      if (!isLoggedIn) {
-        window.location.href = 'login.html';
-        return;
-      }
+    // ========== NAVIGATION ACTIVE STATE ==========
+    function setActiveNavLink() {
+      const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+      const navLinks = [
+        { id: 'nav-home', mobileId: 'nav-home-mobile', page: 'index.html' },
+        { id: 'nav-classes', mobileId: 'nav-classes-mobile', page: 'classes.html' },
+        { id: 'nav-trainers', mobileId: 'nav-trainers-mobile', page: 'trainers.html' },
+        { id: 'nav-about', mobileId: 'nav-about-mobile', page: 'contact.html' },
+        { id: 'nav-tracker', mobileId: 'nav-tracker-mobile', page: 'tracker.html' },
+        { id: 'nav-profile', mobileId: 'nav-profile-mobile', page: 'profile.html' }
+      ];
 
-      // Initialize notifications
-      initializeNotifications();
-    });
+      navLinks.forEach(link => {
+        const desktopLink = document.getElementById(link.id);
+        const mobileLink = document.getElementById(link.mobileId);
 
-    // Mobile menu toggle
-    const menuToggle = document.getElementById('menuToggle');
-    const mobileNav = document.getElementById('mobileNav');
+        if ((currentPage === link.page) || (currentPage === '' && link.page === 'index.html')) {
+          desktopLink?.classList.add('nav-active');
+          mobileLink?.classList.add('nav-active');
+        } else {
+          desktopLink?.classList.remove('nav-active');
+          mobileLink?.classList.remove('nav-active');
+        }
+      });
+    }
 
-    menuToggle.addEventListener('click', function() {
-      mobileNav.classList.toggle('show');
-      this.textContent = mobileNav.classList.contains('show') ? '✕' : '☰';
-    });
-
-    // Set current year
-    document.getElementById('year').textContent = new Date().getFullYear();
-
-    // Close mobile menu when clicking outside
-    document.addEventListener('click', function(event) {
-      if (!event.target.closest('.header-inner')) {
-        mobileNav.classList.remove('show');
-        menuToggle.textContent = '☰';
-      }
-    });
-
-    // Notification System
+    // ========== NOTIFICATION SYSTEM ==========
     let notifications = [];
-
     function initializeNotifications() {
       checkMissedExercises();
-      
-      // Check every hour
       setInterval(checkMissedExercises, 60 * 60 * 1000);
-      
-      // Setup notification bell
-      const notificationBell = document.getElementById('notificationBell');
-      const notificationPanel = document.getElementById('notificationPanel');
-      
-      notificationBell.addEventListener('click', function(e) {
-        e.stopPropagation();
-        notificationPanel.classList.toggle('active');
-      });
 
-      // Close panel when clicking outside
-      document.addEventListener('click', function(e) {
-        if (!notificationPanel.contains(e.target) && e.target !== notificationBell) {
-          notificationPanel.classList.remove('active');
-        }
+      const bell = document.getElementById('notificationBell');
+      const panel = document.getElementById('notificationPanel');
+      bell.addEventListener('click', e => {
+        e.stopPropagation(); panel.classList.toggle('active');
       });
-
-      // Clear all button
+      document.addEventListener('click', e => {
+        if (!panel.contains(e.target) && e.target !== bell) panel.classList.remove('active');
+      });
       document.getElementById('clearAllBtn').addEventListener('click', clearAllNotifications);
     }
-
     function checkMissedExercises() {
-      const lastExercise = localStorage.getItem('lastExerciseDate');
-      const currentDate = new Date();
-      
-      if (lastExercise) {
-        const lastExerciseDate = new Date(lastExercise);
-        const daysDiff = Math.floor((currentDate.getTime() - lastExerciseDate.getTime()) / (1000 * 60 * 60 * 24));
-        
-        if (daysDiff >= 1) {
-          const message = `You haven't exercised in ${daysDiff} day${daysDiff > 1 ? 's' : ''}! Time to get back on track! 💪`;
-          addNotification(message, 'missed-exercise');
-        }
-      } else {
-        // First time - set current date
-        localStorage.setItem('lastExerciseDate', currentDate.toISOString());
+      const last = localStorage.getItem('lastExerciseDate');
+      if (!last) {
+        localStorage.setItem('lastExerciseDate', new Date().toISOString());
+        return;
       }
-
-      // Check for scheduled workouts
-      const scheduledWorkouts = JSON.parse(localStorage.getItem('scheduledWorkouts') || '[]');
-      const today = currentDate.toDateString();
-      
-      const missedWorkouts = scheduledWorkouts.filter(workout => {
-        const workoutDate = new Date(workout.date).toDateString();
-        return workoutDate === today && !workout.completed;
-      });
-
-      if (missedWorkouts.length > 0) {
-        const message = `You have ${missedWorkouts.length} workout${missedWorkouts.length > 1 ? 's' : ''} scheduled for today! 🏋️`;
-        addNotification(message, 'reminder');
+      const days = Math.floor((Date.now() - new Date(last).getTime()) / (1000*60*60*24));
+      if (days >= 1) {
+        addNotification(`You haven't exercised in ${days} day${days > 1 ? 's' : ''}! Time to get back on track! 💪`, 'missed');
       }
     }
-
     function addNotification(message, type) {
-      const existingNotification = notifications.find(n => n.message === message);
-      if (existingNotification) return;
-
-      const notification = {
-        id: Date.now(),
-        message: message,
-        type: type,
-        timestamp: new Date()
-      };
-
-      notifications.unshift(notification);
+      if (notifications.some(n => n.message === message)) return;
+      notifications.unshift({ id: Date.now(), message, type, timestamp: new Date() });
       updateNotificationUI();
       showToast(message);
     }
-
     function updateNotificationUI() {
       const badge = document.getElementById('notificationBadge');
       const list = document.getElementById('notificationList');
-      
-      if (notifications.length > 0) {
+      if (notifications.length) {
         badge.textContent = notifications.length;
         badge.style.display = 'flex';
-        
         list.innerHTML = notifications.map(n => `
           <div class="notification-item">
             <p>${n.message}</p>
@@ -1314,294 +973,201 @@
         badge.style.display = 'none';
         list.innerHTML = '<div class="notification-empty">No new notifications</div>';
       }
-
-      // Update clear all button visibility
-      document.getElementById('clearAllBtn').style.display = notifications.length > 0 ? 'block' : 'none';
     }
-
     function showToast(message) {
-      const toastContainer = document.getElementById('toastContainer');
+      const container = document.getElementById('toastContainer');
       const toast = document.createElement('div');
       toast.className = 'toast';
       toast.innerHTML = `<p>🔔 ${message}</p>`;
-      
-      toastContainer.appendChild(toast);
-      
-      setTimeout(() => {
-        toast.remove();
-      }, 5000);
+      container.appendChild(toast);
+      setTimeout(() => toast.remove(), 5000);
     }
-
     function clearAllNotifications() {
       notifications = [];
       updateNotificationUI();
     }
 
-    // Exercise Modal
-    const exerciseModal = document.getElementById('exerciseModal');
-    const modalClose = document.getElementById('modalClose');
-    const exerciseGrid = document.getElementById('exerciseGrid');
-    const modalTitle = document.getElementById('modalTitle');
-    const modalSubtitle = document.getElementById('modalSubtitle');
+    // ========== MOBILE MENU ==========
+    document.getElementById('menuToggle').addEventListener('click', function() {
+      const nav = document.getElementById('mobileNav');
+      nav.classList.toggle('show');
+      this.textContent = nav.classList.contains('show') ? '✕' : '☰';
+    });
+    document.addEventListener('click', e => {
+      if (!e.target.closest('.header-inner')) {
+        const nav = document.getElementById('mobileNav');
+        nav.classList.remove('show');
+        document.getElementById('menuToggle').textContent = '☰';
+      }
+    });
 
+    // ========== MODALS ==========
+    const exerciseModal = document.getElementById('exerciseModal');
+    const instructionsModal = document.getElementById('instructionsModal');
+    const exerciseGrid = document.getElementById('exerciseGrid');
+
+    function closeExerciseModal() {
+      exerciseModal.classList.remove('active');
+      document.body.style.overflow = 'auto';
+    }
+    function closeInstructionsModal() {
+      instructionsModal.classList.remove('active');
+      document.body.style.overflow = 'auto';
+    }
+
+    document.getElementById('modalClose').addEventListener('click', closeExerciseModal);
+    document.getElementById('instructionsClose').addEventListener('click', closeInstructionsModal);
+    exerciseModal.addEventListener('click', e => { if (e.target === exerciseModal) closeExerciseModal(); });
+    instructionsModal.addEventListener('click', e => { if (e.target === instructionsModal) closeInstructionsModal(); });
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') {
+        if (exerciseModal.classList.contains('active')) closeExerciseModal();
+        if (instructionsModal.classList.contains('active')) closeInstructionsModal();
+      }
+    });
+
+    // ========== EXERCISES DATA ==========
     const exercises = {
       muscle: {
         title: '💪 Build Muscle Program',
         subtitle: '6 Key Exercises to Build Strength and Mass',
         exercises: [
-          {
-            name: 'Barbell Squats',
-            description: 'Build massive leg strength and muscle mass with heavy squats targeting quads, hamstrings, and glutes.',
-            sets: '4 sets',
-            reps: '8-12 reps',
-            image: 'https://images.unsplash.com/photo-1758875568800-29fb434c7b17?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080'
-          },
-          {
-            name: 'Bench Press',
-            description: 'Classic chest builder that also works shoulders and triceps. Essential for upper body mass.',
-            sets: '4 sets',
-            reps: '8-12 reps',
-            image: 'https://images.unsplash.com/photo-1651346847980-ab1c883e8cc8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080'
-          },
-          {
-            name: 'Deadlifts',
-            description: 'King of all exercises! Build total body strength targeting back, glutes, hamstrings, and core.',
-            sets: '4 sets',
-            reps: '6-10 reps',
-            image: 'https://images.unsplash.com/photo-1601106605547-7423365f86e0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080'
-          },
-          {
-            name: 'Dumbbell Rows',
-            description: 'Develop a thick, strong back with this essential pulling movement for muscle growth.',
-            sets: '3 sets',
-            reps: '10-12 reps',
-            image: 'https://images.unsplash.com/photo-1734630341082-0fec0e10126c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080'
-          },
-          {
-            name: 'Shoulder Press',
-            description: 'Build powerful shoulders and triceps with this overhead pressing movement.',
-            sets: '3 sets',
-            reps: '10-12 reps',
-            image: 'https://images.unsplash.com/photo-1630415188550-9e454489ce3a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080'
-          },
-          {
-            name: 'Pull-Ups',
-            description: 'The ultimate bodyweight exercise for building a strong, wide back and powerful arms.',
-            sets: '3 sets',
-            reps: '6-10 reps',
-            image: 'https://images.unsplash.com/photo-1701826510567-8880c3fa1e98?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080'
-          }
+          { name: 'Barbell Squats', description: 'Build massive leg strength and muscle mass with heavy squats targeting quads, hamstrings, and glutes.', sets: '4 sets', reps: '8-12 reps', image: 'https://images.unsplash.com/photo-1758875568800-29fb434c7b17?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080' },
+          { name: 'Bench Press', description: 'Classic chest builder that also works shoulders and triceps. Essential for upper body mass.', sets: '4 sets', reps: '8-12 reps', image: 'https://images.unsplash.com/photo-1651346847980-ab1c883e8cc8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080' },
+          { name: 'Deadlifts', description: 'King of all exercises! Build total body strength targeting back, glutes, hamstrings, and core.', sets: '4 sets', reps: '6-10 reps', image: 'https://images.unsplash.com/photo-1601106605547-7423365f86e0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080' },
+          { name: 'Dumbbell Rows', description: 'Develop a thick, strong back with this essential pulling movement for muscle growth.', sets: '3 sets', reps: '10-12 reps', image: 'https://images.unsplash.com/photo-1734630341082-0fec0e10126c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080' },
+          { name: 'Shoulder Press', description: 'Build powerful shoulders and triceps with this overhead pressing movement.', sets: '3 sets', reps: '10-12 reps', image: 'https://images.unsplash.com/photo-1630415188550-9e454489ce3a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080' },
+          { name: 'Pull-Ups', description: 'The ultimate bodyweight exercise for building a strong, wide back and powerful arms.', sets: '3 sets', reps: '6-10 reps', image: 'https://images.unsplash.com/photo-1701826510567-8880c3fa1e98?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080' }
         ]
       },
       endurance: {
         title: '🔥 Endurance Program',
         subtitle: '6 Key Exercises to Build Stamina and Cardiovascular Fitness',
         exercises: [
-          {
-            name: 'Treadmill Running',
-            description: 'Build cardiovascular endurance with steady-state or interval running.',
-            sets: 'Continuous',
-            reps: '30-45 mins',
-            image: 'https://images.unsplash.com/photo-1761971974992-6df33df97c3a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080'
-          },
-          {
-            name: 'Indoor Cycling',
-            description: 'Low-impact cardio that builds leg endurance and cardiovascular fitness.',
-            sets: 'Continuous',
-            reps: '30-45 mins',
-            image: 'https://images.unsplash.com/photo-1601625193660-86f2807b024b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080'
-          },
-          {
-            name: 'Jump Rope',
-            description: 'High-intensity cardio that improves coordination, endurance, and burns calories fast.',
-            sets: '5 sets',
-            reps: '2-3 mins',
-            image: 'https://images.unsplash.com/photo-1651315283994-03ec73dc21f1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080'
-          },
-          {
-            name: 'Rowing Machine',
-            description: 'Full-body cardio that builds muscular endurance and cardiovascular capacity.',
-            sets: 'Continuous',
-            reps: '20-30 mins',
-            image: 'https://images.unsplash.com/photo-1467818488384-3a21f2b79959?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080'
-          },
-          {
-            name: 'Burpees',
-            description: 'Full-body explosive movement that builds endurance and burns maximum calories.',
-            sets: '4 sets',
-            reps: '15-20 reps',
-            image: 'https://images.unsplash.com/photo-1707608423155-7604c8124d9d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080'
-          },
-          {
-            name: 'Mountain Climbers',
-            description: 'Dynamic cardio exercise that builds core strength and cardiovascular endurance.',
-            sets: '4 sets',
-            reps: '30-45 secs',
-            image: 'https://images.unsplash.com/photo-1731176116069-86205f376088?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080'
-          }
+          { name: 'Treadmill Running', description: 'Build cardiovascular endurance with steady-state or interval running.', sets: 'Continuous', reps: '30-45 mins', image: 'https://images.unsplash.com/photo-1761971974992-6df33df97c3a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080' },
+          { name: 'Indoor Cycling', description: 'Low-impact cardio that builds leg endurance and cardiovascular fitness.', sets: 'Continuous', reps: '30-45 mins', image: 'https://images.unsplash.com/photo-1601625193660-86f2807b024b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080' },
+          { name: 'Jump Rope', description: 'High-intensity cardio that improves coordination, endurance, and burns calories fast.', sets: '5 sets', reps: '2-3 mins', image: 'https://images.unsplash.com/photo-1651315283994-03ec73dc21f1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080' },
+          { name: 'Rowing Machine', description: 'Full-body cardio that builds muscular endurance and cardiovascular capacity.', sets: 'Continuous', reps: '20-30 mins', image: 'https://images.unsplash.com/photo-1467818488384-3a21f2b79959?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080' },
+          { name: 'Burpees', description: 'Full-body explosive movement that builds endurance and burns maximum calories.', sets: '4 sets', reps: '15-20 reps', image: 'https://images.unsplash.com/photo-1707608423155-7604c8124d9d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080' },
+          { name: 'Mountain Climbers', description: 'Dynamic cardio exercise that builds core strength and cardiovascular endurance.', sets: '4 sets', reps: '30-45 secs', image: 'https://images.unsplash.com/photo-1731176116069-86205f376088?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080' }
         ]
       },
       weightloss: {
         title: '🤸‍♀️ Weight Loss Program',
         subtitle: '6 Key Exercises to Burn Fat and Lose Weight',
         exercises: [
-          {
-            name: 'HIIT Training',
-            description: 'High-intensity intervals that maximize calorie burn in minimal time.',
-            sets: '6 rounds',
-            reps: '30s on/30s off',
-            image: 'https://images.unsplash.com/photo-1662386392754-c0fe8e9dc7af?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080'
-          },
-          {
-            name: 'Kettlebell Swings',
-            description: 'Dynamic exercise that burns fat while building posterior chain strength.',
-            sets: '4 sets',
-            reps: '15-20 reps',
-            image: 'https://images.unsplash.com/flagged/photo-1556895368-9d1eed826c58?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080'
-          },
-          {
-            name: 'Plank Hold',
-            description: 'Core-strengthening exercise that builds stability and burns calories.',
-            sets: '3 sets',
-            reps: '45-60 secs',
-            image: 'https://images.unsplash.com/photo-1758599878868-52cced2f8154?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080'
-          },
-          {
-            name: 'Walking Lunges',
-            description: 'Lower body exercise that tones legs and glutes while burning fat.',
-            sets: '3 sets',
-            reps: '12-15/leg',
-            image: 'https://images.unsplash.com/photo-1590556409527-40916236bdd3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080'
-          },
-          {
-            name: 'Battle Ropes',
-            description: 'Total body conditioning that torches calories and builds upper body endurance.',
-            sets: '4 sets',
-            reps: '30-45 secs',
-            image: 'https://images.unsplash.com/photo-1605720789771-a7fb8ab19d04?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080'
-          },
-          {
-            name: 'Box Jumps',
-            description: 'Explosive plyometric exercise that burns fat and builds powerful legs.',
-            sets: '3 sets',
-            reps: '10-15 reps',
-            image: 'https://images.unsplash.com/photo-1599075364586-fa991041cecb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080'
-          }
+          { name: 'HIIT Training', description: 'High-intensity intervals that maximize calorie burn in minimal time.', sets: '6 rounds', reps: '30s on/30s off', image: 'https://images.unsplash.com/photo-1662386392754-c0fe8e9dc7af?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080' },
+          { name: 'Kettlebell Swings', description: 'Dynamic exercise that burns fat while building posterior chain strength.', sets: '4 sets', reps: '15-20 reps', image: 'https://images.unsplash.com/flagged/photo-1556895368-9d1eed826c58?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080' },
+          { name: 'Plank Hold', description: 'Core-strengthening exercise that builds stability and burns calories.', sets: '3 sets', reps: '45-60 secs', image: 'https://images.unsplash.com/photo-1758599878868-52cced2f8154?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080' },
+          { name: 'Walking Lunges', description: 'Lower body exercise that tones legs and glutes while burning fat.', sets: '3 sets', reps: '12-15/leg', image: 'https://images.unsplash.com/photo-1590556409527-40916236bdd3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080' },
+          { name: 'Battle Ropes', description: 'Total body conditioning that torches calories and builds upper body endurance.', sets: '4 sets', reps: '30-45 secs', image: 'https://images.unsplash.com/photo-1605720789771-a7fb8ab19d04?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080' },
+          { name: 'Box Jumps', description: 'Explosive plyometric exercise that burns fat and builds powerful legs.', sets: '3 sets', reps: '10-15 reps', image: 'https://images.unsplash.com/photo-1599075364586-fa991041cecb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080' }
         ]
       }
     };
 
     function openExerciseModal(program) {
-      const programData = exercises[program];
-      modalTitle.textContent = programData.title;
-      modalSubtitle.textContent = programData.subtitle;
-      
-      exerciseGrid.innerHTML = programData.exercises.map(exercise => `
-        <div class="exercise-card">
-          <img src="${exercise.image}" alt="${exercise.name}">
+      const data = exercises[program];
+      if (!data) return;
+      document.getElementById('modalTitle').textContent = data.title;
+      document.getElementById('modalSubtitle').textContent = data.subtitle;
+      exerciseGrid.innerHTML = data.exercises.map(ex => `
+        <div class="exercise-card" data-exercise='${JSON.stringify(ex).replace(/'/g,"&apos;")}'>
+          <img src="${ex.image}" alt="${ex.name}">
           <div class="exercise-card-content">
-            <h4>${exercise.name}</h4>
-            <p>${exercise.description}</p>
+            <h4>${ex.name}</h4>
+            <p>${ex.description}</p>
             <div class="exercise-meta">
-              <span>📊 ${exercise.sets}</span>
-              <span>🔢 ${exercise.reps}</span>
+              <span>📊 ${ex.sets}</span>
+              <span>🔢 ${ex.reps}</span>
             </div>
           </div>
         </div>
       `).join('');
-      
       exerciseModal.classList.add('active');
       document.body.style.overflow = 'hidden';
     }
 
-    function closeExerciseModal() {
-      exerciseModal.classList.remove('active');
-      document.body.style.overflow = 'auto';
-    }
-
-    modalClose.addEventListener('click', closeExerciseModal);
-
-    exerciseModal.addEventListener('click', function(e) {
-      if (e.target === exerciseModal) {
-        closeExerciseModal();
-      }
-    });
-
-    // Close modal with Escape key
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape' && exerciseModal.classList.contains('active')) {
-        closeExerciseModal();
-      }
-    });
-
-    // Exercise Instructions Modal
-    const instructionsModal = document.getElementById('instructionsModal');
-    const instructionsClose = document.getElementById('instructionsClose');
-    const instructionsTitle = document.getElementById('instructionsTitle');
-    const instructionsMeta = document.getElementById('instructionsMeta');
-    const instructionsImage = document.getElementById('instructionsImage');
-    const instructionsSteps = document.getElementById('instructionsSteps');
-    const instructionsTips = document.getElementById('instructionsTips');
-
-    function openInstructionsModal(exercise) {
-      instructionsTitle.textContent = exercise.name;
-      instructionsMeta.innerHTML = `
+    exerciseGrid.addEventListener('click', e => {
+      const card = e.target.closest('.exercise-card');
+      if (!card) return;
+      const exercise = JSON.parse(card.getAttribute('data-exercise').replace(/&apos;/g, "'"));
+      document.getElementById('instructionsTitle').textContent = exercise.name;
+      document.getElementById('instructionsMeta').innerHTML = `
         <span class="badge">💪 ${exercise.sets}</span>
         <span class="badge">🔢 ${exercise.reps}</span>
       `;
-      instructionsImage.src = exercise.image;
-      instructionsImage.alt = exercise.name;
-      instructionsSteps.innerHTML = exercise.description.split('. ').map(step => `<li>${step}</li>`).join('');
-      instructionsTips.innerHTML = `
-        <div class="tip-card">
-          <h5>Tip 1</h5>
-          <p>Focus on proper form to maximize effectiveness and prevent injury.</p>
-        </div>
-        <div class="tip-card">
-          <h5>Tip 2</h5>
-          <p>Breathe deeply to maintain energy and control during the exercise.</p>
-        </div>
-        <div class="tip-card">
-          <h5>Tip 3</h5>
-          <p>Start with lighter weights and gradually increase as you build strength.</p>
-        </div>
+      document.getElementById('instructionsImage').src = exercise.image;
+      document.getElementById('instructionsSteps').innerHTML = exercise.description.split('. ').filter(s => s.trim()).map(s => `<li>${s.trim()}.</li>`).join('');
+      document.getElementById('instructionsTips').innerHTML = `
+        <div class="tip-card"><h5>✅ Focus on Form</h5><p>Proper technique prevents injuries and maximizes gains.</p></div>
+        <div class="tip-card"><h5>🌬️ Breathe</h5><p>Exhale on effort, inhale on release. Don’t hold your breath.</p></div>
+        <div class="tip-card"><h5>📈 Progress Slowly</h5><p>Increase weight or reps gradually—consistency beats intensity.</p></div>
       `;
-      
       instructionsModal.classList.add('active');
       document.body.style.overflow = 'hidden';
+    });
+
+    // ========== LOAD DYNAMIC PROGRAMS ==========
+    function loadProgramsFromStorage() {
+      const programs = JSON.parse(localStorage.getItem('programs') || '[]');
+      const container = document.getElementById('our-programs-container');
+      if (programs.length > 0) {
+        container.innerHTML = programs.map(p => `
+          <div class="card text-center">
+            <img src="${p.image || 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438'}" alt="${p.name}">
+            <h3>${p.name}</h3>
+            <p>${p.description}</p>
+          </div>
+        `).join('');
+      } else {
+        container.innerHTML = `
+          <div class="card text-center">
+            <img src="https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=800&q=80" alt="Strength Training">
+            <h3>Strength Training</h3>
+            <p>Build lean muscle and enhance endurance with guided lifting sessions.</p>
+          </div>
+          <div class="card text-center">
+            <img src="https://images.unsplash.com/photo-1538805060514-97d9cc17730c?w=800&q=80" alt="Cardio Classes">
+            <h3>Cardio Burn</h3>
+            <p>Boost stamina and burn calories with our high-intensity cardio workouts.</p>
+          </div>
+          <div class="card text-center">
+            <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=800&q=80" alt="Yoga Class">
+            <h3>Yoga & Flexibility</h3>
+            <p>Improve mobility and calm your mind with our professional yoga instructors.</p>
+          </div>
+        `;
+      }
     }
 
-    function closeInstructionsModal() {
-      instructionsModal.classList.remove('active');
-      document.body.style.overflow = 'auto';
+    // ========== LOAD DYNAMIC TESTIMONIALS ==========
+    function loadTestimonialsFromStorage() {
+      const testimonials = JSON.parse(localStorage.getItem('testimonials') || '[]');
+      const container = document.getElementById('testimonials-container');
+      
+      if (testimonials.length > 0) {
+        container.innerHTML = testimonials.map(t => `
+          <div class="card">
+            <p>"${t.text}"</p>
+            <h4>— ${t.name}</h4>
+          </div>
+        `).join('');
+      } else {
+        container.innerHTML = `
+          <div class="card"><p>"FITTCHECK helped me transform my body and mindset. Highly recommended!"</p><h4>— John D.</h4></div>
+          <div class="card"><p>"The trainers here truly care about your progress. The best gym in town!"</p><h4>— Sarah P.</h4></div>
+          <div class="card"><p>"Great atmosphere, clean facilities, and motivating people everywhere!"</p><h4>— Michael L.</h4></div>
+        `;
+      }
     }
 
-    instructionsClose.addEventListener('click', closeInstructionsModal);
-
-    instructionsModal.addEventListener('click', function(e) {
-      if (e.target === instructionsModal) {
-        closeInstructionsModal();
-      }
-    });
-
-    // Close modal with Escape key
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape' && instructionsModal.classList.contains('active')) {
-        closeInstructionsModal();
-      }
-    });
-
-    // Add event listeners to exercise cards
-    exerciseGrid.addEventListener('click', function(e) {
-      const card = e.target.closest('.exercise-card');
-      if (card) {
-        const exerciseName = card.querySelector('.exercise-card-content h4').textContent;
-        const exercise = exercises.muscle.exercises.find(e => e.name === exerciseName);
-        if (exercise) {
-          openInstructionsModal(exercise);
-        }
-      }
-    });
+    // ========== INIT ==========
+    document.getElementById('year').textContent = new Date().getFullYear();
+    setActiveNavLink();
+    initializeNotifications();
+    loadProgramsFromStorage();
+    loadTestimonialsFromStorage();
   </script>
 </body>
 </html>

@@ -4,6 +4,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>FITTCHECK Admin Dashboard</title>
   <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
     * {
       margin: 0;
@@ -14,36 +15,38 @@
       border: none;
       outline: none;
       scroll-behavior: smooth;
-      font-family: -apple-system, sans-serif;
+      font-family: 'Inter', -apple-system, sans-serif;
     }
-
     :root {
-      --bg-color: #0e1621;
-      --card-bg: #1b2430;
+      --bg-color: #0c141f;
+      --card-bg: #1a2535;
       --text-color: #fff;
-      --accent: #669bcf;
-      --accent-dark: #8ab9f7;
+      --accent: #4a90e2;
+      --accent-dark: #3a7bc8;
       --muted: #a0a8b5;
-      --border: rgba(102, 155, 207, 0.3);
+      --border: rgba(74, 144, 226, 0.3);
+      --success: #4ade80;
+      --warning: #facc15;
+      --danger: #f87171;
+      --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+      --transition: all 0.3s ease;
     }
-
     html {
       font-size: 62.5%;
       overflow-x: hidden;
     }
-
     body {
-      background: var(--bg-color);
+      background: linear-gradient(135deg, var(--bg-color), #0a101a);
       color: var(--text-color);
       font-size: 1.6rem;
+      min-height: 100vh;
+      position: relative;
     }
-
     .container {
       max-width: 1400px;
       margin: 0 auto;
       padding: 3rem 2rem;
     }
-
     /* Header */
     .admin-header {
       display: flex;
@@ -52,390 +55,443 @@
       margin-bottom: 4rem;
       padding-bottom: 2rem;
       border-bottom: 1px solid var(--border);
+      position: relative;
     }
-
+    .admin-header::after {
+      content: "";
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      width: 100px;
+      height: 3px;
+      background: var(--accent);
+    }
     .admin-header h1 {
       font-size: 3.6rem;
-      color: var(--accent-dark);
+      font-weight: 700;
+      color: var(--accent);
+      background: linear-gradient(to right, var(--accent), #6a9cff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
-
     .admin-header p {
       color: var(--muted);
-      margin-top: 0.5rem;
-      font-size: 1.4rem;
+      margin-top: 0.8rem;
+      font-size: 1.5rem;
     }
-
     /* Profile Dropdown */
     .profile-dropdown {
       position: relative;
     }
-
     .profile-btn {
-      width: 4.5rem;
-      height: 4.5rem;
+      width: 4.8rem;
+      height: 4.8rem;
       border-radius: 50%;
-      background: transparent;
+      background: rgba(26, 37, 53, 0.8);
       border: 2px solid var(--accent);
       color: var(--accent);
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: all 0.3s;
+      transition: var(--transition);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
     }
-
     .profile-btn:hover {
-      background: rgba(102, 155, 207, 0.1);
+      background: rgba(74, 144, 226, 0.2);
+      transform: translateY(-3px);
     }
-
     .profile-btn i {
       font-size: 2.4rem;
     }
-
     .dropdown-menu {
       position: absolute;
-      top: calc(100% + 1rem);
+      top: calc(100% + 1.2rem);
       right: 0;
       background: var(--card-bg);
       border: 2px solid var(--accent);
-      border-radius: 1rem;
-      min-width: 22rem;
+      border-radius: 16px;
+      min-width: 24rem;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
       opacity: 0;
       visibility: hidden;
       transform: translateY(-1rem);
-      transition: all 0.3s;
+      transition: var(--transition);
       z-index: 1000;
+      overflow: hidden;
     }
-
     .dropdown-menu.show {
       opacity: 1;
       visibility: visible;
       transform: translateY(0);
     }
-
     .dropdown-header {
-      padding: 1.5rem 2rem;
+      padding: 1.8rem 2rem;
       border-bottom: 1px solid var(--border);
+      background: rgba(26, 37, 53, 0.95);
     }
-
     .dropdown-header p:first-child {
-      font-size: 1.5rem;
+      font-size: 1.7rem;
       margin-bottom: 0.5rem;
+      font-weight: 600;
+      color: white;
     }
-
     .dropdown-header p:last-child {
-      font-size: 1.2rem;
+      font-size: 1.4rem;
       color: var(--muted);
     }
-
     .dropdown-item {
-      padding: 1.2rem 2rem;
+      padding: 1.4rem 2rem;
       display: flex;
       align-items: center;
-      gap: 1rem;
+      gap: 1.2rem;
       cursor: pointer;
-      transition: all 0.3s;
-      font-size: 1.4rem;
+      transition: var(--transition);
+      font-size: 1.5rem;
       background: transparent;
       border: none;
       color: var(--text-color);
       width: 100%;
       text-align: left;
     }
-
     .dropdown-item:hover {
-      background: rgba(220, 38, 38, 0.1);
+      background: rgba(74, 144, 226, 0.15);
     }
-
     .dropdown-item.logout {
-      color: #ef4444;
+      color: var(--danger);
+      border-top: 1px solid var(--border);
     }
-
     .dropdown-item i {
-      font-size: 1.6rem;
+      font-size: 1.8rem;
+      color: var(--accent);
     }
-
     /* Tabs */
     .tabs {
       margin-bottom: 3rem;
     }
-
     .tab-list {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 1rem;
+      display: flex;
+      gap: 1.2rem;
       background: var(--card-bg);
-      padding: 1rem;
-      border-radius: 1rem;
+      padding: 1.2rem;
+      border-radius: 18px;
+      box-shadow: var(--card-shadow);
     }
-
     .tab-btn {
-      padding: 1.2rem 2rem;
+      padding: 1.4rem 2.2rem;
       background: transparent;
       border: none;
       color: var(--muted);
       cursor: pointer;
-      border-radius: 0.5rem;
-      transition: all 0.3s;
-      font-size: 1.4rem;
+      border-radius: 14px;
+      transition: var(--transition);
+      font-size: 1.5rem;
       font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      flex: 1;
+      justify-content: center;
     }
-
+    .tab-btn i {
+      font-size: 1.8rem;
+    }
     .tab-btn.active {
       background: var(--accent);
       color: white;
+      box-shadow: 0 6px 15px rgba(74, 144, 226, 0.4);
     }
-
-    .tab-btn:hover {
-      background: rgba(102, 155, 207, 0.2);
+    .tab-btn:hover:not(.active) {
+      background: rgba(74, 144, 226, 0.15);
+      color: var(--accent);
     }
-
     .tab-content {
       display: none;
     }
-
     .tab-content.active {
       display: block;
     }
-
     /* Card */
     .card {
       background: var(--card-bg);
-      border: 2px solid var(--accent);
-      border-radius: 1rem;
-      padding: 2.5rem;
+      border-radius: 20px;
+      padding: 2.8rem;
       margin-bottom: 3rem;
+      box-shadow: var(--card-shadow);
+      border: 1px solid var(--border);
+      transition: var(--transition);
     }
-
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+    }
     .card-header {
-      margin-bottom: 2rem;
+      margin-bottom: 2.5rem;
     }
-
     .card-header h2 {
-      font-size: 2.4rem;
-      color: var(--accent-dark);
-      margin-bottom: 0.5rem;
+      font-size: 2.6rem;
+      color: var(--accent);
+      margin-bottom: 0.8rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
     }
-
+    .card-header h2 i {
+      background: rgba(74, 144, 226, 0.2);
+      width: 46px;
+      height: 46px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+    }
     .card-header p {
       color: var(--muted);
-      font-size: 1.4rem;
+      font-size: 1.5rem;
+      line-height: 1.6;
     }
-
     /* Form */
     .form-group {
-      margin-bottom: 2rem;
+      margin-bottom: 2.2rem;
     }
-
     .form-group label {
-      display: block;
-      margin-bottom: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      margin-bottom: 1rem;
       color: var(--text-color);
-      font-size: 1.4rem;
+      font-size: 1.5rem;
       font-weight: 600;
     }
-
+    .form-group label i {
+      color: var(--accent);
+      font-size: 1.6rem;
+    }
     .form-input,
     .form-textarea,
     .form-select {
       width: 100%;
-      padding: 1.2rem;
-      background: var(--bg-color);
+      padding: 1.4rem 1.6rem;
+      background: rgba(26, 37, 53, 0.8);
       border: 1px solid var(--border);
-      border-radius: 0.5rem;
+      border-radius: 14px;
       color: var(--text-color);
-      font-size: 1.4rem;
-      transition: border 0.3s;
+      font-size: 1.5rem;
+      transition: var(--transition);
+      backdrop-filter: blur(5px);
     }
-
     .form-input:focus,
     .form-textarea:focus,
     .form-select:focus {
       border-color: var(--accent);
       outline: none;
+      box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.3);
     }
-
     .form-textarea {
-      min-height: 10rem;
+      min-height: 14rem;
       resize: vertical;
     }
-
     .form-select {
       cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%234a90e2' class='bi bi-chevron-down' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 1.8rem center;
+      padding-right: 4.5rem;
     }
-
     .form-actions {
       display: flex;
-      gap: 1rem;
+      gap: 1.4rem;
+      margin-top: 1rem;
     }
-
     .btn {
       display: inline-flex;
       align-items: center;
-      gap: 0.8rem;
-      padding: 1rem 2rem;
-      border-radius: 0.5rem;
+      justify-content: center;
+      gap: 0.9rem;
+      padding: 1.3rem 2.4rem;
+      border-radius: 14px;
       cursor: pointer;
-      transition: all 0.3s;
-      font-size: 1.4rem;
+      transition: var(--transition);
+      font-size: 1.5rem;
       font-weight: 600;
       border: none;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     }
-
     .btn-primary {
-      background: var(--accent);
+      background: linear-gradient(135deg, var(--accent), var(--accent-dark));
       color: white;
+      flex: 1;
     }
-
     .btn-primary:hover {
-      background: var(--accent-dark);
-      transform: translateY(-2px);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(74, 144, 226, 0.4);
     }
-
     .btn-secondary {
-      background: transparent;
+      background: rgba(255, 255, 255, 0.08);
       border: 1px solid var(--border);
       color: var(--text-color);
     }
-
     .btn-secondary:hover {
-      background: rgba(255, 255, 255, 0.05);
+      background: rgba(255, 255, 255, 0.12);
     }
-
     .btn-danger {
-      background: #dc2626;
+      background: linear-gradient(135deg, var(--danger), #e53e3e);
       color: white;
     }
-
     .btn-danger:hover {
-      background: #b91c1c;
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(248, 113, 113, 0.4);
     }
-
     /* Item List */
     .item-list {
-      display: grid;
-      gap: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.8rem;
     }
-
     .item-card {
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: 1rem;
-      padding: 2rem;
+      background: rgba(26, 37, 53, 0.7);
+      border-radius: 18px;
+      padding: 2.2rem;
       display: flex;
       justify-content: space-between;
-      align-items: start;
+      align-items: flex-start;
+      border: 1px solid var(--border);
+      transition: var(--transition);
     }
-
+    .item-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    }
     .item-content h3 {
-      font-size: 2rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .item-category {
-      color: var(--accent);
-      font-size: 1.3rem;
+      font-size: 2.1rem;
       margin-bottom: 0.8rem;
+      color: white;
     }
-
+    .item-category {
+      display: inline-block;
+      background: rgba(74, 144, 226, 0.15);
+      color: var(--accent);
+      padding: 0.5rem 1.2rem;
+      border-radius: 24px;
+      font-size: 1.4rem;
+      margin-bottom: 1.2rem;
+      font-weight: 600;
+    }
     .item-content p {
       color: var(--muted);
-      font-size: 1.4rem;
-      line-height: 1.6;
+      font-size: 1.5rem;
+      line-height: 1.7;
+      margin-bottom: 0.8rem;
     }
-
     .item-video {
-      color: var(--accent-dark);
-      font-size: 1.2rem;
-      margin-top: 0.5rem;
-      word-break: break-all;
+      color: var(--accent);
+      font-size: 1.3rem;
+      margin-top: 0.6rem;
+      font-style: italic;
     }
-
     .item-actions {
       display: flex;
       gap: 1rem;
       flex-shrink: 0;
       margin-left: 2rem;
     }
-
     .btn-icon {
-      padding: 0.8rem;
-      width: 3.6rem;
-      height: 3.6rem;
+      padding: 0;
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
       display: flex;
       align-items: center;
       justify-content: center;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
     }
-
+    .btn-icon i {
+      font-size: 1.8rem;
+    }
     /* Toast */
     .toast {
       position: fixed;
       bottom: 3rem;
       right: 3rem;
       background: var(--card-bg);
-      border: 2px solid var(--accent);
-      border-radius: 1rem;
-      padding: 1.5rem 2rem;
+      border-radius: 16px;
+      padding: 1.6rem 2.4rem;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
       transform: translateY(150%);
-      transition: transform 0.3s;
+      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       z-index: 1000;
-      font-size: 1.4rem;
+      font-size: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      border-left: 4px solid var(--accent);
     }
-
     .toast.show {
       transform: translateY(0);
     }
-
     .toast.success {
-      border-color: #45ffca;
+      border-left-color: var(--success);
     }
-
     .toast.error {
-      border-color: #dc2626;
+      border-left-color: var(--danger);
     }
-
     .helper-text {
-      font-size: 1.2rem;
+      font-size: 1.3rem;
       color: var(--muted);
-      margin-top: 0.5rem;
+      margin-top: 0.7rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
     }
-
+    .helper-text i {
+      font-size: 1.4rem;
+    }
     /* Responsive */
     @media (max-width: 768px) {
       .tab-list {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .item-card {
         flex-direction: column;
       }
-
+      .item-card {
+        flex-direction: column;
+        gap: 1.5rem;
+      }
       .item-actions {
         margin-left: 0;
-        margin-top: 1.5rem;
+        margin-top: 1rem;
         width: 100%;
+        justify-content: flex-end;
       }
-
       .admin-header {
         flex-direction: column;
         gap: 2rem;
         text-align: center;
       }
+      .admin-header::after {
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80px;
+      }
+      .form-actions {
+        flex-direction: column;
+      }
+      .btn {
+        width: 100%;
+      }
     }
   </style>
 </head>
 <body>
-
   <div class="container">
     <!-- Header -->
     <div class="admin-header">
       <div>
         <h1>FITTCHECK Admin Dashboard</h1>
-        <p>Manage your gym content</p>
+        <p>Manage your gym content with ease</p>
       </div>
-      
       <!-- Profile Dropdown -->
       <div class="profile-dropdown">
         <button class="profile-btn" id="profile-btn">
@@ -453,32 +509,37 @@
         </div>
       </div>
     </div>
-
     <!-- Tabs -->
     <div class="tabs">
       <div class="tab-list">
-        <button class="tab-btn active" onclick="showTab('exercises')">Exercises</button>
-        <button class="tab-btn" onclick="showTab('trainers')">Trainers</button>
-        <button class="tab-btn" onclick="showTab('programs')">Programs</button>
-        <button class="tab-btn" onclick="showTab('testimonials')">Testimonials</button>
+        <button class="tab-btn active" onclick="showTab('exercises')">
+          <i class='bx bx-dumbbell'></i> Exercises
+        </button>
+        <button class="tab-btn" onclick="showTab('trainers')">
+          <i class='bx bx-user-check'></i> Trainers
+        </button>
+        <button class="tab-btn" onclick="showTab('programs')">
+          <i class='bx bx-task'></i> Programs
+        </button>
+        <button class="tab-btn" onclick="showTab('testimonials')">
+          <i class='bx bx-message-square-dots'></i> Testimonials
+        </button>
       </div>
     </div>
-
     <!-- Exercises Tab -->
     <div id="exercises-tab" class="tab-content active">
       <div class="card">
         <div class="card-header">
-          <h2 id="exercise-form-title">Add New Exercise Class</h2>
+          <h2><i class='bx bx-plus-circle'></i> Add New Exercise Class</h2>
           <p>Manage workout exercises that will appear on the Classes page</p>
         </div>
         <form id="exercise-form">
           <div class="form-group">
-            <label for="exercise-name">Class Name</label>
+            <label for="exercise-name"><i class='bx bx-font'></i> Class Name</label>
             <input type="text" id="exercise-name" class="form-input" placeholder="e.g., Morning Yoga Flow" required>
           </div>
-          
           <div class="form-group">
-            <label for="exercise-type">Class Type</label>
+            <label for="exercise-type"><i class='bx bx-category'></i> Class Type</label>
             <select id="exercise-type" class="form-select" required>
               <option value="">Select type...</option>
               <option value="yoga">Yoga</option>
@@ -489,24 +550,20 @@
               <option value="boxing">Boxing</option>
             </select>
           </div>
-
           <div class="form-group">
-            <label for="exercise-instructor">Instructor Name</label>
+            <label for="exercise-instructor"><i class='bx bx-user'></i> Instructor Name</label>
             <input type="text" id="exercise-instructor" class="form-input" placeholder="e.g., Maria Cruz" required>
           </div>
-
           <div class="form-group">
-            <label for="exercise-time">Class Time</label>
+            <label for="exercise-time"><i class='bx bx-time-five'></i> Class Time</label>
             <input type="text" id="exercise-time" class="form-input" placeholder="e.g., 6:00 AM" required>
           </div>
-
           <div class="form-group">
-            <label for="exercise-duration">Duration</label>
+            <label for="exercise-duration"><i class='bx bx-timer'></i> Duration</label>
             <input type="text" id="exercise-duration" class="form-input" placeholder="e.g., 60 min" required>
           </div>
-
           <div class="form-group">
-            <label for="exercise-difficulty">Difficulty Level</label>
+            <label for="exercise-difficulty"><i class='bx bx-bar-chart-alt-2'></i> Difficulty Level</label>
             <select id="exercise-difficulty" class="form-select" required>
               <option value="">Select difficulty...</option>
               <option value="beginner">Beginner</option>
@@ -514,63 +571,55 @@
               <option value="advanced">Advanced</option>
             </select>
           </div>
-
           <div class="form-group">
-            <label for="exercise-spots">Available Spots</label>
+            <label for="exercise-spots"><i class='bx bx-group'></i> Available Spots</label>
             <input type="number" id="exercise-spots" class="form-input" placeholder="e.g., 15" min="1" required>
           </div>
-
           <div class="form-group">
-            <label for="exercise-description">Description</label>
+            <label for="exercise-description"><i class='bx bx-text'></i> Description</label>
             <textarea id="exercise-description" class="form-textarea" placeholder="Describe the class" required></textarea>
           </div>
-
           <div class="form-group">
-            <label for="exercise-video">YouTube Video URL</label>
+            <label for="exercise-video"><i class='bx bx-video'></i> YouTube Video URL</label>
             <input type="url" id="exercise-video" class="form-input" placeholder="https://www.youtube.com/watch?v=..." required>
-            <p class="helper-text">Paste a YouTube video link (will be automatically converted to embed format)</p>
+            <p class="helper-text"><i class='bx bx-info-circle'></i> Paste a YouTube video link (will be automatically converted to embed format)</p>
           </div>
-
           <div class="form-group">
-            <label for="exercise-image">Image URL</label>
+            <label for="exercise-image"><i class='bx bx-image-alt'></i> Image URL</label>
             <input type="url" id="exercise-image" class="form-input" placeholder="https://...">
-            <p class="helper-text">Optional: Leave blank for default image</p>
+            <p class="helper-text"><i class='bx bx-info-circle'></i> Optional: Leave blank for default image</p>
           </div>
-
           <div class="form-actions">
             <button type="submit" class="btn btn-primary">
               <i class='bx bx-plus'></i>
               <span id="exercise-submit-text">Add Exercise Class</span>
             </button>
             <button type="button" class="btn btn-secondary" id="exercise-cancel-btn" style="display: none;" onclick="cancelExerciseEdit()">
-              <i class='bx bx-x'></i>
-              Cancel
+              <i class='bx bx-x'></i> Cancel
             </button>
           </div>
         </form>
       </div>
-
       <div class="item-list" id="exercise-list"></div>
     </div>
-
     <!-- Trainers Tab -->
     <div id="trainers-tab" class="tab-content">
       <div class="card">
         <div class="card-header">
-          <h2 id="trainer-form-title">Add New Trainer</h2>
+          <h2><i class='bx bx-user-plus'></i> Add New Trainer</h2>
           <p>Manage gym trainers</p>
         </div>
         <form id="trainer-form">
           <div class="form-group">
-            <label for="trainer-name">Trainer Name</label>
+            <label for="trainer-name"><i class='bx bx-user'></i> Trainer Name</label>
             <input type="text" id="trainer-name" class="form-input" placeholder="e.g., Alex Tan" required>
           </div>
           <div class="form-group">
-            <label for="trainer-title">Title/Specialization</label>
+            <label for="trainer-title"><i class='bx bx-badge-check'></i> Title/Specialization</label>
             <input type="text" id="trainer-title" class="form-input" placeholder="e.g., Certified Strength Coach" required>
           </div>
           <div class="form-group">
-            <label for="trainer-image">Image URL</label>
+            <label for="trainer-image"><i class='bx bx-image'></i> Image URL</label>
             <input type="text" id="trainer-image" class="form-input" placeholder="https://...">
           </div>
           <div class="form-actions">
@@ -579,34 +628,31 @@
               <span id="trainer-submit-text">Add Trainer</span>
             </button>
             <button type="button" class="btn btn-secondary" id="trainer-cancel-btn" style="display: none;" onclick="cancelTrainerEdit()">
-              <i class='bx bx-x'></i>
-              Cancel
+              <i class='bx bx-x'></i> Cancel
             </button>
           </div>
         </form>
       </div>
-
       <div class="item-list" id="trainer-list"></div>
     </div>
-
     <!-- Programs Tab -->
     <div id="programs-tab" class="tab-content">
       <div class="card">
         <div class="card-header">
-          <h2 id="program-form-title">Add New Program</h2>
+          <h2><i class='bx bx-task'></i> Add New Program</h2>
           <p>Manage fitness programs</p>
         </div>
         <form id="program-form">
           <div class="form-group">
-            <label for="program-name">Program Name</label>
+            <label for="program-name"><i class='bx bx-font'></i> Program Name</label>
             <input type="text" id="program-name" class="form-input" placeholder="e.g., Strength Training" required>
           </div>
           <div class="form-group">
-            <label for="program-description">Description</label>
+            <label for="program-description"><i class='bx bx-text'></i> Description</label>
             <textarea id="program-description" class="form-textarea" placeholder="Describe the program" required></textarea>
           </div>
           <div class="form-group">
-            <label for="program-image">Image URL</label>
+            <label for="program-image"><i class='bx bx-image'></i> Image URL</label>
             <input type="text" id="program-image" class="form-input" placeholder="https://...">
           </div>
           <div class="form-actions">
@@ -615,30 +661,27 @@
               <span id="program-submit-text">Add Program</span>
             </button>
             <button type="button" class="btn btn-secondary" id="program-cancel-btn" style="display: none;" onclick="cancelProgramEdit()">
-              <i class='bx bx-x'></i>
-              Cancel
+              <i class='bx bx-x'></i> Cancel
             </button>
           </div>
         </form>
       </div>
-
       <div class="item-list" id="program-list"></div>
     </div>
-
     <!-- Testimonials Tab -->
     <div id="testimonials-tab" class="tab-content">
       <div class="card">
         <div class="card-header">
-          <h2 id="testimonial-form-title">Add New Testimonial</h2>
+          <h2><i class='bx bx-message-square-add'></i> Add New Testimonial</h2>
           <p>Manage member testimonials</p>
         </div>
         <form id="testimonial-form">
           <div class="form-group">
-            <label for="testimonial-name">Member Name</label>
+            <label for="testimonial-name"><i class='bx bx-user'></i> Member Name</label>
             <input type="text" id="testimonial-name" class="form-input" placeholder="e.g., John D." required>
           </div>
           <div class="form-group">
-            <label for="testimonial-text">Testimonial</label>
+            <label for="testimonial-text"><i class='bx bx-message-square-dots'></i> Testimonial</label>
             <textarea id="testimonial-text" class="form-textarea" placeholder="What did they say?" required></textarea>
           </div>
           <div class="form-actions">
@@ -647,37 +690,30 @@
               <span id="testimonial-submit-text">Add Testimonial</span>
             </button>
             <button type="button" class="btn btn-secondary" id="testimonial-cancel-btn" style="display: none;" onclick="cancelTestimonialEdit()">
-              <i class='bx bx-x'></i>
-              Cancel
+              <i class='bx bx-x'></i> Cancel
             </button>
           </div>
         </form>
       </div>
-
       <div class="item-list" id="testimonial-list"></div>
     </div>
   </div>
-
   <!-- Toast Notification -->
   <div id="toast" class="toast"></div>
-
   <script>
     // Profile Dropdown Toggle
     const profileBtn = document.getElementById('profile-btn');
     const dropdownMenu = document.getElementById('dropdown-menu');
-
     profileBtn.addEventListener('click', (e) => {
       e.stopPropagation();
       dropdownMenu.classList.toggle('show');
     });
-
     // Close dropdown when clicking outside
     document.addEventListener('click', (e) => {
       if (!dropdownMenu.contains(e.target) && !profileBtn.contains(e.target)) {
         dropdownMenu.classList.remove('show');
       }
     });
-
     // Logout Handler
     function handleLogout() {
       showToast('Logged out successfully!', 'success');
@@ -686,19 +722,15 @@
         window.location.href = '/';
       }, 1000);
     }
-
     // Helper function to convert YouTube URL to embed format
     function getYouTubeEmbedUrl(url) {
       if (!url) return '';
-      
       // Already an embed URL
       if (url.includes('youtube.com/embed/')) {
         return url;
       }
-      
       // Extract video ID from various YouTube URL formats
       let videoId = '';
-      
       if (url.includes('youtube.com/watch?v=')) {
         videoId = url.split('watch?v=')[1].split('&')[0];
       } else if (url.includes('youtu.be/')) {
@@ -706,56 +738,49 @@
       } else if (url.includes('youtube.com/shorts/')) {
         videoId = url.split('shorts/')[1].split('?')[0];
       }
-      
       return videoId ? `https://www.youtube.com/embed/${videoId}` : url;
     }
-
     // Global state
     let editingId = null;
     let editingType = null;
-
     // Tab switching
     function showTab(tabName) {
       const tabs = document.querySelectorAll('.tab-content');
       const buttons = document.querySelectorAll('.tab-btn');
-      
       tabs.forEach(tab => tab.classList.remove('active'));
       buttons.forEach(btn => btn.classList.remove('active'));
-      
       document.getElementById(tabName + '-tab').classList.add('active');
-      event.target.classList.add('active');
+      // Update button states
+      buttons.forEach(button => {
+        if (button.textContent.trim().toLowerCase().includes(tabName)) {
+          button.classList.add('active');
+        }
+      });
     }
-
     // Toast notification
     function showToast(message, type = 'success') {
       const toast = document.getElementById('toast');
       toast.textContent = message;
       toast.className = 'toast show ' + type;
-      
       setTimeout(() => {
         toast.classList.remove('show');
       }, 3000);
     }
-
     // Load data from localStorage
     function loadData(key, defaultValue = []) {
       const data = localStorage.getItem(key);
       return data ? JSON.parse(data) : defaultValue;
     }
-
     // Save data to localStorage
     function saveData(key, data) {
       localStorage.setItem(key, JSON.stringify(data));
     }
-
     // EXERCISES
     let exercises = loadData('exercises');
     let editingExerciseId = null;
-
     function renderExercises() {
       const list = document.getElementById('exercise-list');
       list.innerHTML = '';
-      
       exercises.forEach(exercise => {
         const item = document.createElement('div');
         item.className = 'item-card';
@@ -765,13 +790,13 @@
             <p class="item-category">${exercise.type} • ${exercise.difficulty} • ${exercise.duration}</p>
             <p><strong>Instructor:</strong> ${exercise.instructor} | <strong>Time:</strong> ${exercise.time}</p>
             <p>${exercise.description}</p>
-            <p class="item-video">📹 Video: ${exercise.videoUrl ? 'Added' : 'No video'}</p>
+            <p class="item-video">🎥 Video: ${exercise.videoUrl ? 'Added' : 'No video'}</p>
           </div>
           <div class="item-actions">
-            <button class="btn btn-secondary btn-icon" onclick="editExercise('${exercise.id}')">
+            <button class="btn-icon" style="background: rgba(74, 144, 226, 0.2); color: var(--accent);" onclick="editExercise('${exercise.id}')">
               <i class='bx bx-edit'></i>
             </button>
-            <button class="btn btn-danger btn-icon" onclick="deleteExercise('${exercise.id}')">
+            <button class="btn-icon" style="background: rgba(248, 113, 113, 0.2); color: var(--danger);" onclick="deleteExercise('${exercise.id}')">
               <i class='bx bx-trash'></i>
             </button>
           </div>
@@ -779,10 +804,8 @@
         list.appendChild(item);
       });
     }
-
     document.getElementById('exercise-form').addEventListener('submit', function(e) {
       e.preventDefault();
-      
       const name = document.getElementById('exercise-name').value;
       const type = document.getElementById('exercise-type').value;
       const instructor = document.getElementById('exercise-instructor').value;
@@ -793,7 +816,6 @@
       const description = document.getElementById('exercise-description').value;
       const videoUrl = getYouTubeEmbedUrl(document.getElementById('exercise-video').value);
       const image = document.getElementById('exercise-image').value || 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438';
-      
       if (editingExerciseId) {
         // Update existing
         exercises = exercises.map(ex => 
@@ -824,15 +846,12 @@
         showToast('Exercise class added successfully! Check the Classes page.');
         this.reset();
       }
-      
       saveData('exercises', exercises);
       renderExercises();
     });
-
     function editExercise(id) {
       const exercise = exercises.find(ex => ex.id === id);
       if (!exercise) return;
-      
       editingExerciseId = id;
       document.getElementById('exercise-name').value = exercise.name;
       document.getElementById('exercise-type').value = exercise.type;
@@ -844,14 +863,11 @@
       document.getElementById('exercise-description').value = exercise.description;
       document.getElementById('exercise-video').value = exercise.videoUrl;
       document.getElementById('exercise-image').value = exercise.image;
-      
       document.getElementById('exercise-form-title').textContent = 'Edit Exercise Class';
       document.getElementById('exercise-submit-text').textContent = 'Update Exercise Class';
       document.getElementById('exercise-cancel-btn').style.display = 'inline-flex';
-      
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
-
     function cancelExerciseEdit() {
       editingExerciseId = null;
       document.getElementById('exercise-form').reset();
@@ -859,7 +875,6 @@
       document.getElementById('exercise-submit-text').textContent = 'Add Exercise Class';
       document.getElementById('exercise-cancel-btn').style.display = 'none';
     }
-
     function deleteExercise(id) {
       if (confirm('Are you sure you want to delete this exercise class?')) {
         exercises = exercises.filter(ex => ex.id !== id);
@@ -868,15 +883,16 @@
         showToast('Exercise class deleted!');
       }
     }
-
     // TRAINERS
-    let trainers = loadData('trainers');
+    let trainers = loadData('trainers', [
+      { id: '1', name: 'Maria Cruz', title: 'Yoga Instructor', image: 'https://images.unsplash.com/photo-1549995546-87cb41aa98a4' },
+      { id: '2', name: 'Jake Santos', title: 'Cardio Trainer', image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d' },
+      { id: '3', name: 'Alex Tan', title: 'Strength Coach', image: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7' }
+    ]);
     let editingTrainerId = null;
-
     function renderTrainers() {
       const list = document.getElementById('trainer-list');
       list.innerHTML = '';
-      
       trainers.forEach(trainer => {
         const item = document.createElement('div');
         item.className = 'item-card';
@@ -886,10 +902,10 @@
             <p>${trainer.title}</p>
           </div>
           <div class="item-actions">
-            <button class="btn btn-secondary btn-icon" onclick="editTrainer('${trainer.id}')">
+            <button class="btn-icon" style="background: rgba(74, 144, 226, 0.2); color: var(--accent);" onclick="editTrainer('${trainer.id}')">
               <i class='bx bx-edit'></i>
             </button>
-            <button class="btn btn-danger btn-icon" onclick="deleteTrainer('${trainer.id}')">
+            <button class="btn-icon" style="background: rgba(248, 113, 113, 0.2); color: var(--danger);" onclick="deleteTrainer('${trainer.id}')">
               <i class='bx bx-trash'></i>
             </button>
           </div>
@@ -897,14 +913,11 @@
         list.appendChild(item);
       });
     }
-
     document.getElementById('trainer-form').addEventListener('submit', function(e) {
       e.preventDefault();
-      
       const name = document.getElementById('trainer-name').value;
       const title = document.getElementById('trainer-title').value;
       const image = document.getElementById('trainer-image').value || 'https://images.unsplash.com/photo-1549995546-87cb41aa98a4';
-      
       if (editingTrainerId) {
         trainers = trainers.map(tr => 
           tr.id === editingTrainerId 
@@ -924,27 +937,21 @@
         showToast('Trainer added successfully!');
         this.reset();
       }
-      
       saveData('trainers', trainers);
       renderTrainers();
     });
-
     function editTrainer(id) {
       const trainer = trainers.find(tr => tr.id === id);
       if (!trainer) return;
-      
       editingTrainerId = id;
       document.getElementById('trainer-name').value = trainer.name;
       document.getElementById('trainer-title').value = trainer.title;
       document.getElementById('trainer-image').value = trainer.image;
-      
       document.getElementById('trainer-form-title').textContent = 'Edit Trainer';
       document.getElementById('trainer-submit-text').textContent = 'Update Trainer';
       document.getElementById('trainer-cancel-btn').style.display = 'inline-flex';
-      
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
-
     function cancelTrainerEdit() {
       editingTrainerId = null;
       document.getElementById('trainer-form').reset();
@@ -952,7 +959,6 @@
       document.getElementById('trainer-submit-text').textContent = 'Add Trainer';
       document.getElementById('trainer-cancel-btn').style.display = 'none';
     }
-
     function deleteTrainer(id) {
       if (confirm('Are you sure you want to delete this trainer?')) {
         trainers = trainers.filter(tr => tr.id !== id);
@@ -961,15 +967,12 @@
         showToast('Trainer deleted!');
       }
     }
-
     // PROGRAMS
     let programs = loadData('programs');
     let editingProgramId = null;
-
     function renderPrograms() {
       const list = document.getElementById('program-list');
       list.innerHTML = '';
-      
       programs.forEach(program => {
         const item = document.createElement('div');
         item.className = 'item-card';
@@ -979,10 +982,10 @@
             <p>${program.description}</p>
           </div>
           <div class="item-actions">
-            <button class="btn btn-secondary btn-icon" onclick="editProgram('${program.id}')">
+            <button class="btn-icon" style="background: rgba(74, 144, 226, 0.2); color: var(--accent);" onclick="editProgram('${program.id}')">
               <i class='bx bx-edit'></i>
             </button>
-            <button class="btn btn-danger btn-icon" onclick="deleteProgram('${program.id}')">
+            <button class="btn-icon" style="background: rgba(248, 113, 113, 0.2); color: var(--danger);" onclick="deleteProgram('${program.id}')">
               <i class='bx bx-trash'></i>
             </button>
           </div>
@@ -990,14 +993,11 @@
         list.appendChild(item);
       });
     }
-
     document.getElementById('program-form').addEventListener('submit', function(e) {
       e.preventDefault();
-      
       const name = document.getElementById('program-name').value;
       const description = document.getElementById('program-description').value;
       const image = document.getElementById('program-image').value || 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438';
-      
       if (editingProgramId) {
         programs = programs.map(pr => 
           pr.id === editingProgramId 
@@ -1017,27 +1017,21 @@
         showToast('Program added successfully!');
         this.reset();
       }
-      
       saveData('programs', programs);
       renderPrograms();
     });
-
     function editProgram(id) {
       const program = programs.find(pr => pr.id === id);
       if (!program) return;
-      
       editingProgramId = id;
       document.getElementById('program-name').value = program.name;
       document.getElementById('program-description').value = program.description;
       document.getElementById('program-image').value = program.image;
-      
       document.getElementById('program-form-title').textContent = 'Edit Program';
       document.getElementById('program-submit-text').textContent = 'Update Program';
       document.getElementById('program-cancel-btn').style.display = 'inline-flex';
-      
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
-
     function cancelProgramEdit() {
       editingProgramId = null;
       document.getElementById('program-form').reset();
@@ -1045,7 +1039,6 @@
       document.getElementById('program-submit-text').textContent = 'Add Program';
       document.getElementById('program-cancel-btn').style.display = 'none';
     }
-
     function deleteProgram(id) {
       if (confirm('Are you sure you want to delete this program?')) {
         programs = programs.filter(pr => pr.id !== id);
@@ -1054,28 +1047,25 @@
         showToast('Program deleted!');
       }
     }
-
     // TESTIMONIALS
     let testimonials = loadData('testimonials');
     let editingTestimonialId = null;
-
     function renderTestimonials() {
       const list = document.getElementById('testimonial-list');
       list.innerHTML = '';
-      
       testimonials.forEach(testimonial => {
         const item = document.createElement('div');
         item.className = 'item-card';
         item.innerHTML = `
           <div class="item-content">
-            <p style="margin-bottom: 1rem;">"${testimonial.text}"</p>
+            <p style="margin-bottom: 1rem; font-style: italic;">"${testimonial.text}"</p>
             <h4>— ${testimonial.name}</h4>
           </div>
           <div class="item-actions">
-            <button class="btn btn-secondary btn-icon" onclick="editTestimonial('${testimonial.id}')">
+            <button class="btn-icon" style="background: rgba(74, 144, 226, 0.2); color: var(--accent);" onclick="editTestimonial('${testimonial.id}')">
               <i class='bx bx-edit'></i>
             </button>
-            <button class="btn btn-danger btn-icon" onclick="deleteTestimonial('${testimonial.id}')">
+            <button class="btn-icon" style="background: rgba(248, 113, 113, 0.2); color: var(--danger);" onclick="deleteTestimonial('${testimonial.id}')">
               <i class='bx bx-trash'></i>
             </button>
           </div>
@@ -1083,13 +1073,10 @@
         list.appendChild(item);
       });
     }
-
     document.getElementById('testimonial-form').addEventListener('submit', function(e) {
       e.preventDefault();
-      
       const name = document.getElementById('testimonial-name').value;
       const text = document.getElementById('testimonial-text').value;
-      
       if (editingTestimonialId) {
         testimonials = testimonials.map(test => 
           test.id === editingTestimonialId 
@@ -1108,26 +1095,20 @@
         showToast('Testimonial added successfully!');
         this.reset();
       }
-      
       saveData('testimonials', testimonials);
       renderTestimonials();
     });
-
     function editTestimonial(id) {
       const testimonial = testimonials.find(test => test.id === id);
       if (!testimonial) return;
-      
       editingTestimonialId = id;
       document.getElementById('testimonial-name').value = testimonial.name;
       document.getElementById('testimonial-text').value = testimonial.text;
-      
       document.getElementById('testimonial-form-title').textContent = 'Edit Testimonial';
       document.getElementById('testimonial-submit-text').textContent = 'Update Testimonial';
       document.getElementById('testimonial-cancel-btn').style.display = 'inline-flex';
-      
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
-
     function cancelTestimonialEdit() {
       editingTestimonialId = null;
       document.getElementById('testimonial-form').reset();
@@ -1135,7 +1116,6 @@
       document.getElementById('testimonial-submit-text').textContent = 'Add Testimonial';
       document.getElementById('testimonial-cancel-btn').style.display = 'none';
     }
-
     function deleteTestimonial(id) {
       if (confirm('Are you sure you want to delete this testimonial?')) {
         testimonials = testimonials.filter(test => test.id !== id);
@@ -1144,13 +1124,11 @@
         showToast('Testimonial deleted!');
       }
     }
-
     // Initialize
     renderExercises();
     renderTrainers();
     renderPrograms();
     renderTestimonials();
   </script>
-
 </body>
 </html>

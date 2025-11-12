@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>FITTCHECK — Trainers</title>
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
   <style>
     /* Reset & Base Styles */
     * {
@@ -11,26 +12,20 @@
       margin: 0;
       padding: 0;
     }
-
     :root {
       --accent: #669bcf;
       --accent-dark: #8ab9f7;
       --muted: #a0a8b5;
       --bg: #0e1621;
       --card: #1b2430;
-      --success: #4ade80;
-      --warning: #fbbf24;
-      --danger: #f87171;
-      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      font-family: 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
     }
-
     html, body {
       background-color: var(--bg);
       min-height: 100%;
       color: #fff;
     }
-
-    /* Header Styles */
+    /* Header Styles - Updated to match tracker.html */
     .site-header {
       background: rgba(14, 22, 33, 0.95);
       backdrop-filter: blur(8px);
@@ -40,7 +35,6 @@
       border-bottom: 1px solid rgba(255, 255, 255, 0.05);
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
     }
-
     .header-inner {
       max-width: 1280px;
       margin: 0 auto;
@@ -49,25 +43,24 @@
       align-items: center;
       justify-content: space-between;
     }
-
     .logo {
       color: #ffffff;
       text-decoration: none;
       letter-spacing: 0.05em;
       font-size: 1.25rem;
       font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
     }
-
     .main-nav {
       display: none;
       align-items: center;
       gap: 2rem;
     }
-
     .main-nav.desktop {
       display: flex;
     }
-
     .main-nav a, .main-nav button {
       color: #d1d5db;
       text-decoration: none;
@@ -83,12 +76,39 @@
       align-items: center;
       gap: 0.5rem;
     }
-
-    .main-nav a:hover, .main-nav a.active, .main-nav button:hover {
-      color: #8ab9f7;
-      background: rgba(102, 155, 207, 0.15);
+    .main-nav a:hover, .main-nav button:hover {
+      color: var(--accent-dark);
+      background: rgba(91, 155, 213, 0.15);
     }
-
+    /* ✅ Active Nav - Same as tracker.html (no underline) */
+    .nav-active {
+      color: var(--accent-dark) !important;
+      background: rgba(91, 155, 213, 0.15) !important;
+    }
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+    .main-nav.mobile {
+      display: none;
+      flex-direction: column;
+      background: var(--card);
+      position: absolute;
+      top: 100%;
+      right: 1.25rem;
+      width: 200px;
+      border-radius: 0.5rem;
+      padding: 1rem;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+      gap: 0.5rem;
+    }
+    .main-nav.mobile.show {
+      display: flex;
+    }
     /* Notification Bell */
     .notification-bell {
       position: fixed;
@@ -108,12 +128,10 @@
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
       transition: all 0.3s;
     }
-
     .notification-bell:hover {
       background: var(--accent-dark);
       transform: scale(1.1);
     }
-
     .notification-badge {
       position: absolute;
       top: -0.25rem;
@@ -128,7 +146,6 @@
       align-items: center;
       justify-content: center;
     }
-
     .notification-panel {
       display: none;
       position: fixed;
@@ -143,11 +160,9 @@
       z-index: 99;
       overflow: hidden;
     }
-
     .notification-panel.active {
       display: block;
     }
-
     .notification-header {
       display: flex;
       align-items: center;
@@ -155,12 +170,10 @@
       padding: 1rem;
       border-bottom: 1px solid rgba(102, 155, 207, 0.2);
     }
-
     .notification-header h3 {
       color: white;
       font-size: 1rem;
     }
-
     .clear-all-btn {
       color: var(--accent);
       font-size: 0.875rem;
@@ -169,43 +182,35 @@
       cursor: pointer;
       transition: color 0.2s;
     }
-
     .clear-all-btn:hover {
       color: var(--accent-dark);
     }
-
     .notification-list {
       max-height: 20rem;
       overflow-y: auto;
     }
-
     .notification-item {
       padding: 1rem;
       border-bottom: 1px solid rgba(102, 155, 207, 0.1);
       transition: background 0.2s;
     }
-
     .notification-item:hover {
       background: rgba(102, 155, 207, 0.05);
     }
-
     .notification-item p {
       color: white;
       font-size: 0.875rem;
       margin-bottom: 0.25rem;
     }
-
     .notification-item small {
       color: var(--muted);
       font-size: 0.75rem;
     }
-
     .notification-empty {
       padding: 2rem;
       text-align: center;
       color: var(--muted);
     }
-
     /* Toast Notification */
     .toast-container {
       position: fixed;
@@ -216,7 +221,6 @@
       flex-direction: column;
       gap: 0.5rem;
     }
-
     .toast {
       background: var(--card);
       border: 1px solid var(--accent);
@@ -226,7 +230,6 @@
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
       animation: slideIn 0.3s ease-out;
     }
-
     @keyframes slideIn {
       from {
         transform: translateX(100%);
@@ -237,404 +240,175 @@
         opacity: 1;
       }
     }
-
     .toast p {
       color: white;
       font-size: 0.875rem;
     }
-
-    .menu-toggle {
-      display: none;
-      background: none;
-      border: none;
-      color: white;
-      font-size: 1.5rem;
-      cursor: pointer;
-    }
-
-    .main-nav.mobile {
-      display: none;
-      flex-direction: column;
-      background: #1b2430;
-      position: absolute;
-      top: 100%;
-      right: 1.25rem;
-      width: 200px;
-      border-radius: 0.5rem;
-      padding: 1rem;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
-      gap: 0.5rem;
-    }
-
-    .main-nav.mobile.show {
-      display: flex;
-    }
-
     /* Container */
     .container {
       max-width: 1280px;
       margin: 0 auto;
       padding: 0 1.25rem;
     }
-
-    /* Page Intro */
-    .page-intro {
-      text-align: center;
-      padding: 3rem 0 2rem;
+    /* Page Header */
+    .page-header {
       background: linear-gradient(135deg, #1b2430 0%, #0e1621 100%);
+      padding: 3rem 0 2rem;
       border-bottom: 2px solid var(--accent);
     }
-
-    .page-intro h1 {
+    .page-header h1 {
       color: var(--accent-dark);
-      margin-bottom: 1rem;
       font-size: 2.5rem;
+      margin-bottom: 0.75rem;
+      text-align: center;
     }
-
-    .page-intro p {
+    .page-header p {
       color: var(--muted);
-      font-size: 1.15rem;
+      text-align: center;
       max-width: 600px;
-      margin: 0 auto;
+      margin: 0 auto 2rem;
       line-height: 1.6;
     }
-
-    /* Filter Section */
-    .filter-section {
-      display: flex;
-      justify-content: center;
+    /* Stats Bar */
+    .stats-bar {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: 1rem;
-      margin: 2rem 0;
-      flex-wrap: wrap;
+      margin-top: 2rem;
     }
-
-    .filter-btn {
-      padding: 0.5rem 1.5rem;
-      background: #1b2430;
-      border: 1px solid rgba(102, 155, 207, 0.3);
-      color: #d1d5db;
-      border-radius: 1.5rem;
-      cursor: pointer;
-      font-size: 0.85rem;
-      font-weight: 500;
-      transition: all 0.3s;
+    .stat-card {
+      background: rgba(102, 155, 207, 0.1);
+      border: 1px solid var(--accent);
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      text-align: center;
     }
-
-    .filter-btn:hover {
-      background: rgba(102, 155, 207, 0.2);
-      border-color: var(--accent);
+    .stat-number {
+      font-size: 2rem;
+      font-weight: bold;
+      color: var(--accent-dark);
+      display: block;
     }
-
-    .filter-btn.active {
-      background: var(--accent);
-      color: white;
-      border-color: var(--accent);
+    .stat-label {
+      color: var(--muted);
+      font-size: 0.9rem;
+      margin-top: 0.25rem;
     }
-
     /* Trainers Grid */
     .trainers-grid {
       display: grid;
       grid-template-columns: 1fr;
-      gap: 2rem;
+      gap: 1.5rem;
       padding: 2rem 0;
     }
-
     @media (min-width: 768px) {
       .trainers-grid {
         grid-template-columns: repeat(2, 1fr);
       }
     }
-
     @media (min-width: 1024px) {
       .trainers-grid {
         grid-template-columns: repeat(3, 1fr);
       }
     }
-
-    /* Trainer Card */
     .trainer-card {
       background: #1b2430;
       border-radius: 1rem;
       overflow: hidden;
-      border: 1px solid transparent;
       transition: all 0.3s;
-      cursor: pointer;
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+      border: 1px solid transparent;
     }
-
     .trainer-card:hover {
       transform: translateY(-5px);
       box-shadow: 0 12px 24px rgba(102, 155, 207, 0.3);
       border-color: var(--accent);
     }
-
-    .trainer-card img {
+    .trainer-image {
+      position: relative;
+      height: 250px;
+      overflow: hidden;
+    }
+    .trainer-image img {
       width: 100%;
-      height: 300px;
+      height: 100%;
       object-fit: cover;
       transition: transform 0.3s;
     }
-
-    .trainer-card:hover img {
+    .trainer-card:hover .trainer-image img {
       transform: scale(1.05);
     }
-
     .trainer-content {
       padding: 1.5rem;
     }
-
-    .trainer-header {
+    .trainer-name {
+      font-size: 1.25rem;
+      color: white;
+      margin-bottom: 0.5rem;
+    }
+    .trainer-title {
+      color: var(--accent);
+      font-size: 0.9rem;
+      font-weight: 600;
       margin-bottom: 1rem;
     }
-
-    .trainer-header h3 {
-      color: white;
-      font-size: 1.5rem;
-      margin-bottom: 0.25rem;
-    }
-
-    .trainer-header .title {
-      color: var(--accent-dark);
-      font-size: 0.95rem;
-      font-weight: 500;
-    }
-
-    .trainer-bio {
+    .trainer-description {
       color: var(--muted);
+      font-size: 0.9rem;
       line-height: 1.6;
-      margin-bottom: 1rem;
-      font-size: 0.9rem;
+      margin-bottom: 1.5rem;
     }
-
-    .trainer-specialties {
+    .trainer-meta {
       display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      margin-bottom: 1rem;
-    }
-
-    .specialty-badge {
-      background: rgba(102, 155, 207, 0.15);
-      color: var(--accent-dark);
-      padding: 0.25rem 0.75rem;
-      border-radius: 1rem;
-      font-size: 0.85rem;
-      font-weight: 500;
-    }
-
-    .trainer-stats {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
       gap: 1rem;
-      margin-bottom: 1rem;
-      padding-top: 1rem;
-      border-top: 1px solid rgba(255, 255, 255, 0.05);
-    }
-
-    .stat-item {
-      text-align: center;
-    }
-
-    .stat-value {
-      color: var(--accent-dark);
-      font-size: 1.5rem;
-      font-weight: 600;
-    }
-
-    .stat-label {
-      color: var(--muted);
-      font-size: 0.85rem;
-      margin-top: 0.25rem;
-    }
-
-    .trainer-actions {
-      display: flex;
-      gap: 0.75rem;
-    }
-
-    .btn {
-      flex: 1;
-      padding: 0.625rem 1rem;
-      border: none;
+      margin-bottom: 1.5rem;
+      padding: 1rem;
+      background: rgba(255, 255, 255, 0.02);
       border-radius: 0.5rem;
-      cursor: pointer;
-      font-size: 0.9rem;
-      font-weight: 600;
-      transition: all 0.2s;
-      text-align: center;
     }
-
-    .btn-primary {
-      background: var(--accent);
-      color: white;
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      color: #d1d5db;
     }
-
-    .btn-primary:hover {
-      background: var(--accent-dark);
-      transform: translateY(-2px);
-    }
-
-    .btn-outline {
-      background: transparent;
-      border: 1px solid var(--accent);
+    .meta-icon {
+      width: 16px;
+      height: 16px;
       color: var(--accent);
     }
-
-    .btn-outline:hover {
+    .contact-btn {
+      width: 100%;
+      padding: 0.625rem 1.5rem;
       background: var(--accent);
       color: white;
-    }
-
-    /* Modal */
-    .modal {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.85);
-      z-index: 1000;
-      padding: 1rem;
-      overflow-y: auto;
-    }
-
-    .modal.show {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .modal-content {
-      background: var(--card);
-      border-radius: 1rem;
-      max-width: 800px;
-      width: 100%;
-      max-height: 90vh;
-      overflow-y: auto;
-      border: 2px solid var(--accent);
-    }
-
-    .modal-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1.5rem;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    }
-
-    .modal-header h2 {
-      color: var(--accent-dark);
-      font-size: 1.75rem;
-    }
-
-    .close-modal {
-      background: none;
       border: none;
-      color: var(--muted);
-      font-size: 2rem;
+      border-radius: 0.5rem;
       cursor: pointer;
-      padding: 0;
-      width: 40px;
-      height: 40px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 0.5rem;
       transition: all 0.2s;
-    }
-
-    .close-modal:hover {
-      background: rgba(255, 255, 255, 0.05);
-      color: white;
-    }
-
-    .modal-body {
-      padding: 1.5rem;
-    }
-
-    .modal-section {
-      margin-bottom: 2rem;
-    }
-
-    .modal-section h3 {
-      color: var(--accent-dark);
-      margin-bottom: 1rem;
-      font-size: 1.25rem;
-    }
-
-    .modal-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 1rem;
-    }
-
-    @media (min-width: 768px) {
-      .modal-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
-    .certification-item {
-      background: rgba(255, 255, 255, 0.02);
-      padding: 1rem;
-      border-radius: 0.5rem;
-      border-left: 3px solid var(--accent);
-    }
-
-    .certification-item .cert-name {
-      color: white;
       font-weight: 600;
-      margin-bottom: 0.25rem;
-    }
-
-    .certification-item .cert-org {
-      color: var(--muted);
       font-size: 0.9rem;
+      text-align: center;
     }
-
-    .schedule-day {
-      background: rgba(255, 255, 255, 0.02);
-      padding: 1rem;
-      border-radius: 0.5rem;
-      margin-bottom: 0.75rem;
+    .contact-btn:hover {
+      background: var(--accent-dark);
+      transform: scale(1.05);
     }
-
-    .schedule-day .day {
-      color: var(--accent-dark);
-      font-weight: 600;
-      margin-bottom: 0.5rem;
+    /* Empty State */
+    .empty-state {
+      text-align: center;
+      padding: 4rem 2rem;
     }
-
-    .schedule-day .time {
-      color: #d1d5db;
-      font-size: 0.95rem;
-    }
-
-    .testimonial-item {
-      background: rgba(255, 255, 255, 0.02);
-      padding: 1.25rem;
-      border-radius: 0.5rem;
+    .empty-icon {
+      font-size: 4rem;
       margin-bottom: 1rem;
+      opacity: 0.5;
     }
-
-    .testimonial-text {
-      color: #d1d5db;
-      font-style: italic;
-      margin-bottom: 0.75rem;
-      line-height: 1.6;
+    .empty-text {
+      color: var(--muted);
+      font-size: 1.1rem;
     }
-
-    .testimonial-author {
-      color: var(--accent-dark);
-      font-weight: 600;
-    }
-
-    .rating {
-      color: #fbbf24;
-      margin-bottom: 0.5rem;
-    }
-
     /* Footer */
     .site-footer {
       background: #000;
@@ -643,7 +417,6 @@
       border-top: 1px solid rgba(255, 255, 255, 0.05);
       padding: 1.5rem 0;
     }
-
     .footer-inner {
       display: flex;
       justify-content: space-between;
@@ -651,91 +424,54 @@
       flex-wrap: wrap;
       gap: 1rem;
     }
-
     .footer-inner h3 {
       color: white;
       font-size: 1rem;
       margin: 0;
     }
-
     .footer-nav {
       display: flex;
       gap: 1.5rem;
     }
-
     .footer-nav a {
       color: #9ca3af;
       text-decoration: none;
       transition: color 0.3s;
       font-size: 0.875rem;
     }
-
     .footer-nav a:hover {
       color: #8ab9f7;
     }
-
     .footer-contact {
       color: #9ca3af;
       font-size: 0.875rem;
       font-style: normal;
     }
-
     .footer-contact a {
       color: #9ca3af;
       text-decoration: none;
       transition: color 0.3s;
     }
-
     .footer-contact a:hover {
       color: #8ab9f7;
     }
-
     .footer-bottom {
       text-align: center;
       padding: 1rem 0;
       border-top: 1px solid rgba(255, 255, 255, 0.05);
       margin-top: 1rem;
     }
-
     .footer-bottom small {
       font-size: 0.8rem;
-    }
-
-    /* Responsive */
-    @media (min-width: 768px) {
-      .menu-toggle { display: none; }
-      .main-nav.desktop { display: flex; }
-    }
-
-    @media (max-width: 767px) {
-      .menu-toggle { display: block; }
-      .main-nav.desktop { display: none; }
-      .page-intro h1 { font-size: 2rem; }
-    }
-
-    /* Scrollbar */
-    .modal-content::-webkit-scrollbar {
-      width: 8px;
-    }
-
-    .modal-content::-webkit-scrollbar-track {
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 4px;
-    }
-
-    .modal-content::-webkit-scrollbar-thumb {
-      background: var(--accent);
-      border-radius: 4px;
     }
   </style>
 </head>
 <body>
   <!-- Notification Bell -->
   <button class="notification-bell" id="notificationBell">
-    🔔
+    <i class='bx bxs-bell'></i>
     <span class="notification-badge" id="notificationBadge" style="display: none;">0</span>
   </button>
-
   <!-- Notification Panel -->
   <div class="notification-panel" id="notificationPanel">
     <div class="notification-header">
@@ -746,115 +482,71 @@
       <div class="notification-empty">No new notifications</div>
     </div>
   </div>
-
   <!-- Toast Container -->
   <div class="toast-container" id="toastContainer"></div>
- <!-- Header -->
+  <!-- Header - Updated to match tracker.html -->
   <header class="site-header">
     <div class="header-inner">
-      <a href="index.html" class="logo">FITTCHECK</a>
-      
+      <a href="index.html" class="logo">
+        <i class='bx bxs-dumbbell'></i>
+        FITTCHECK
+      </a>
       <!-- Desktop Navigation -->
       <nav class="main-nav desktop">
-        <a href="index.html" class="active">
-       <img src="pictures/home-button 1.png" alt="Home Icon" style="width:20px; height:20px;">
-          Home
-        </a>
-        <a href="classes.html">
-          <i class="icon-classes"></i>
-          Classes
-        </a>
-        <a href="trainers.html">
-          <i class="icon-trainers"></i>
-          Trainers
-        </a>
-        <a href="contact.html">
-          <i class="icon-about"></i>
-          About Us
-        </a>
-        <a href="tracker.html">
-          <i class="icon-tracker"></i>
-          Tracker
-        </a>
-        <button onclick="window.location.href='profile.html'" style="font-family: inherit;">
-          <i class="icon-profile"></i>
-          Profile
-        </button>
+        <a href="index.html" id="nav-home"><i class='bx bx-home'></i> Home</a>
+        <a href="classes.html" id="nav-classes"><i class='bx bx-dumbbell'></i> Classes</a>
+        <a href="trainers.html" id="nav-trainers" class="nav-active"><i class='bx bx-user-check'></i> Trainers</a>
+        <a href="contact.html" id="nav-about"><i class='bx bx-info-circle'></i> About Us</a>
+        <a href="tracker.html" id="nav-tracker"><i class='bx bx-trending-up'></i> Tracker</a>
+        <button onclick="window.location.href='profile.html'" id="nav-profile"><i class='bx bx-user'></i> Profile</button>
       </nav>
-
       <!-- Mobile Menu Toggle -->
       <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">☰</button>
-      
       <!-- Mobile Navigation -->
       <nav class="main-nav mobile" id="mobileNav">
-        <a href="index.html" class="active">
-          <i class="icon-home"></i>
-          Home
-        </a>
-        <a href="classes.html">
-          <i class="icon-classes"></i>
-          Classes
-        </a>
-        <a href="trainers.html">
-          <i class="icon-trainers"></i>
-          Trainers
-        </a>
-        <a href="contact.html">
-          <i class="icon-about"></i>
-          About Us
-        </a>
-        <a href="tracker.html">
-          <i class="icon-tracker"></i>
-          Tracker
-        </a>
-        <button onclick="window.location.href='profile.html'" style="font-family: inherit; width: 100%; justify-content: flex-start;">
-          <i class="icon-profile"></i>
-          Profile
-        </button>
+        <a href="index.html" id="nav-home-mobile"><i class='bx bx-home'></i> Home</a>
+        <a href="classes.html" id="nav-classes-mobile"><i class='bx bx-dumbbell'></i> Classes</a>
+        <a href="trainers.html" id="nav-trainers-mobile" class="nav-active"><i class='bx bx-user-check'></i> Trainers</a>
+        <a href="contact.html" id="nav-about-mobile"><i class='bx bx-info-circle'></i> About Us</a>
+        <a href="tracker.html" id="nav-tracker-mobile"><i class='bx bx-trending-up'></i> Tracker</a>
+        <button onclick="window.location.href='profile.html'" id="nav-profile-mobile"><i class='bx bx-user'></i> Profile</button>
       </nav>
     </div>
   </header>
-  
-  <!-- Main Content -->
-  <main class="container">
-    <section class="page-intro">
+  <!-- Page Header -->
+  <section class="page-header">
+    <div class="container">
       <h1>Meet Our Expert Trainers</h1>
-      <p>Certified professionals dedicated to helping you achieve your fitness goals with personalized training and expert guidance.</p>
-    </section>
-
-    <!-- Filter Section -->
-    <div class="filter-section">
-      <button class="filter-btn active" data-filter="all">All Trainers</button>
-      <button class="filter-btn" data-filter="strength">Strength</button>
-      <button class="filter-btn" data-filter="cardio">Cardio</button>
-      <button class="filter-btn" data-filter="yoga">Yoga</button>
-      <button class="filter-btn" data-filter="hiit">HIIT</button>
-    </div>
-
-    <!-- Trainers Grid -->
-    <section class="trainers-grid" id="trainersGrid">
-      <!-- Trainers will be loaded here -->
-    </section>
-  </main>
-
-  <!-- Trainer Detail Modal -->
-  <div class="modal" id="trainerModal">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h2 id="modalTrainerName">Trainer Name</h2>
-        <button class="close-modal" id="closeModal">&times;</button>
-      </div>
-      <div class="modal-body" id="modalBody">
-        <!-- Content will be loaded here -->
+      <p>Our certified fitness professionals are here to guide you on your journey to better health and wellness.</p>
+      <div class="stats-bar">
+        <div class="stat-card">
+          <span class="stat-number" id="totalTrainers">12</span>
+          <span class="stat-label">Expert Trainers</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-number">15+</span>
+          <span class="stat-label">Years Experience</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-number">200+</span>
+          <span class="stat-label">Happy Clients</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-number">8</span>
+          <span class="stat-label">Specialties</span>
+        </div>
       </div>
     </div>
-  </div>
-
+  </section>
+  <!-- Trainers Section -->
+  <section class="container">
+    <div class="trainers-grid" id="trainersGrid"></div>
+  </section>
   <!-- Footer -->
   <footer class="site-footer">
     <div class="container footer-inner">
       <div>
-        <h3>FITTCHECK</h3>
+        <h3><i class='bx bxs-dumbbell'></i> FITTCHECK</h3>
       </div>
       <nav class="footer-nav">
         <a href="index.html">Home</a>
@@ -862,237 +554,141 @@
         <a href="tracker.html">Tracker</a>
       </nav>
       <address class="footer-contact">
-        <a href="mailto:hello@fittcheck.ph">hello@fittcheck.ph</a>
+        <a href="mailto:hello@fittcheck.ph"><i class='bx bx-envelope'></i> hello@fittcheck.ph</a>
       </address>
     </div>
     <div class="footer-bottom container">
       <small>© <span id="year"></span> FITTCHECK. All rights reserved.</small>
     </div>
   </footer>
-
   <script>
-    // Trainer Data
-    const trainers = [
-      {
-        id: 1,
-        name: "Alex Perez",
-        title: "Strength & Conditioning Specialist",
-        image: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxmaXRuZXNzJTIwdHJhaW5lciUyMG1hbGV8ZW58MXx8fHwxNzYyMzkxODY2fDA&ixlib=rb-4.1.0&q=80&w=1080",
-        bio: "With over 10 years of experience in strength training and athletic conditioning, Alex helps clients build muscle, increase power, and achieve peak performance.",
-        specialties: ["Strength Training", "Powerlifting", "Athletic Performance", "Nutrition"],
-        category: ["strength"],
-        experience: "10+",
-        clients: "200+",
-        rating: 4.9,
-        certifications: [
-          { name: "NSCA-CSCS", org: "National Strength & Conditioning Association" },
-          { name: "USA Weightlifting Level 2", org: "USA Weightlifting" },
-          { name: "Precision Nutrition Level 1", org: "Precision Nutrition" }
-        ],
-        schedule: [
-          { day: "Monday - Wednesday", time: "6:00 AM - 2:00 PM" },
-          { day: "Thursday - Friday", time: "6:00 AM - 12:00 PM" },
-          { day: "Saturday", time: "8:00 AM - 12:00 PM" }
-        ],
-        testimonials: [
-          { text: "Alex transformed my training! I've gained 15lbs of muscle and feel stronger than ever.", author: "John M." },
-          { text: "Best strength coach I've worked with. His programs are challenging but effective.", author: "Sarah K." }
-        ]
-      },
-      {
-        id: 2,
-        name: "Rina Lopez",
-        title: "Yoga & Mobility Coach",
-        image: "https://images.unsplash.com/photo-1518611012118-696072aa579a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx5b2dhJTIwaW5zdHJ1Y3RvciUyMGZlbWFsZXxlbnwxfHx8fDE3NjIzOTE4NjZ8MA&ixlib=rb-4.1.0&q=80&w=1080",
-        bio: "Rina specializes in yoga, flexibility, and mindful movement. She helps clients improve mobility, reduce stress, and find balance in their fitness journey.",
-        specialties: ["Yoga", "Flexibility", "Mindfulness", "Injury Recovery"],
-        category: ["yoga"],
-        experience: "8+",
-        clients: "150+",
-        rating: 5.0,
-        certifications: [
-          { name: "RYT-500", org: "Yoga Alliance" },
-          { name: "Therapeutic Yoga Certification", org: "American Yoga Association" },
-          { name: "Meditation Teacher Training", org: "Mindful Schools" }
-        ],
-        schedule: [
-          { day: "Monday - Friday", time: "7:00 AM - 11:00 AM" },
-          { day: "Tuesday - Thursday", time: "5:00 PM - 7:00 PM" },
-          { day: "Sunday", time: "9:00 AM - 1:00 PM" }
-        ],
-        testimonials: [
-          { text: "Rina's yoga classes are peaceful yet challenging. My flexibility has improved dramatically!", author: "Maria D." },
-          { text: "She helped me recover from a back injury through therapeutic yoga. Highly recommend!", author: "David L." }
-        ]
-      },
-      {
-        id: 3,
-        name: "Mark Santos",
-        title: "Cardio & HIIT Expert",
-        image: "https://images.unsplash.com/photo-1566241440091-ec10de8db2e1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxmaXRuZXNzJTIwdHJhaW5lciUyMG1hbGUlMjBjYXJkaW98ZW58MXx8fHwxNzYyMzkxODY2fDA&ixlib=rb-4.1.0&q=80&w=1080",
-        bio: "Mark is passionate about high-intensity training and cardiovascular fitness. He designs dynamic workouts that maximize calorie burn and boost endurance.",
-        specialties: ["HIIT", "Cardio Training", "Weight Loss", "Endurance"],
-        category: ["cardio", "hiit"],
-        experience: "7+",
-        clients: "180+",
-        rating: 4.8,
-        certifications: [
-          { name: "ACE Personal Trainer", org: "American Council on Exercise" },
-          { name: "HIIT Specialist", org: "ISSA" },
-          { name: "Running Coach Level 2", org: "RRCA" }
-        ],
-        schedule: [
-          { day: "Monday - Friday", time: "5:00 AM - 10:00 AM" },
-          { day: "Wednesday - Friday", time: "4:00 PM - 7:00 PM" },
-          { day: "Saturday", time: "7:00 AM - 11:00 AM" }
-        ],
-        testimonials: [
-          { text: "Mark's HIIT workouts are intense but fun! I've lost 20lbs in 3 months.", author: "Jennifer P." },
-          { text: "His energy is contagious. Every session pushes me to my limits in the best way.", author: "Mike R." }
-        ]
-      },
-      {
-        id: 4,
-        name: "Sofia Chen",
-        title: "Functional Fitness Coach",
-        image: "https://images.unsplash.com/photo-1594381898411-846e7d193883?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxmZW1hbGUlMjBmaXRuZXNzJTIwdHJhaW5lcnxlbnwxfHx8fDE3NjIzOTE4NjZ8MA&ixlib=rb-4.1.0&q=80&w=1080",
-        bio: "Sofia focuses on functional movements that translate to everyday life. She helps clients build strength, balance, and coordination for long-term health.",
-        specialties: ["Functional Training", "Core Strength", "Balance", "Seniors Fitness"],
-        category: ["strength"],
-        experience: "6+",
-        clients: "120+",
-        rating: 4.9,
-        certifications: [
-          { name: "NASM-CPT", org: "National Academy of Sports Medicine" },
-          { name: "Functional Movement Screen", org: "FMS" },
-          { name: "Senior Fitness Specialist", org: "ACE" }
-        ],
-        schedule: [
-          { day: "Tuesday - Thursday", time: "8:00 AM - 1:00 PM" },
-          { day: "Friday - Saturday", time: "9:00 AM - 2:00 PM" },
-          { day: "Sunday", time: "10:00 AM - 12:00 PM" }
-        ],
-        testimonials: [
-          { text: "Sofia's approach to fitness is refreshing. I feel stronger and more mobile in my daily activities.", author: "Robert H." },
-          { text: "Great for older adults! She knows how to challenge without risking injury.", author: "Linda S." }
-        ]
-      },
-      {
-        id: 5,
-        name: "Carlos Rivera",
-        title: "Boxing & Combat Sports Coach",
-        image: "https://images.unsplash.com/photo-1552374196-1ab2a1c593e8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxib3hpbmclMjB0cmFpbmVyfGVufDF8fHx8MTc2MjM5MTg2Nnww&ixlib=rb-4.1.0&q=80&w=1080",
-        bio: "Former competitive boxer, Carlos brings real combat sports experience to his training. He teaches boxing technique, conditioning, and mental toughness.",
-        specialties: ["Boxing", "Kickboxing", "Combat Fitness", "Self-Defense"],
-        category: ["cardio", "hiit"],
-        experience: "12+",
-        clients: "160+",
-        rating: 5.0,
-        certifications: [
-          { name: "USA Boxing Coach", org: "USA Boxing" },
-          { name: "Kickboxing Instructor", org: "ISKA" },
-          { name: "Self-Defense Instructor", org: "Krav Maga Alliance" }
-        ],
-        schedule: [
-          { day: "Monday - Thursday", time: "6:00 AM - 12:00 PM" },
-          { day: "Friday", time: "6:00 AM - 10:00 AM" },
-          { day: "Saturday", time: "8:00 AM - 2:00 PM" }
-        ],
-        testimonials: [
-          { text: "Carlos is the real deal. His boxing classes are challenging and empowering!", author: "Alex T." },
-          { text: "Best workout I've ever had. I've lost weight and learned valuable self-defense skills.", author: "Emma W." }
-        ]
-      },
-      {
-        id: 6,
-        name: "Dr. Lisa Park",
-        title: "Sports Rehabilitation Specialist",
-        image: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwaHlzaW90aGVyYXBpc3QlMjBmZW1hbGV8ZW58MXx8fHwxNzYyMzkxODY2fDA&ixlib=rb-4.1.0&q=80&w=1080",
-        bio: "Dr. Park is a licensed physical therapist specializing in injury recovery and prevention. She works with clients returning from injury or managing chronic conditions.",
-        specialties: ["Injury Recovery", "Physical Therapy", "Pain Management", "Corrective Exercise"],
-        category: ["strength", "yoga"],
-        experience: "15+",
-        clients: "250+",
-        rating: 4.9,
-        certifications: [
-          { name: "Doctor of Physical Therapy", org: "APTA" },
-          { name: "Orthopedic Specialist", org: "ABPTS" },
-          { name: "Corrective Exercise Specialist", org: "NASM" }
-        ],
-        schedule: [
-          { day: "Monday - Wednesday", time: "9:00 AM - 5:00 PM" },
-          { day: "Thursday - Friday", time: "10:00 AM - 3:00 PM" },
-          { day: "By Appointment", time: "Flexible" }
-        ],
-        testimonials: [
-          { text: "Dr. Park helped me recover from a knee injury. I'm back to running pain-free!", author: "Chris B." },
-          { text: "Her expertise in rehabilitation is unmatched. Highly professional and caring.", author: "Nancy F." }
-        ]
+    // Load trainers from localStorage
+    function getTrainers() {
+      const trainers = localStorage.getItem('trainers');
+      return trainers ? JSON.parse(trainers) : [];
+    }
+    
+    // Render trainers
+    function renderTrainers() {
+      const trainersGrid = document.getElementById('trainersGrid');
+      const trainers = getTrainers();
+      
+      if (trainers.length === 0) {
+        trainersGrid.innerHTML = `
+          <div class="empty-state">
+            <div class="empty-icon">👥</div>
+            <p class="empty-text">No trainers available at the moment.</p>
+          </div>
+        `;
+        return;
       }
-    ];
-
+      
+      trainersGrid.innerHTML = trainers.map(trainer => {
+        return `
+          <div class="trainer-card">
+            <div class="trainer-image">
+              <img src="${trainer.image || 'https://images.unsplash.com/photo-1549995546-87cb41aa98a4'}" alt="${trainer.name}">
+            </div>
+            <div class="trainer-content">
+              <h3 class="trainer-name">${trainer.name}</h3>
+              <p class="trainer-title">${trainer.title}</p>
+              <div class="trainer-meta">
+                <div class="meta-item">
+                  <i class='bx bx-star'></i>
+                  <span>Expert Trainer</span>
+                </div>
+                <div class="meta-item">
+                  <i class='bx bx-calendar'></i>
+                  <span>Available Daily</span>
+                </div>
+              </div>
+              <button class="contact-btn" onclick="contactTrainer('${trainer.name}')">
+                Contact ${trainer.name}
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
+      
+      // Update stats
+      document.getElementById('totalTrainers').textContent = trainers.length;
+    }
+    
+    // Contact trainer function
+    function contactTrainer(name) {
+      showToast(`Contacting ${name}... We'll connect you with our team shortly!`);
+    }
+    
+    // Show toast notification
+    function showToast(message) {
+      const toastContainer = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      toast.className = 'toast';
+      toast.innerHTML = `<p>🔔 ${message}</p>`;
+      toastContainer.appendChild(toast);
+      setTimeout(() => {
+        toast.remove();
+      }, 5000);
+    }
+    
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+      renderTrainers();
+    });
+    
+    // Set year
+    document.getElementById('year').textContent = new Date().getFullYear();
+    
     // Notification System
     let notifications = [];
-
     function initializeNotifications() {
       checkMissedExercises();
-      
       const notificationBell = document.getElementById('notificationBell');
       const notificationPanel = document.getElementById('notificationPanel');
-      
       notificationBell.addEventListener('click', function(e) {
         e.stopPropagation();
         notificationPanel.classList.toggle('active');
       });
-
       document.addEventListener('click', function(e) {
         if (!notificationPanel.contains(e.target) && e.target !== notificationBell) {
           notificationPanel.classList.remove('active');
         }
       });
-
       document.getElementById('clearAllBtn').addEventListener('click', clearAllNotifications);
     }
-
+    
     function checkMissedExercises() {
       const lastExercise = localStorage.getItem('lastExerciseDate');
       const currentDate = new Date();
-      
       if (lastExercise) {
         const lastExerciseDate = new Date(lastExercise);
         const daysDiff = Math.floor((currentDate.getTime() - lastExerciseDate.getTime()) / (1000 * 60 * 60 * 24));
-        
         if (daysDiff >= 1) {
-          const message = `You haven't exercised in ${daysDiff} day${daysDiff > 1 ? 's' : ''}! Time to get back on track! 💪`;
-          addNotification(message, 'missed-exercise');
+          addNotification(`You haven't exercised in ${daysDiff} day${daysDiff > 1 ? 's' : ''}! Time to get back on track! 💪`, 'missed-exercise');
         }
       }
     }
-
+    
     function addNotification(message, type) {
       const existingNotification = notifications.find(n => n.message === message);
       if (existingNotification) return;
-
       const notification = {
         id: Date.now(),
         message: message,
         type: type,
         timestamp: new Date()
       };
-
       notifications.unshift(notification);
       updateNotificationUI();
       showToast(message);
     }
-
+    
     function updateNotificationUI() {
       const badge = document.getElementById('notificationBadge');
       const list = document.getElementById('notificationList');
-      
       if (notifications.length > 0) {
         badge.textContent = notifications.length;
         badge.style.display = 'flex';
-        
         list.innerHTML = notifications.map(n => `
           <div class="notification-item">
             <p>${n.message}</p>
@@ -1103,186 +699,52 @@
         badge.style.display = 'none';
         list.innerHTML = '<div class="notification-empty">No new notifications</div>';
       }
-
       document.getElementById('clearAllBtn').style.display = notifications.length > 0 ? 'block' : 'none';
     }
-
+    
     function showToast(message) {
       const toastContainer = document.getElementById('toastContainer');
       const toast = document.createElement('div');
       toast.className = 'toast';
       toast.innerHTML = `<p>🔔 ${message}</p>`;
-      
       toastContainer.appendChild(toast);
-      
       setTimeout(() => {
         toast.remove();
       }, 5000);
     }
-
+    
     function clearAllNotifications() {
       notifications = [];
       updateNotificationUI();
     }
-
-    // Mobile menu toggle
-    const menuToggle = document.getElementById('menuToggle');
-    const mobileNav = document.getElementById('mobileNav');
-
-    menuToggle.addEventListener('click', function() {
-      mobileNav.classList.toggle('show');
-      this.textContent = mobileNav.classList.contains('show') ? '✕' : '☰';
-    });
-
-    document.addEventListener('click', function(event) {
-      if (!event.target.closest('.header-inner')) {
-        mobileNav.classList.remove('show');
-        menuToggle.textContent = '☰';
-      }
-    });
-
-    // Render trainers
-    function renderTrainers(filter = 'all') {
-      const grid = document.getElementById('trainersGrid');
-      const filtered = filter === 'all' 
-        ? trainers 
-        : trainers.filter(t => t.category.includes(filter));
-
-      grid.innerHTML = filtered.map(trainer => `
-        <div class="trainer-card" onclick="openTrainerModal(${trainer.id})">
-          <img src="${trainer.image}" alt="${trainer.name}">
-          <div class="trainer-content">
-            <div class="trainer-header">
-              <h3>${trainer.name}</h3>
-              <div class="title">${trainer.title}</div>
-            </div>
-            <p class="trainer-bio">${trainer.bio}</p>
-            <div class="trainer-specialties">
-              ${trainer.specialties.map(s => `<span class="specialty-badge">${s}</span>`).join('')}
-            </div>
-            <div class="trainer-stats">
-              <div class="stat-item">
-                <div class="stat-value">${trainer.experience}</div>
-                <div class="stat-label">Years Exp</div>
-              </div>
-              <div class="stat-item">
-                <div class="stat-value">${trainer.clients}</div>
-                <div class="stat-label">Clients</div>
-              </div>
-            </div>
-            <div class="trainer-actions">
-              <button class="btn btn-primary" onclick="event.stopPropagation(); bookSession(${trainer.id})">Book Session</button>
-              <button class="btn btn-outline" onclick="event.stopPropagation(); openTrainerModal(${trainer.id})">View Profile</button>
-            </div>
-          </div>
-        </div>
-      `).join('');
-    }
-
-    // Filter functionality
-    const filterButtons = document.querySelectorAll('.filter-btn');
-    filterButtons.forEach(btn => {
-      btn.addEventListener('click', () => {
-        filterButtons.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        renderTrainers(btn.getAttribute('data-filter'));
+    
+    // Active Navigation
+    function setActiveNavLink() {
+      const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+      const navLinks = [
+        { id: 'nav-home', mobileId: 'nav-home-mobile', page: 'index.html' },
+        { id: 'nav-classes', mobileId: 'nav-classes-mobile', page: 'classes.html' },
+        { id: 'nav-trainers', mobileId: 'nav-trainers-mobile', page: 'trainers.html' },
+        { id: 'nav-about', mobileId: 'nav-about-mobile', page: 'contact.html' },
+        { id: 'nav-tracker', mobileId: 'nav-tracker-mobile', page: 'tracker.html' },
+        { id: 'nav-profile', mobileId: 'nav-profile-mobile', page: 'profile.html' }
+      ];
+      navLinks.forEach(link => {
+        const desktopLink = document.getElementById(link.id);
+        const mobileLink = document.getElementById(link.mobileId);
+        if ((currentPage === link.page) || (currentPage === '' && link.page === 'index.html')) {
+          desktopLink?.classList.add('nav-active');
+          mobileLink?.classList.add('nav-active');
+        } else {
+          desktopLink?.classList.remove('nav-active');
+          mobileLink?.classList.remove('nav-active');
+        }
       });
-    });
-
-    // Modal functionality
-    function openTrainerModal(trainerId) {
-      const trainer = trainers.find(t => t.id === trainerId);
-      if (!trainer) return;
-
-      document.getElementById('modalTrainerName').textContent = trainer.name;
-      document.getElementById('modalBody').innerHTML = `
-        <div class="modal-section">
-          <img src="${trainer.image}" alt="${trainer.name}" style="width: 100%; height: 300px; object-fit: cover; border-radius: 0.75rem; margin-bottom: 1.5rem;">
-          <p style="color: #d1d5db; line-height: 1.7;">${trainer.bio}</p>
-        </div>
-
-        <div class="modal-section">
-          <h3>Specialties</h3>
-          <div class="trainer-specialties">
-            ${trainer.specialties.map(s => `<span class="specialty-badge">${s}</span>`).join('')}
-          </div>
-        </div>
-
-        <div class="modal-section">
-          <h3>Certifications</h3>
-          <div class="modal-grid">
-            ${trainer.certifications.map(cert => `
-              <div class="certification-item">
-                <div class="cert-name">${cert.name}</div>
-                <div class="cert-org">${cert.org}</div>
-              </div>
-            `).join('')}
-          </div>
-        </div>
-
-        <div class="modal-section">
-          <h3>Availability Schedule</h3>
-          ${trainer.schedule.map(sched => `
-            <div class="schedule-day">
-              <div class="day">${sched.day}</div>
-              <div class="time">${sched.time}</div>
-            </div>
-          `).join('')}
-        </div>
-
-        <div class="modal-section">
-          <h3>Client Testimonials</h3>
-          <div class="rating">${'⭐'.repeat(Math.floor(trainer.rating))} ${trainer.rating}/5.0</div>
-          ${trainer.testimonials.map(test => `
-            <div class="testimonial-item">
-              <div class="testimonial-text">"${test.text}"</div>
-              <div class="testimonial-author">— ${test.author}</div>
-            </div>
-          `).join('')}
-        </div>
-
-        <div style="display: flex; gap: 1rem; margin-top: 2rem;">
-          <button class="btn btn-primary" style="flex: 1;" onclick="bookSession(${trainer.id})">Book a Session</button>
-          <button class="btn btn-outline" style="flex: 1;" onclick="contactTrainer(${trainer.id})">Contact Trainer</button>
-        </div>
-      `;
-
-      document.getElementById('trainerModal').classList.add('show');
-      document.body.style.overflow = 'hidden';
     }
-
-    function closeModal() {
-      document.getElementById('trainerModal').classList.remove('show');
-      document.body.style.overflow = 'auto';
-    }
-
-    document.getElementById('closeModal').addEventListener('click', closeModal);
-    document.getElementById('trainerModal').addEventListener('click', (e) => {
-      if (e.target.id === 'trainerModal') closeModal();
-    });
-
-    // Booking functions
-    function bookSession(trainerId) {
-      const trainer = trainers.find(t => t.id === trainerId);
-      alert(`Booking session with ${trainer.name}!\n\nYou will be redirected to our booking system.`);
-    }
-
-    function contactTrainer(trainerId) {
-      const trainer = trainers.find(t => t.id === trainerId);
-      alert(`Contact ${trainer.name}\n\nEmail: ${trainer.name.toLowerCase().replace(' ', '.')}@fittcheck.ph\nPhone: (+63)-923456789`);
-    }
-
+    
     // Initialize
-    document.getElementById('year').textContent = new Date().getFullYear();
-    renderTrainers();
     initializeNotifications();
-
-    // Keyboard navigation for modal
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && document.getElementById('trainerModal').classList.contains('show')) {
-        closeModal();
-      }
-    });
+    setActiveNavLink();
   </script>
 </body>
 </html>

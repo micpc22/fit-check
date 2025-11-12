@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>FITTCHECK — Classes</title>
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
   <style>
     /* Reset & Base Styles */
     * {
@@ -11,26 +12,21 @@
       margin: 0;
       padding: 0;
     }
-
     :root {
-      --accent: #669bcf;
-      --accent-dark: #8ab9f7;
+      --accent: #5b9bd5;
+      --accent-dark: #7ab3e8;
+      --accent-hover: #4a8bc4;
       --muted: #a0a8b5;
       --bg: #0e1621;
       --card: #1b2430;
-      --success: #4ade80;
-      --warning: #fbbf24;
-      --danger: #f87171;
-      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      font-family: 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
     }
-
     html, body {
       background-color: var(--bg);
       min-height: 100%;
       color: #fff;
     }
-
-    /* Header Styles */
+    /* Header Styles - Updated to match index.html */
     .site-header {
       background: rgba(14, 22, 33, 0.95);
       backdrop-filter: blur(8px);
@@ -40,7 +36,6 @@
       border-bottom: 1px solid rgba(255, 255, 255, 0.05);
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
     }
-
     .header-inner {
       max-width: 1280px;
       margin: 0 auto;
@@ -49,25 +44,24 @@
       align-items: center;
       justify-content: space-between;
     }
-
     .logo {
       color: #ffffff;
       text-decoration: none;
       letter-spacing: 0.05em;
       font-size: 1.25rem;
       font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
     }
-
     .main-nav {
       display: none;
       align-items: center;
       gap: 2rem;
     }
-
     .main-nav.desktop {
       display: flex;
     }
-
     .main-nav a, .main-nav button {
       color: #d1d5db;
       text-decoration: none;
@@ -83,21 +77,38 @@
       align-items: center;
       gap: 0.5rem;
     }
-
-    .main-nav a:hover, .main-nav a.active, .main-nav button:hover {
-      color: #8ab9f7;
-      background: rgba(102, 155, 207, 0.15);
+    .main-nav a:hover, .main-nav button:hover {
+      color: var(--accent-dark);
+      background: rgba(91, 155, 213, 0.15);
     }
-
-    .admin-badge {
-      background: var(--accent);
+    .nav-active {
+      color: var(--accent-dark) !important;
+      background: rgba(91, 155, 213, 0.15) !important;
+    }
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: none;
       color: white;
-      padding: 0.4rem 0.8rem;
-      border-radius: 0.5rem;
-      font-size: 0.85rem;
-      font-weight: 600;
+      font-size: 1.5rem;
+      cursor: pointer;
     }
-
+    .main-nav.mobile {
+      display: none;
+      flex-direction: column;
+      background: var(--card);
+      position: absolute;
+      top: 100%;
+      right: 1.25rem;
+      width: 200px;
+      border-radius: 0.5rem;
+      padding: 1rem;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+      gap: 0.5rem;
+    }
+    .main-nav.mobile.show {
+      display: flex;
+    }
     /* Notification Bell */
     .notification-bell {
       position: fixed;
@@ -117,12 +128,10 @@
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
       transition: all 0.3s;
     }
-
     .notification-bell:hover {
       background: var(--accent-dark);
       transform: scale(1.1);
     }
-
     .notification-badge {
       position: absolute;
       top: -0.25rem;
@@ -137,7 +146,6 @@
       align-items: center;
       justify-content: center;
     }
-
     .notification-panel {
       display: none;
       position: fixed;
@@ -148,28 +156,24 @@
       background: var(--card);
       border-radius: 0.75rem;
       box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
-      border: 1px solid rgba(102, 155, 207, 0.3);
+      border: 1px solid rgba(91, 155, 213, 0.3);
       z-index: 99;
       overflow: hidden;
     }
-
     .notification-panel.active {
       display: block;
     }
-
     .notification-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
       padding: 1rem;
-      border-bottom: 1px solid rgba(102, 155, 207, 0.2);
+      border-bottom: 1px solid rgba(91, 155, 213, 0.2);
     }
-
     .notification-header h3 {
       color: white;
       font-size: 1rem;
     }
-
     .clear-all-btn {
       color: var(--accent);
       font-size: 0.875rem;
@@ -178,43 +182,35 @@
       cursor: pointer;
       transition: color 0.2s;
     }
-
     .clear-all-btn:hover {
       color: var(--accent-dark);
     }
-
     .notification-list {
       max-height: 20rem;
       overflow-y: auto;
     }
-
     .notification-item {
       padding: 1rem;
-      border-bottom: 1px solid rgba(102, 155, 207, 0.1);
+      border-bottom: 1px solid rgba(91, 155, 213, 0.1);
       transition: background 0.2s;
     }
-
     .notification-item:hover {
-      background: rgba(102, 155, 207, 0.05);
+      background: rgba(91, 155, 213, 0.05);
     }
-
     .notification-item p {
       color: white;
       font-size: 0.875rem;
       margin-bottom: 0.25rem;
     }
-
     .notification-item small {
       color: var(--muted);
       font-size: 0.75rem;
     }
-
     .notification-empty {
       padding: 2rem;
       text-align: center;
       color: var(--muted);
     }
-
     /* Toast Notification */
     .toast-container {
       position: fixed;
@@ -225,7 +221,6 @@
       flex-direction: column;
       gap: 0.5rem;
     }
-
     .toast {
       background: var(--card);
       border: 1px solid var(--accent);
@@ -235,7 +230,6 @@
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
       animation: slideIn 0.3s ease-out;
     }
-
     @keyframes slideIn {
       from {
         transform: translateX(100%);
@@ -246,60 +240,28 @@
         opacity: 1;
       }
     }
-
     .toast p {
       color: white;
       font-size: 0.875rem;
     }
-
-    .menu-toggle {
-      display: none;
-      background: none;
-      border: none;
-      color: white;
-      font-size: 1.5rem;
-      cursor: pointer;
-    }
-
-    .main-nav.mobile {
-      display: none;
-      flex-direction: column;
-      background: #1b2430;
-      position: absolute;
-      top: 100%;
-      right: 1.25rem;
-      width: 200px;
-      border-radius: 0.5rem;
-      padding: 1rem;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
-      gap: 0.5rem;
-    }
-
-    .main-nav.mobile.show {
-      display: flex;
-    }
-
     /* Container */
     .container {
       max-width: 1280px;
       margin: 0 auto;
       padding: 0 1.25rem;
     }
-
     /* Page Header */
     .page-header {
       background: linear-gradient(135deg, #1b2430 0%, #0e1621 100%);
       padding: 3rem 0 2rem;
       border-bottom: 2px solid var(--accent);
     }
-
     .page-header h1 {
       color: var(--accent-dark);
       font-size: 2.5rem;
       margin-bottom: 0.75rem;
       text-align: center;
     }
-
     .page-header p {
       color: var(--muted);
       text-align: center;
@@ -307,7 +269,6 @@
       margin: 0 auto 2rem;
       line-height: 1.6;
     }
-
     /* Stats Bar */
     .stats-bar {
       display: grid;
@@ -315,28 +276,24 @@
       gap: 1rem;
       margin-top: 2rem;
     }
-
     .stat-card {
-      background: rgba(102, 155, 207, 0.1);
+      background: rgba(91, 155, 213, 0.1);
       border: 1px solid var(--accent);
       border-radius: 0.75rem;
       padding: 1.5rem;
       text-align: center;
     }
-
     .stat-number {
       font-size: 2rem;
       font-weight: bold;
       color: var(--accent-dark);
       display: block;
     }
-
     .stat-label {
       color: var(--muted);
       font-size: 0.9rem;
       margin-top: 0.25rem;
     }
-
     /* Filter Section */
     .filter-section {
       background: rgba(27, 36, 48, 0.5);
@@ -347,40 +304,34 @@
       backdrop-filter: blur(10px);
       border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     }
-
     .filter-controls {
       display: flex;
       flex-direction: column;
       gap: 1rem;
     }
-
     .search-and-view {
       display: flex;
       flex-direction: column;
       gap: 1rem;
     }
-
     .search-box {
       flex: 1;
       position: relative;
     }
-
     .search-box input {
       width: 100%;
       padding: 0.75rem 1rem 0.75rem 2.5rem;
       background: #1b2430;
-      border: 1px solid rgba(102, 155, 207, 0.3);
+      border: 1px solid rgba(91, 155, 213, 0.3);
       border-radius: 0.5rem;
       color: white;
       font-size: 0.95rem;
       transition: border-color 0.3s;
     }
-
     .search-box input:focus {
       outline: none;
       border-color: var(--accent);
     }
-
     .search-icon {
       position: absolute;
       left: 0.75rem;
@@ -388,7 +339,6 @@
       transform: translateY(-50%);
       color: var(--muted);
     }
-
     .view-toggle {
       display: flex;
       gap: 0.5rem;
@@ -396,7 +346,6 @@
       padding: 0.25rem;
       border-radius: 0.5rem;
     }
-
     .view-btn {
       flex: 1;
       padding: 0.5rem 1rem;
@@ -408,40 +357,34 @@
       transition: all 0.3s;
       font-size: 0.9rem;
     }
-
     .view-btn.active {
       background: var(--accent);
       color: white;
     }
-
     .filter-tags {
       display: flex;
       flex-wrap: wrap;
       gap: 0.5rem;
     }
-
     .filter-tag {
       padding: 0.5rem 1rem;
       background: #1b2430;
-      border: 1px solid rgba(102, 155, 207, 0.3);
+      border: 1px solid rgba(91, 155, 213, 0.3);
       color: #d1d5db;
       border-radius: 1.5rem;
       cursor: pointer;
       transition: all 0.3s;
       font-size: 0.85rem;
     }
-
     .filter-tag:hover {
-      background: rgba(102, 155, 207, 0.2);
+      background: rgba(91, 155, 213, 0.2);
       border-color: var(--accent);
     }
-
     .filter-tag.active {
       background: var(--accent);
       color: white;
       border-color: var(--accent);
     }
-
     /* Grid View */
     .classes-grid {
       display: grid;
@@ -449,7 +392,6 @@
       gap: 1.5rem;
       padding: 2rem 0;
     }
-
     .class-card {
       background: #1b2430;
       border-radius: 1rem;
@@ -458,30 +400,25 @@
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
       border: 1px solid transparent;
     }
-
     .class-card:hover {
       transform: translateY(-5px);
-      box-shadow: 0 12px 24px rgba(102, 155, 207, 0.3);
+      box-shadow: 0 12px 24px rgba(91, 155, 213, 0.3);
       border-color: var(--accent);
     }
-
     .class-image {
       position: relative;
       height: 200px;
       overflow: hidden;
     }
-
     .class-image img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       transition: transform 0.3s;
     }
-
     .class-card:hover .class-image img {
       transform: scale(1.05);
     }
-
     .class-badge {
       position: absolute;
       top: 1rem;
@@ -494,11 +431,9 @@
       font-weight: 600;
       text-transform: uppercase;
     }
-
-    .badge-beginner { color: var(--success); }
-    .badge-intermediate { color: var(--warning); }
-    .badge-advanced { color: var(--danger); }
-
+    .badge-beginner { color: #4ade80; }
+    .badge-intermediate { color: #fbbf24; }
+    .badge-advanced { color: #f87171; }
     .class-status {
       position: absolute;
       top: 1rem;
@@ -510,11 +445,9 @@
       font-size: 0.75rem;
       font-weight: 600;
     }
-
-    .status-available { color: var(--success); }
-    .status-filling { color: var(--warning); }
-    .status-full { color: var(--danger); }
-
+    .status-available { color: #4ade80; }
+    .status-filling { color: #fbbf24; }
+    .status-full { color: #f87171; }
     .watch-video-btn {
       position: absolute;
       bottom: 1rem;
@@ -534,46 +467,38 @@
       gap: 0.5rem;
       font-size: 0.9rem;
     }
-
     .class-card:hover .watch-video-btn {
       opacity: 1;
     }
-
     .watch-video-btn:hover {
       background: var(--accent);
     }
-
     .class-content {
       padding: 1.5rem;
     }
-
     .class-header {
       display: flex;
       justify-content: space-between;
       align-items: start;
       margin-bottom: 1rem;
     }
-
     .class-title {
       font-size: 1.25rem;
       color: white;
       margin-bottom: 0.25rem;
     }
-
     .class-type {
       color: var(--accent);
       font-size: 0.85rem;
       text-transform: uppercase;
       font-weight: 600;
     }
-
     .class-description {
       color: var(--muted);
       font-size: 0.9rem;
       line-height: 1.6;
       margin-bottom: 1.25rem;
     }
-
     .class-meta {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -583,7 +508,6 @@
       background: rgba(255, 255, 255, 0.02);
       border-radius: 0.5rem;
     }
-
     .meta-item {
       display: flex;
       align-items: center;
@@ -591,42 +515,35 @@
       font-size: 0.85rem;
       color: #d1d5db;
     }
-
     .meta-icon {
       width: 16px;
       height: 16px;
       color: var(--accent);
     }
-
     .class-footer {
       display: flex;
       gap: 0.75rem;
       align-items: center;
     }
-
     .spots-indicator {
       flex: 1;
     }
-
     .spots-text {
       font-size: 0.8rem;
       color: var(--muted);
       margin-bottom: 0.375rem;
     }
-
     .spots-bar {
       height: 6px;
       background: rgba(255, 255, 255, 0.1);
       border-radius: 3px;
       overflow: hidden;
     }
-
     .spots-fill {
       height: 100%;
       background: var(--accent);
       transition: width 0.3s;
     }
-
     .book-btn {
       padding: 0.625rem 1.5rem;
       background: var(--accent);
@@ -639,46 +556,38 @@
       font-size: 0.9rem;
       white-space: nowrap;
     }
-
     .book-btn:hover {
-      background: var(--accent-dark);
+      background: var(--accent-hover);
       transform: scale(1.05);
     }
-
     .book-btn:disabled {
       background: #4b5563;
       color: #9ca3af;
       cursor: not-allowed;
       transform: none;
     }
-
     /* Schedule View */
     .schedule-view {
       display: none;
       padding: 2rem 0;
     }
-
     .schedule-view.active {
       display: block;
     }
-
     .day-section {
       margin-bottom: 2rem;
     }
-
     .day-header {
       background: linear-gradient(90deg, var(--accent) 0%, transparent 100%);
       padding: 1rem 1.5rem;
       border-radius: 0.5rem;
       margin-bottom: 1rem;
     }
-
     .day-name {
       font-size: 1.5rem;
       color: white;
       font-weight: 600;
     }
-
     .time-slot {
       background: #1b2430;
       border-left: 4px solid var(--accent);
@@ -690,12 +599,10 @@
       gap: 1rem;
       transition: all 0.3s;
     }
-
     .time-slot:hover {
-      background: rgba(102, 155, 207, 0.1);
+      background: rgba(91, 155, 213, 0.1);
       transform: translateX(5px);
     }
-
     .slot-header {
       display: flex;
       justify-content: space-between;
@@ -703,26 +610,22 @@
       flex-wrap: wrap;
       gap: 1rem;
     }
-
     .slot-time {
       font-size: 1.25rem;
       color: var(--accent-dark);
       font-weight: 600;
     }
-
     .slot-details {
       display: flex;
       flex-direction: column;
       gap: 0.5rem;
       flex: 1;
     }
-
     .slot-class {
       font-size: 1.1rem;
       color: white;
       font-weight: 600;
     }
-
     .slot-info {
       display: flex;
       flex-wrap: wrap;
@@ -730,21 +633,18 @@
       font-size: 0.85rem;
       color: var(--muted);
     }
-
     .slot-info span {
       display: flex;
       align-items: center;
       gap: 0.375rem;
     }
-
     .slot-actions {
       display: flex;
       gap: 0.5rem;
     }
-
     .tutorial-btn {
       padding: 0.625rem 1rem;
-      background: rgba(102, 155, 207, 0.2);
+      background: rgba(91, 155, 213, 0.2);
       color: var(--accent-dark);
       border: 1px solid var(--accent);
       border-radius: 0.5rem;
@@ -757,28 +657,23 @@
       align-items: center;
       gap: 0.5rem;
     }
-
     .tutorial-btn:hover {
-      background: rgba(102, 155, 207, 0.3);
+      background: rgba(91, 155, 213, 0.3);
     }
-
     /* Empty State */
     .empty-state {
       text-align: center;
       padding: 4rem 2rem;
     }
-
     .empty-icon {
       font-size: 4rem;
       margin-bottom: 1rem;
       opacity: 0.5;
     }
-
     .empty-text {
       color: var(--muted);
       font-size: 1.1rem;
     }
-
     /* Video Modal */
     .modal-overlay {
       display: none;
@@ -794,16 +689,13 @@
       padding: 1rem;
       animation: fadeIn 0.3s;
     }
-
     .modal-overlay.show {
       display: flex;
     }
-
     @keyframes fadeIn {
       from { opacity: 0; }
       to { opacity: 1; }
     }
-
     .modal-content {
       background: #1b2430;
       border: 2px solid var(--accent);
@@ -815,7 +707,6 @@
       position: relative;
       animation: slideUp 0.3s;
     }
-
     @keyframes slideUp {
       from {
         transform: translateY(50px);
@@ -826,7 +717,6 @@
         opacity: 1;
       }
     }
-
     .modal-header {
       padding: 1.5rem;
       border-bottom: 1px solid rgba(255, 255, 255, 0.1);
@@ -834,18 +724,15 @@
       justify-content: space-between;
       align-items: start;
     }
-
     .modal-title {
       color: var(--accent-dark);
       font-size: 1.5rem;
       margin-bottom: 0.25rem;
     }
-
     .modal-subtitle {
       color: var(--muted);
       font-size: 0.9rem;
     }
-
     .modal-close {
       background: transparent;
       border: none;
@@ -857,15 +744,12 @@
       transition: background 0.3s;
       line-height: 1;
     }
-
     .modal-close:hover {
       background: rgba(255, 255, 255, 0.1);
     }
-
     .modal-body {
       padding: 1.5rem;
     }
-
     .video-container {
       position: relative;
       width: 100%;
@@ -875,7 +759,6 @@
       overflow: hidden;
       margin-bottom: 1.5rem;
     }
-
     .video-container iframe {
       position: absolute;
       top: 0;
@@ -883,71 +766,60 @@
       width: 100%;
       height: 100%;
     }
-
     .class-details-box {
-      background: rgba(102, 155, 207, 0.1);
-      border: 1px solid rgba(102, 155, 207, 0.3);
+      background: rgba(91, 155, 213, 0.1);
+      border: 1px solid rgba(91, 155, 213, 0.3);
       border-radius: 0.5rem;
       padding: 1.5rem;
       margin-bottom: 1rem;
     }
-
     .class-details-box h3 {
       color: var(--accent-dark);
       margin-bottom: 1rem;
     }
-
     .detail-grid {
       display: grid;
       grid-template-columns: 1fr;
       gap: 0.75rem;
       color: #d1d5db;
     }
-
     .detail-item {
       display: flex;
       gap: 0.5rem;
     }
-
     .detail-label {
       color: var(--muted);
     }
-
     .tips-box {
       background: rgba(74, 222, 128, 0.1);
       border: 1px solid rgba(74, 222, 128, 0.3);
       border-radius: 0.5rem;
       padding: 1.5rem;
     }
-
     .tips-box h4 {
-      color: var(--success);
+      color: #4ade80;
       margin-bottom: 1rem;
       display: flex;
       align-items: center;
       gap: 0.5rem;
     }
-
     .tips-box ul {
       list-style: none;
       padding: 0;
     }
-
     .tips-box li {
       color: #d1d5db;
       margin-bottom: 0.75rem;
       line-height: 1.5;
     }
-
     /* Footer */
     .site-footer {
-      background: #000;
+      background: rgba(0, 0, 0, 0.5);
       color: #9ca3af;
       margin-top: 3rem;
       border-top: 1px solid rgba(255, 255, 255, 0.05);
       padding: 1.5rem 0;
     }
-
     .footer-inner {
       display: flex;
       justify-content: space-between;
@@ -955,56 +827,46 @@
       flex-wrap: wrap;
       gap: 1rem;
     }
-
     .footer-inner h3 {
       color: white;
       font-size: 1rem;
       margin: 0;
     }
-
     .footer-nav {
       display: flex;
       gap: 1.5rem;
     }
-
     .footer-nav a {
       color: #9ca3af;
       text-decoration: none;
       transition: color 0.3s;
       font-size: 0.875rem;
     }
-
     .footer-nav a:hover {
-      color: #8ab9f7;
+      color: var(--accent-dark);
     }
-
     .footer-contact {
       color: #9ca3af;
       font-size: 0.875rem;
       font-style: normal;
     }
-
     .footer-contact a {
       color: #9ca3af;
       text-decoration: none;
       transition: color 0.3s;
     }
-
     .footer-contact a:hover {
-      color: #8ab9f7;
+      color: var(--accent-dark);
     }
-
     .footer-bottom {
       text-align: center;
       padding: 1rem 0;
       border-top: 1px solid rgba(255, 255, 255, 0.05);
       margin-top: 1rem;
     }
-
     .footer-bottom small {
       font-size: 0.8rem;
     }
-
     /* Responsive */
     @media (min-width: 768px) {
       .menu-toggle { display: none; }
@@ -1014,11 +876,9 @@
       .view-toggle { width: auto; }
       .detail-grid { grid-template-columns: repeat(2, 1fr); }
     }
-
     @media (min-width: 1024px) {
       .classes-grid { grid-template-columns: repeat(3, 1fr); }
     }
-
     @media (max-width: 767px) {
       .menu-toggle { display: block; }
       .main-nav.desktop { display: none; }
@@ -1029,10 +889,9 @@
 <body>
   <!-- Notification Bell -->
   <button class="notification-bell" id="notificationBell">
-    🔔
+    <i class='bx bxs-bell'></i>
     <span class="notification-badge" id="notificationBadge" style="display: none;">0</span>
   </button>
-
   <!-- Notification Panel -->
   <div class="notification-panel" id="notificationPanel">
     <div class="notification-header">
@@ -1043,72 +902,34 @@
       <div class="notification-empty">No new notifications</div>
     </div>
   </div>
-
   <!-- Toast Container -->
   <div class="toast-container" id="toastContainer"></div>
-
- <!-- Header -->
+ <!-- Header - Updated to match index.html -->
   <header class="site-header">
     <div class="header-inner">
-      <a href="index.html" class="logo">FITTCHECK</a>
-      
+      <a href="index.html" class="logo">
+        <i class='bx bxs-dumbbell'></i>
+        FITTCHECK
+      </a>
       <!-- Desktop Navigation -->
       <nav class="main-nav desktop">
-        <a href="index.html" class="active">
-       <img src="pictures/home-button 1.png" alt="Home Icon" style="width:20px; height:20px;">
-          Home
-        </a>
-        <a href="classes.html">
-          <i class="icon-classes"></i>
-          Classes
-        </a>
-        <a href="trainers.html">
-          <i class="icon-trainers"></i>
-          Trainers
-        </a>
-        <a href="contact.html">
-          <i class="icon-about"></i>
-          About Us
-        </a>
-        <a href="tracker.html">
-          <i class="icon-tracker"></i>
-          Tracker
-        </a>
-        <button onclick="window.location.href='profile.html'" style="font-family: inherit;">
-          <i class="icon-profile"></i>
-          Profile
-        </button>
+        <a href="index.html" id="nav-home"><i class='bx bx-home'></i> Home</a>
+        <a href="classes.html" id="nav-classes" class="nav-active"><i class='bx bx-dumbbell'></i> Classes</a>
+        <a href="trainers.html" id="nav-trainers"><i class='bx bx-user-check'></i> Trainers</a>
+        <a href="contact.html" id="nav-about"><i class='bx bx-info-circle'></i> About Us</a>
+        <a href="tracker.html" id="nav-tracker"><i class='bx bx-trending-up'></i> Tracker</a>
+        <button onclick="window.location.href='profile.html'" id="nav-profile"><i class='bx bx-user'></i> Profile</button>
       </nav>
-
       <!-- Mobile Menu Toggle -->
       <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">☰</button>
-      
       <!-- Mobile Navigation -->
       <nav class="main-nav mobile" id="mobileNav">
-        <a href="index.html" class="active">
-          <i class="icon-home"></i>
-          Home
-        </a>
-        <a href="classes.html">
-          <i class="icon-classes"></i>
-          Classes
-        </a>
-        <a href="trainers.html">
-          <i class="icon-trainers"></i>
-          Trainers
-        </a>
-        <a href="contact.html">
-          <i class="icon-about"></i>
-          About Us
-        </a>
-        <a href="tracker.html">
-          <i class="icon-tracker"></i>
-          Tracker
-        </a>
-        <button onclick="window.location.href='profile.html'" style="font-family: inherit; width: 100%; justify-content: flex-start;">
-          <i class="icon-profile"></i>
-          Profile
-        </button>
+        <a href="index.html" id="nav-home-mobile"><i class='bx bx-home'></i> Home</a>
+        <a href="classes.html" id="nav-classes-mobile" class="nav-active"><i class='bx bx-dumbbell'></i> Classes</a>
+        <a href="trainers.html" id="nav-trainers-mobile"><i class='bx bx-user-check'></i> Trainers</a>
+        <a href="contact.html" id="nav-about-mobile"><i class='bx bx-info-circle'></i> About Us</a>
+        <a href="tracker.html" id="nav-tracker-mobile"><i class='bx bx-trending-up'></i> Tracker</a>
+        <button onclick="window.location.href='profile.html'" id="nav-profile-mobile"><i class='bx bx-user'></i> Profile</button>
       </nav>
     </div>
   </header>
@@ -1117,7 +938,6 @@
     <div class="container">
       <h1>Browse Our Fitness Classes</h1>
       <p>Choose from our wide variety of expert-led fitness classes. Book your spot and start your journey to a healthier you.</p>
-      
       <div class="stats-bar">
         <div class="stat-card">
           <span class="stat-number" id="weeklyClassCount">30+</span>
@@ -1138,7 +958,6 @@
       </div>
     </div>
   </section>
-
   <!-- Filter Section -->
   <section class="filter-section">
     <div class="container">
@@ -1151,11 +970,14 @@
             <input type="text" id="searchInput" placeholder="Search classes or instructors...">
           </div>
           <div class="view-toggle">
-            <button class="view-btn active" data-view="grid">📋 Grid View</button>
-            <button class="view-btn" data-view="schedule">📅 Schedule View</button>
+            <button class="view-btn active" data-view="grid">
+              <i class='bx bx-grid'></i> Grid View
+            </button>
+            <button class="view-btn" data-view="schedule">
+              <i class='bx bx-calendar'></i> Schedule View
+            </button>
           </div>
         </div>
-        
         <div class="filter-tags">
           <button class="filter-tag active" data-filter="all">All Classes</button>
           <button class="filter-tag" data-filter="yoga">Yoga</button>
@@ -1168,13 +990,10 @@
       </div>
     </div>
   </section>
-
   <!-- Classes Grid View -->
   <section class="classes-grid container" id="gridView"></section>
-
   <!-- Schedule View -->
   <section class="schedule-view container" id="scheduleView"></section>
-
   <!-- Video Modal -->
   <div class="modal-overlay" id="videoModal">
     <div class="modal-content">
@@ -1183,22 +1002,20 @@
           <div class="modal-title" id="modalTitle"></div>
           <div class="modal-subtitle">Step-by-Step Exercise Tutorial</div>
         </div>
-        <button class="modal-close" id="modalClose" aria-label="Close">×</button>
+        <button class="modal-close" id="modalClose"><i class='bx bx-x'></i></button>
       </div>
       <div class="modal-body">
         <div class="video-container" id="videoContainer">
           <!-- Video will be inserted here -->
         </div>
-        
         <div class="class-details-box">
           <h3>Class Details</h3>
           <div class="detail-grid" id="classDetails">
             <!-- Details will be inserted here -->
           </div>
         </div>
-
         <div class="tips-box">
-          <h4>💡 Training Tips</h4>
+          <h4><i class='bx bx-info-circle'></i> Training Tips</h4>
           <ul>
             <li>• Watch the tutorial completely before attempting the exercises</li>
             <li>• Focus on proper form rather than speed</li>
@@ -1210,12 +1027,11 @@
       </div>
     </div>
   </div>
-
   <!-- Footer -->
   <footer class="site-footer">
     <div class="container footer-inner">
       <div>
-        <h3>FITTCHECK</h3>
+        <h3><i class='bx bxs-dumbbell'></i> FITTCHECK</h3>
       </div>
       <nav class="footer-nav">
         <a href="index.html">Home</a>
@@ -1223,14 +1039,13 @@
         <a href="tracker.html">Tracker</a>
       </nav>
       <address class="footer-contact">
-        <a href="mailto:hello@fittcheck.ph">hello@fittcheck.ph</a>
+        <a href="mailto:hello@fittcheck.ph"><i class='bx bx-envelope'></i> hello@fittcheck.ph</a>
       </address>
     </div>
     <div class="footer-bottom container">
       <small>© <span id="year"></span> FITTCHECK. All rights reserved.</small>
     </div>
   </footer>
-
   <script>
     // Default Classes Data
     const defaultClassesData = [
@@ -1355,44 +1170,34 @@
         videoUrl: 'https://www.youtube.com/embed/sTANio_2E0Q'
       }
     ];
-
-    // Load admin-added exercises from localStorage
+    // Get admin-added exercises from localStorage
     function getAdminExercises() {
       const exercises = localStorage.getItem('exercises');
       return exercises ? JSON.parse(exercises) : [];
     }
-
     // Merge default classes with admin exercises
     function getAllClasses() {
       const adminExercises = getAdminExercises();
-      
       // Convert admin exercises to match class format
       const formattedAdminExercises = adminExercises.map((ex, index) => ({
         ...ex,
-        id: parseInt(ex.id), // Ensure ID is a number for consistency
-        isAdminClass: true // Flag to identify admin-added classes
+        id: parseInt(ex.id),
+        isAdminClass: true
       }));
-      
       return [...defaultClassesData, ...formattedAdminExercises];
     }
-
     // Get all classes (default + admin)
     let classesData = getAllClasses();
-
-    // State
     let currentFilter = 'all';
     let searchQuery = '';
     let currentView = 'grid';
-
     // Update stats
     function updateStats() {
       const totalClasses = classesData.length;
       const types = new Set(classesData.map(c => c.type));
-      
       document.getElementById('weeklyClassCount').textContent = totalClasses + '+';
       document.getElementById('classTypeCount').textContent = types.size;
     }
-
     // Helper Functions
     function getStatus(spots, maxSpots) {
       const ratio = spots / maxSpots;
@@ -1400,24 +1205,12 @@
       if (ratio > 0) return { class: 'filling', text: 'Filling Fast' };
       return { class: 'full', text: 'Fully Booked' };
     }
-
-    function getDifficultyColor(difficulty) {
-      switch(difficulty) {
-        case 'beginner': return '#4ade80';
-        case 'intermediate': return '#fbbf24';
-        case 'advanced': return '#f87171';
-        default: return '#d1d5db';
-      }
-    }
-
     function openVideoModal(cls) {
       const modal = document.getElementById('videoModal');
       const modalTitle = document.getElementById('modalTitle');
       const videoContainer = document.getElementById('videoContainer');
       const classDetails = document.getElementById('classDetails');
-
       modalTitle.textContent = cls.name;
-      
       videoContainer.innerHTML = `
         <iframe
           src="${cls.videoUrl}"
@@ -1426,7 +1219,6 @@
           allowfullscreen
         ></iframe>
       `;
-
       classDetails.innerHTML = `
         <div class="detail-item">
           <span class="detail-label">Instructor:</span>
@@ -1438,7 +1230,7 @@
         </div>
         <div class="detail-item">
           <span class="detail-label">Difficulty:</span>
-          <span style="color: ${getDifficultyColor(cls.difficulty)}">${cls.difficulty}</span>
+          <span>${cls.difficulty}</span>
         </div>
         <div class="detail-item">
           <span class="detail-label">Time:</span>
@@ -1449,20 +1241,17 @@
           <span>${cls.days.join(', ')}</span>
         </div>
       `;
-
       modal.classList.add('show');
       document.body.style.overflow = 'hidden';
     }
-
     function closeVideoModal() {
       const modal = document.getElementById('videoModal');
       const videoContainer = document.getElementById('videoContainer');
-      
       modal.classList.remove('show');
       videoContainer.innerHTML = '';
       document.body.style.overflow = 'auto';
     }
-
+    // Render functions
     function renderGridView() {
       const grid = document.getElementById('gridView');
       const filtered = classesData.filter(cls => {
@@ -1471,7 +1260,6 @@
                              cls.instructor.toLowerCase().includes(searchQuery.toLowerCase());
         return matchesType && matchesSearch;
       });
-
       if (filtered.length === 0) {
         grid.innerHTML = `
           <div class="empty-state">
@@ -1481,11 +1269,9 @@
         `;
         return;
       }
-
       grid.innerHTML = filtered.map(cls => {
         const status = getStatus(cls.spots, cls.maxSpots);
         const filledPercent = ((cls.maxSpots - cls.spots) / cls.maxSpots) * 100;
-        
         return `
           <div class="class-card">
             <div class="class-image">
@@ -1493,7 +1279,7 @@
               <span class="class-badge badge-${cls.difficulty}">${cls.difficulty}</span>
               <span class="class-status status-${status.class}">⚡ ${status.text}</span>
               <button class="watch-video-btn" onclick='openVideoModal(${JSON.stringify(cls).replace(/'/g, "\\'")})'> 
-                ▶ Watch Tutorial
+                <i class='bx bx-play'></i> Watch Tutorial
               </button>
             </div>
             <div class="class-content">
@@ -1504,34 +1290,24 @@
                 </div>
               </div>
               <p class="class-description">${cls.description}</p>
-              
               <div class="class-meta">
                 <div class="meta-item">
-                  <svg class="meta-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-                  </svg>
+                  <i class='bx bx-user'></i>
                   <span>${cls.instructor}</span>
                 </div>
                 <div class="meta-item">
-                  <svg class="meta-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                  </svg>
+                  <i class='bx bx-time-five'></i>
                   <span>${cls.time}</span>
                 </div>
                 <div class="meta-item">
-                  <svg class="meta-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                  </svg>
+                  <i class='bx bx-timer'></i>
                   <span>${cls.duration}</span>
                 </div>
                 <div class="meta-item">
-                  <svg class="meta-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                  </svg>
+                  <i class='bx bx-calendar'></i>
                   <span>${cls.days.length} days/week</span>
                 </div>
               </div>
-
               <div class="class-footer">
                 <div class="spots-indicator">
                   <p class="spots-text">${cls.spots} of ${cls.maxSpots} spots left</p>
@@ -1548,18 +1324,15 @@
         `;
       }).join('');
     }
-
     function renderScheduleView() {
       const schedule = document.getElementById('scheduleView');
       const weekDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-      
       const filtered = classesData.filter(cls => {
         const matchesType = currentFilter === 'all' || cls.type === currentFilter;
         const matchesSearch = cls.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
                              cls.instructor.toLowerCase().includes(searchQuery.toLowerCase());
         return matchesType && matchesSearch;
       });
-
       if (filtered.length === 0) {
         schedule.innerHTML = `
           <div class="empty-state">
@@ -1569,10 +1342,8 @@
         `;
         return;
       }
-
       const scheduleByDay = {};
       weekDays.forEach(day => { scheduleByDay[day] = []; });
-
       filtered.forEach(cls => {
         cls.days.forEach(day => {
           if (scheduleByDay[day]) {
@@ -1580,14 +1351,9 @@
           }
         });
       });
-
       schedule.innerHTML = weekDays.map(day => {
-        const classes = scheduleByDay[day].sort((a, b) => {
-          return a.time.localeCompare(b.time);
-        });
-
+        const classes = scheduleByDay[day].sort((a, b) => a.time.localeCompare(b.time));
         if (classes.length === 0) return '';
-
         return `
           <div class="day-section">
             <div class="day-header">
@@ -1603,9 +1369,7 @@
                       <div class="slot-class">${cls.name}</div>
                       <div class="slot-info">
                         <span>
-                          <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-                          </svg>
+                          <i class='bx bx-user'></i>
                           ${cls.instructor}
                         </span>
                         <span>⏱ ${cls.duration}</span>
@@ -1615,7 +1379,7 @@
                     </div>
                     <div class="slot-actions">
                       <button class="tutorial-btn" onclick='openVideoModal(${JSON.stringify(cls).replace(/'/g, "\\'")})'> 
-                        ▶ Tutorial
+                        <i class='bx bx-play'></i> Tutorial
                       </button>
                       <button class="book-btn" ${cls.spots === 0 ? 'disabled' : ''} onclick="bookClass(${cls.id})">
                         ${cls.spots > 0 ? 'Book' : 'Full'}
@@ -1629,15 +1393,12 @@
         `;
       }).join('');
     }
-
+    // Update view based on current state
     function updateView() {
-      // Refresh data in case admin added new classes
       classesData = getAllClasses();
       updateStats();
-      
       const gridView = document.getElementById('gridView');
       const scheduleView = document.getElementById('scheduleView');
-      
       if (currentView === 'grid') {
         gridView.style.display = 'grid';
         scheduleView.classList.remove('active');
@@ -1648,8 +1409,7 @@
         renderScheduleView();
       }
     }
-
-    // Event Listeners
+    // Event listeners
     document.querySelectorAll('.filter-tag').forEach(btn => {
       btn.addEventListener('click', function() {
         document.querySelectorAll('.filter-tag').forEach(b => b.classList.remove('active'));
@@ -1658,7 +1418,6 @@
         updateView();
       });
     });
-
     document.querySelectorAll('.view-btn').forEach(btn => {
       btn.addEventListener('click', function() {
         document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
@@ -1667,119 +1426,94 @@
         updateView();
       });
     });
-
     document.getElementById('searchInput').addEventListener('input', function(e) {
       searchQuery = e.target.value;
       updateView();
     });
-
     function bookClass(id) {
       const cls = classesData.find(c => c.id === id);
       if (cls && cls.spots > 0) {
-        alert(`Booking ${cls.name} with ${cls.instructor}!\n\nTime: ${cls.time}\nDuration: ${cls.duration}\n\nYou will receive a confirmation email shortly.`);
+        alert(`Booking ${cls.name} with ${cls.instructor}!
+Time: ${cls.time}
+Duration: ${cls.duration}
+You will receive a confirmation email shortly.`);
       }
     }
-
     // Modal event listeners
     document.getElementById('modalClose').addEventListener('click', closeVideoModal);
-    
     document.getElementById('videoModal').addEventListener('click', function(e) {
       if (e.target === this) {
         closeVideoModal();
       }
     });
-
     // Close modal on ESC key
     document.addEventListener('keydown', function(e) {
       if (e.key === 'Escape') {
         closeVideoModal();
       }
     });
-
     // Mobile menu
     const menuToggle = document.getElementById('menuToggle');
     const mobileNav = document.getElementById('mobileNav');
-
     menuToggle.addEventListener('click', function() {
       mobileNav.classList.toggle('show');
       this.textContent = mobileNav.classList.contains('show') ? '✕' : '☰';
     });
-
     document.addEventListener('click', function(event) {
       if (!event.target.closest('.header-inner')) {
         mobileNav.classList.remove('show');
         menuToggle.textContent = '☰';
       }
     });
-
     // Set year
     document.getElementById('year').textContent = new Date().getFullYear();
-
     // Notification System
     let notifications = [];
-
     function initializeNotifications() {
       checkMissedExercises();
-      
-      // Setup notification bell
       const notificationBell = document.getElementById('notificationBell');
       const notificationPanel = document.getElementById('notificationPanel');
-      
       notificationBell.addEventListener('click', function(e) {
         e.stopPropagation();
         notificationPanel.classList.toggle('active');
       });
-
-      // Close panel when clicking outside
       document.addEventListener('click', function(e) {
         if (!notificationPanel.contains(e.target) && e.target !== notificationBell) {
           notificationPanel.classList.remove('active');
         }
       });
-
-      // Clear all button
       document.getElementById('clearAllBtn').addEventListener('click', clearAllNotifications);
     }
-
     function checkMissedExercises() {
       const lastExercise = localStorage.getItem('lastExerciseDate');
       const currentDate = new Date();
-      
       if (lastExercise) {
         const lastExerciseDate = new Date(lastExercise);
         const daysDiff = Math.floor((currentDate.getTime() - lastExerciseDate.getTime()) / (1000 * 60 * 60 * 24));
-        
         if (daysDiff >= 1) {
-          const message = `You haven't exercised in ${daysDiff} day${daysDiff > 1 ? 's' : ''}! Time to get back on track! 💪`;
-          addNotification(message, 'missed-exercise');
+          addNotification(`You haven't exercised in ${daysDiff} day${daysDiff > 1 ? 's' : ''}! Time to get back on track! 💪`, 'missed-exercise');
         }
       }
     }
-
     function addNotification(message, type) {
       const existingNotification = notifications.find(n => n.message === message);
       if (existingNotification) return;
-
       const notification = {
         id: Date.now(),
         message: message,
         type: type,
         timestamp: new Date()
       };
-
       notifications.unshift(notification);
       updateNotificationUI();
       showToast(message);
     }
-
     function updateNotificationUI() {
       const badge = document.getElementById('notificationBadge');
       const list = document.getElementById('notificationList');
-      
       if (notifications.length > 0) {
         badge.textContent = notifications.length;
         badge.style.display = 'flex';
-        
         list.innerHTML = notifications.map(n => `
           <div class="notification-item">
             <p>${n.message}</p>
@@ -1790,34 +1524,51 @@
         badge.style.display = 'none';
         list.innerHTML = '<div class="notification-empty">No new notifications</div>';
       }
-
       document.getElementById('clearAllBtn').style.display = notifications.length > 0 ? 'block' : 'none';
     }
-
     function showToast(message) {
       const toastContainer = document.getElementById('toastContainer');
       const toast = document.createElement('div');
       toast.className = 'toast';
       toast.innerHTML = `<p>🔔 ${message}</p>`;
-      
       toastContainer.appendChild(toast);
-      
       setTimeout(() => {
         toast.remove();
       }, 5000);
     }
-
     function clearAllNotifications() {
       notifications = [];
       updateNotificationUI();
     }
+    // Active Navigation
+    function setActiveNavLink() {
+      const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+      const navLinks = [
+        { id: 'nav-home', mobileId: 'nav-home-mobile', page: 'index.html' },
+        { id: 'nav-classes', mobileId: 'nav-classes-mobile', page: 'classes.html' },
+        { id: 'nav-trainers', mobileId: 'nav-trainers-mobile', page: 'trainers.html' },
+        { id: 'nav-about', mobileId: 'nav-about-mobile', page: 'contact.html' },
+        { id: 'nav-tracker', mobileId: 'nav-tracker-mobile', page: 'tracker.html' },
+        { id: 'nav-profile', mobileId: 'nav-profile-mobile', page: 'profile.html' }
+      ];
 
-    // Initialize notifications
+      navLinks.forEach(link => {
+        const desktopLink = document.getElementById(link.id);
+        const mobileLink = document.getElementById(link.mobileId);
+
+        if ((currentPage === link.page) || (currentPage === '' && link.page === 'index.html')) {
+          desktopLink?.classList.add('nav-active');
+          mobileLink?.classList.add('nav-active');
+        } else {
+          desktopLink?.classList.remove('nav-active');
+          mobileLink?.classList.remove('nav-active');
+        }
+      });
+    }
+    // Initialize
     initializeNotifications();
-
-    // Initial render
+    setActiveNavLink();
     updateView();
-
     // Refresh classes every 5 seconds to catch new admin additions
     setInterval(updateView, 5000);
   </script>

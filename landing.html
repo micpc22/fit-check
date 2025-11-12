@@ -23,8 +23,8 @@
       --snd-bg-color: #1b2430;
       --text-color: #fff;
       --main-color: #45ffca;
-      --accent: #669bcf;
-      --accent-dark: #8ab9f7;
+      --accent: #5b9bd5;
+      --accent-dark: #7ab3e8;
       --muted: #a0a8b5;
     }
 
@@ -39,10 +39,10 @@
 
     section {
       min-height: 100vh;
-      padding: 10rem 8% 2rem;
+      padding: 1.5rem 8% 2rem;
     }
 
-    /* Header Styles */
+    /* Header Styles - Updated to match tracker.html */
     .site-header {
       background: rgba(14, 22, 33, 0.95);
       backdrop-filter: blur(8px);
@@ -68,6 +68,9 @@
       letter-spacing: 0.05em;
       font-size: 1.25rem;
       font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
     }
 
     .main-nav {
@@ -96,14 +99,15 @@
       gap: 0.5rem;
     }
 
-    .main-nav a:hover, .main-nav a.active, .main-nav button:hover {
-      color: #8ab9f7;
-      background: rgba(102, 155, 207, 0.15);
+    .main-nav a:hover, .main-nav button:hover {
+      color: var(--accent-dark);
+      background: rgba(91, 155, 213, 0.15);
     }
 
-    .main-nav a.active {
-      color: #8ab9f7;
-      background: rgba(102, 155, 207, 0.1);
+    /* Active Nav - Same as tracker.html (no underline) */
+    .nav-active {
+      color: var(--accent-dark) !important;
+      background: rgba(91, 155, 213, 0.15) !important;
     }
 
     .menu-toggle {
@@ -118,7 +122,7 @@
     .main-nav.mobile {
       display: none;
       flex-direction: column;
-      background: #1b2430;
+      background: var(--snd-bg-color);
       position: absolute;
       top: 100%;
       right: 1.25rem;
@@ -133,6 +137,105 @@
       display: flex;
     }
 
+    /* Notification Bell */
+    .notification-bell {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      z-index: 100;
+      background: var(--accent);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 3rem;
+      height: 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      transition: all 0.3s;
+    }
+    .notification-bell:hover {
+      background: var(--accent-dark);
+      transform: scale(1.1);
+    }
+    .notification-badge {
+      position: absolute;
+      top: -0.25rem;
+      right: -0.25rem;
+      background: #dc2626;
+      color: white;
+      font-size: 0.75rem;
+      border-radius: 50%;
+      width: 1.25rem;
+      height: 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .notification-panel {
+      display: none;
+      position: fixed;
+      top: 5rem;
+      right: 1rem;
+      width: 20rem;
+      max-height: 24rem;
+      background: var(--snd-bg-color);
+      border-radius: 0.75rem;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(91, 155, 213, 0.3);
+      z-index: 99;
+      overflow: hidden;
+    }
+    .notification-panel.active {
+      display: block;
+    }
+    .notification-header {
+      display: flex;
+      justify-content: space-between;
+      padding: 1rem;
+      border-bottom: 1px solid rgba(91, 155, 213, 0.2);
+    }
+    .clear-all-btn {
+      color: var(--accent);
+      background: none;
+      border: none;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+    .notification-list {
+      max-height: 20rem;
+      overflow-y: auto;
+    }
+    .notification-item {
+      padding: 1rem;
+      border-bottom: 1px solid rgba(91, 155, 213, 0.1);
+    }
+    .notification-empty { text-align: center; color: var(--muted); padding: 2rem; }
+    .toast-container {
+      position: fixed;
+      bottom: 1rem;
+      right: 1rem;
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .toast {
+      background: var(--snd-bg-color);
+      border: 1px solid var(--accent);
+      border-radius: 0.5rem;
+      padding: 1rem;
+      max-width: 20rem;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+      animation: slideIn 0.3s;
+    }
+    @keyframes slideIn {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
     /* HOME SECTION */
     .home {
       display: flex;
@@ -140,6 +243,7 @@
       align-items: center;
       gap: 5rem;
       flex-wrap: wrap;
+      padding: 3rem 8% 2rem;
     }
 
     .home-content h3 {
@@ -210,7 +314,7 @@
     .btn:hover {
       background: var(--accent-dark);
       transform: translateY(-2px);
-      box-shadow: 0 0 1.5rem rgba(102, 155, 207, 0.5);
+      box-shadow: 0 0 1.5rem rgba(91, 155, 213, 0.5);
     }
 
     /* Container */
@@ -252,13 +356,13 @@
       text-decoration: none;
       cursor: pointer;
       transition: all 0.3s ease;
-      box-shadow: 0 0 15px rgba(102, 155, 207, 0.3);
+      box-shadow: 0 0 15px rgba(91, 155, 213, 0.3);
     }
 
     .program-btn:hover {
       background: var(--accent);
       transform: translateY(-5px);
-      box-shadow: 0 0 25px rgba(102, 155, 207, 0.6);
+      box-shadow: 0 0 25px rgba(91, 155, 213, 0.6);
     }
 
     .program-title {
@@ -483,37 +587,54 @@
   </style>
 </head>
 <body>
+  <!-- Notifications -->
+  <button class="notification-bell" id="notificationBell">
+    <i class='bx bxs-bell'></i>
+    <span class="notification-badge" id="notificationBadge" style="display: none;">0</span>
+  </button>
+  <div class="notification-panel" id="notificationPanel">
+    <div class="notification-header">
+      <h3>Notifications</h3>
+      <button class="clear-all-btn" id="clearAllBtn">Clear All</button>
+    </div>
+    <div class="notification-list" id="notificationList">
+      <div class="notification-empty">No new notifications</div>
+    </div>
+  </div>
+  <div class="toast-container" id="toastContainer"></div>
 
-  <!-- Header -->
+  <!-- Header - Updated to match tracker.html -->
   <header class="site-header">
     <div class="header-inner">
-      <a href="index.html" class="logo">FITTCHECK</a>
+      <a href="index.html" class="logo">
+        <i class='bx bxs-dumbbell'></i> FITTCHECK
+      </a>
       
       <!-- Desktop Navigation -->
       <nav class="main-nav desktop">
-        <a href="index.html" class="active">
-          <i class="icon-home"></i>
+        <a href="index.html" id="nav-home" class="nav-active">
+          <i class='bx bx-home'></i>
           Home
         </a>
-        <a href="classes.html">
-          <i class="icon-classes"></i>
+        <a href="classes.html" id="nav-classes">
+          <i class='bx bx-dumbbell'></i>
           Classes
         </a>
-        <a href="trainers.html">
-          <i class="icon-trainers"></i>
+        <a href="trainers.html" id="nav-trainers">
+          <i class='bx bx-user-check'></i>
           Trainers
         </a>
-        <a href="contact.html">
-          <i class="icon-about"></i>
+        <a href="contact.html" id="nav-about">
+          <i class='bx bx-info-circle'></i>
           About Us
         </a>
-        <a href="tracker.html">
-          <i class="icon-tracker"></i>
+        <a href="tracker.html" id="nav-tracker">
+          <i class='bx bx-trending-up'></i>
           Tracker
         </a>
-        <button onclick="window.location.href='profile.html'" style="font-family: inherit;">
-          <i class="icon-profile"></i>
-          Profile
+        <button onclick="window.location.href='login.html'" id="nav-profile" style="font-family: inherit;">
+          <i class='bx bx-user'></i>
+          Join Us
         </button>
       </nav>
 
@@ -522,29 +643,29 @@
       
       <!-- Mobile Navigation -->
       <nav class="main-nav mobile" id="mobileNav">
-        <a href="index.html" class="active">
-          <i class="icon-home"></i>
+        <a href="index.html" id="nav-home-mobile" class="nav-active">
+          <i class='bx bx-home'></i>
           Home
         </a>
-        <a href="classes.html">
-          <i class="icon-classes"></i>
+        <a href="classes.html" id="nav-classes-mobile">
+          <i class='bx bx-dumbbell'></i>
           Classes
         </a>
-        <a href="trainers.html">
-          <i class="icon-trainers"></i>
+        <a href="trainers.html" id="nav-trainers-mobile">
+          <i class='bx bx-user-check'></i>
           Trainers
         </a>
-        <a href="contact.html">
-          <i class="icon-about"></i>
+        <a href="contact.html" id="nav-about-mobile">
+          <i class='bx bx-info-circle'></i>
           About Us
         </a>
-        <a href="tracker.html">
-          <i class="icon-tracker"></i>
+        <a href="tracker.html" id="nav-tracker-mobile">
+          <i class='bx bx-trending-up'></i>
           Tracker
         </a>
-        <button onclick="window.location.href='profile.html'" style="font-family: inherit; width: 100%; justify-content: flex-start;">
-          <i class="icon-profile"></i>
-          Profile
+        <button onclick="window.location.href='login.html'" id="nav-profile-mobile" style="font-family: inherit; width: 100%; justify-content: flex-start;">
+          <i class='bx bx-user'></i>
+          Join Us
         </button>
       </nav>
     </div>
@@ -570,9 +691,9 @@
     <div class="container">
       <h2 class="section-title">Choose Your Path</h2>
       <div class="program-options">
-        <a href="#classes" class="program-btn">💪 Build Muscle</a>
-        <a href="#classes" class="program-btn">🔥 Endurance</a>
-        <a href="#classes" class="program-btn">🤸‍♀️ Weight Loss</a>
+        <a href="#classes" class="program-btn"> Build Muscle</a>
+        <a href="#classes" class="program-btn"> Endurance</a>
+        <a href="#classes" class="program-btn"> Weight Loss</a>
       </div>
       <h3 class="program-title">Select a program above to see exercises.</h3>
     </div>
@@ -681,7 +802,7 @@
   <footer class="site-footer">
     <div class="container footer-inner">
       <div>
-        <h3>FITTCHECK</h3>
+        <h3><i class='bx bxs-dumbbell'></i> FITTCHECK</h3>
       </div>
       <nav class="footer-nav">
         <a href="#home">Home</a>
@@ -698,9 +819,59 @@
       <small>© <span id="year"></span> FITTCHECK. All rights reserved.</small>
     </div>
   </footer>
+ <script>
+    // ========== NOTIFICATIONS ==========
+    let notifications = [];
+    function initializeNotifications() {
+      checkMissedExercises();
+      const bell = document.getElementById('notificationBell');
+      const panel = document.getElementById('notificationPanel');
+      bell.addEventListener('click', e => { e.stopPropagation(); panel.classList.toggle('active'); });
+      document.addEventListener('click', e => {
+        if (!panel.contains(e.target) && e.target !== bell) panel.classList.remove('active');
+      });
+      document.getElementById('clearAllBtn').addEventListener('click', () => {
+        notifications = []; updateNotificationUI();
+      });
+    }
+    function checkMissedExercises() {
+      const last = localStorage.getItem('lastExerciseDate');
+      if (!last) return;
+      const diff = Math.floor((Date.now() - new Date(last)) / (864e5));
+      if (diff >= 1) {
+        addNotification(`You haven’t exercised in ${diff} day${diff > 1 ? 's' : ''}! 💪`, 'missed');
+      }
+    }
+    function addNotification(msg, type) {
+      if (notifications.some(n => n.msg === msg)) return;
+      notifications.unshift({ id: Date.now(), msg, type, ts: new Date() });
+      updateNotificationUI();
+      showToast(msg);
+    }
+    function updateNotificationUI() {
+      const badge = document.getElementById('notificationBadge');
+      const list = document.getElementById('notificationList');
+      if (notifications.length) {
+        badge.textContent = notifications.length;
+        badge.style.display = 'flex';
+        list.innerHTML = notifications.map(n =>
+          `<div class="notification-item"><p>${n.msg}</p><small>${n.ts.toLocaleTimeString()}</small></div>`
+        ).join('');
+      } else {
+        badge.style.display = 'none';
+        list.innerHTML = '<div class="notification-empty">No new notifications</div>';
+      }
+    }
+    function showToast(msg) {
+      const c = document.getElementById('toastContainer');
+      const t = document.createElement('div');
+      t.className = 'toast';
+      t.innerHTML = `<p>🔔 ${msg}</p>`;
+      c.appendChild(t);
+      setTimeout(() => t.remove(), 5000);
+    }
 
-  <script>
-    // Mobile menu toggle
+    // --- Mobile menu toggle ---
     const menuToggle = document.getElementById('menuToggle');
     const mobileNav = document.getElementById('mobileNav');
 
@@ -728,11 +899,7 @@
           e.preventDefault();
           const target = document.querySelector(href);
           if (target) {
-            target.scrollIntoView({
-              behavior: 'smooth',
-              block: 'start'
-            });
-            // Close mobile menu if open
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
             mobileNav.classList.remove('show');
             menuToggle.textContent = '☰';
           }
@@ -740,26 +907,28 @@
       });
     });
 
-    // Update active nav link on scroll
-    window.addEventListener('scroll', () => {
-      const sections = document.querySelectorAll('section[id]');
-      const scrollY = window.pageYOffset;
+    // --- Restrict access to other pages ---
+    const restrictedPages = ["classes.html", "trainers.html", "contact.html", "tracker.html"];
+    document.querySelectorAll('a').forEach(link => {
+      const href = link.getAttribute('href');
+      if (restrictedPages.includes(href)) {
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          alert("You must log in to access this page.");
+          window.location.href = "login.html";
+        });
+      }
+    });
 
-      sections.forEach(section => {
-        const sectionHeight = section.offsetHeight;
-        const sectionTop = section.offsetTop - 100;
-        const sectionId = section.getAttribute('id');
-        const navLink = document.querySelector(`.main-nav a[href="#${sectionId}"]`);
-
-        if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
-          document.querySelectorAll('.main-nav a').forEach(link => {
-            link.classList.remove('active');
-          });
-          if (navLink) {
-            navLink.classList.add('active');
-          }
-        }
-      });
+    // Same for buttons if ever used to navigate restricted pages
+    document.querySelectorAll('button').forEach(btn => {
+      const onClick = btn.getAttribute('onclick');
+      if (onClick && restrictedPages.some(page => onClick.includes(page))) {
+        btn.onclick = () => {
+          alert("You must log in to access this page.");
+          window.location.href = "login.html";
+        };
+      }
     });
   </script>
 

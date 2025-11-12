@@ -4,6 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>FITTCHECK — About Us</title>
+  <!-- ✅ Boxicons for consistency -->
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
     /* Reset & Base Styles */
     * {
@@ -13,15 +16,17 @@
     }
 
     :root {
-      --accent: #669bcf;
-      --accent-dark: #8ab9f7;
-      --muted: #cbd5e1;
+      /* ✅ Unified accent (same as tracker.html) */
+      --accent: #5b9bd5;
+      --accent-dark: #7ab3e8;
+      --accent-hover: #4a8bc4;
+      --muted: #a0a8b5;
       --text-primary: #f1f5f9;
       --text-secondary: #e2e8f0;
       --bg: #0e1621;
       --card: #1b2430;
       --radius: 12px;
-      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      font-family: 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     }
 
     html, body {
@@ -30,7 +35,7 @@
       color: var(--text-primary);
     }
 
-    /* Header Styles */
+    /* Header Styles — ✅ IDENTICAL TO tracker.html */
     .site-header {
       background: rgba(14, 22, 33, 0.95);
       backdrop-filter: blur(8px);
@@ -56,6 +61,9 @@
       letter-spacing: 0.05em;
       font-size: 1.25rem;
       font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
     }
 
     .main-nav {
@@ -84,9 +92,15 @@
       gap: 0.5rem;
     }
 
-    .main-nav a:hover, .main-nav a.active, .main-nav button:hover {
-      color: #8ab9f7;
-      background: rgba(102, 155, 207, 0.1);
+    .main-nav a:hover, .main-nav button:hover {
+      color: var(--accent-dark);
+      background: rgba(91, 155, 213, 0.15);
+    }
+
+    /* ✅ Active Nav — Same as tracker.html (no underline) */
+    .nav-active {
+      color: var(--accent-dark) !important;
+      background: rgba(91, 155, 213, 0.15) !important;
     }
 
     .menu-toggle {
@@ -101,7 +115,7 @@
     .main-nav.mobile {
       display: none;
       flex-direction: column;
-      background: #1b2430;
+      background: var(--card);
       position: absolute;
       top: 100%;
       right: 1.25rem;
@@ -116,7 +130,7 @@
       display: flex;
     }
 
-    /* Notification Bell */
+    /* Notifications — ✅ Same as tracker */
     .notification-bell {
       position: fixed;
       top: 1rem;
@@ -166,7 +180,7 @@
       background: var(--card);
       border-radius: 0.75rem;
       box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
-      border: 1px solid rgba(102, 155, 207, 0.3);
+      border: 1px solid rgba(91, 155, 213, 0.3);
       z-index: 99;
       overflow: hidden;
     }
@@ -180,7 +194,7 @@
       align-items: center;
       justify-content: space-between;
       padding: 1rem;
-      border-bottom: 1px solid rgba(102, 155, 207, 0.2);
+      border-bottom: 1px solid rgba(91, 155, 213, 0.2);
     }
 
     .notification-header h3 {
@@ -208,12 +222,12 @@
 
     .notification-item {
       padding: 1rem;
-      border-bottom: 1px solid rgba(102, 155, 207, 0.1);
+      border-bottom: 1px solid rgba(91, 155, 213, 0.1);
       transition: background 0.2s;
     }
 
     .notification-item:hover {
-      background: rgba(102, 155, 207, 0.05);
+      background: rgba(91, 155, 213, 0.05);
     }
 
     .notification-item p {
@@ -233,7 +247,7 @@
       color: var(--muted);
     }
 
-    /* Toast Notification */
+    /* Toast */
     .toast-container {
       position: fixed;
       bottom: 1rem;
@@ -281,18 +295,24 @@
     .hero-section {
       padding: 4rem 0;
       text-align: center;
+      background: linear-gradient(135deg, rgba(27, 36, 48, 0.7) 0%, rgba(14, 22, 33, 0.9) 100%);
+      border-bottom: 2px solid var(--accent);
+      position: relative;
+      overflow: hidden;
     }
 
     .hero-section h1 {
       color: var(--accent-dark);
       font-size: 3rem;
       margin-bottom: 1rem;
+      font-weight: 700;
     }
 
     .hero-section .tagline {
       color: var(--text-secondary);
       font-size: 1.5rem;
       margin-bottom: 1rem;
+      font-weight: 500;
     }
 
     .hero-section p {
@@ -303,8 +323,12 @@
       line-height: 1.7;
     }
 
-    /* Story Section */
-    .story-section {
+    /* Story, Stats, Values — Styles kept but colors adjusted for consistency */
+    .story-section,
+    .stats-section,
+    .values-section,
+    .facilities-section,
+    .contact-section {
       padding: 3rem 0;
     }
 
@@ -316,9 +340,7 @@
     }
 
     @media (min-width: 1024px) {
-      .story-grid {
-        grid-template-columns: 1fr 1fr;
-      }
+      .story-grid { grid-template-columns: 1fr 1fr; }
     }
 
     .story-image {
@@ -327,31 +349,22 @@
       object-fit: cover;
       border-radius: 1rem;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+      transition: transform 0.3s;
     }
 
-    .story-content h2 {
+    .story-image:hover {
+      transform: scale(1.02);
+    }
+
+    .story-content h2,
+    .values-section h2,
+    .facilities-section h2,
+    .contact-form h2,
+    .contact-info h2 {
       color: var(--accent-dark);
       font-size: 2rem;
-      margin-bottom: 1rem;
-    }
-
-    .story-content p {
-      color: var(--text-secondary);
-      line-height: 1.8;
-      margin-bottom: 1rem;
-      font-size: 1.05rem;
-    }
-
-    /* Values Section */
-    .values-section {
-      padding: 3rem 0;
-      text-align: center;
-    }
-
-    .values-section h2 {
-      color: var(--accent-dark);
-      font-size: 2.5rem;
-      margin-bottom: 3rem;
+      margin-bottom: 1.5rem;
+      font-weight: 700;
     }
 
     .values-grid {
@@ -359,11 +372,8 @@
       grid-template-columns: 1fr;
       gap: 2rem;
     }
-
     @media (min-width: 768px) {
-      .values-grid {
-        grid-template-columns: repeat(3, 1fr);
-      }
+      .values-grid { grid-template-columns: repeat(3, 1fr); }
     }
 
     .value-card {
@@ -377,32 +387,12 @@
     .value-card:hover {
       transform: translateY(-5px);
       border-color: var(--accent);
-      box-shadow: 0 10px 30px rgba(102, 155, 207, 0.2);
+      background: rgba(91, 155, 213, 0.05);
     }
 
-    .value-icon {
-      font-size: 3rem;
-      margin-bottom: 1rem;
-    }
-
-    .value-card h3 {
-      color: var(--text-primary);
-      font-size: 1.5rem;
-      margin-bottom: 0.75rem;
-    }
-
-    .value-card p {
-      color: var(--text-secondary);
-      line-height: 1.6;
-      font-size: 1.05rem;
-    }
-
-    /* Stats Section */
-    .stats-section {
-      padding: 3rem 0;
-      background: rgba(255, 255, 255, 0.02);
-      margin: 3rem 0;
-    }
+    .value-icon { font-size: 3rem; margin-bottom: 1rem; color: var(--accent); }
+    .value-card h3 { color: white; font-size: 1.5rem; margin-bottom: 0.75rem; font-weight: 600; }
+    .value-card p { color: var(--text-secondary); line-height: 1.6; }
 
     .stats-grid {
       display: grid;
@@ -410,58 +400,17 @@
       gap: 2rem;
       text-align: center;
     }
-
-    @media (min-width: 768px) {
-      .stats-grid {
-        grid-template-columns: repeat(4, 1fr);
-      }
-    }
-
-    .stat-item {
-      padding: 1.5rem;
-    }
-
-    .stat-number {
-      color: var(--accent-dark);
-      font-size: 3rem;
-      font-weight: 700;
-      margin-bottom: 0.5rem;
-    }
-
-    .stat-label {
-      color: var(--text-secondary);
-      font-size: 1.1rem;
-    }
-
-    /* Facilities Section */
-    .facilities-section {
-      padding: 3rem 0;
-    }
-
-    .facilities-section h2 {
-      color: var(--accent-dark);
-      font-size: 2.5rem;
-      margin-bottom: 3rem;
-      text-align: center;
-    }
+    @media (min-width: 768px) { .stats-grid { grid-template-columns: repeat(4, 1fr); } }
+    .stat-number { color: var(--accent-dark); font-size: 3rem; font-weight: 700; }
+    .stat-label { color: var(--text-secondary); font-size: 1rem; }
 
     .facilities-grid {
       display: grid;
       grid-template-columns: 1fr;
       gap: 1.5rem;
     }
-
-    @media (min-width: 768px) {
-      .facilities-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
-    @media (min-width: 1024px) {
-      .facilities-grid {
-        grid-template-columns: repeat(3, 1fr);
-      }
-    }
+    @media (min-width: 768px) { .facilities-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 1024px) { .facilities-grid { grid-template-columns: repeat(3, 1fr); } }
 
     .facility-card {
       background: rgba(255, 255, 255, 0.02);
@@ -469,69 +418,52 @@
       border-radius: 0.75rem;
       border: 1px solid rgba(255, 255, 255, 0.05);
       display: flex;
-      align-items: flex-start;
       gap: 1rem;
+      transition: all 0.3s;
     }
-
+    .facility-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-3px);
+      background: rgba(91, 155, 213, 0.03);
+    }
     .facility-icon {
       font-size: 2rem;
       flex-shrink: 0;
+      color: var(--accent);
+      background: rgba(91, 155, 213, 0.1);
+      width: 50px;
+      height: 50px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
+    .facility-content h3 { color: white; font-size: 1.25rem; margin-bottom: 0.5rem; font-weight: 600; }
+    .facility-content p { color: var(--text-secondary); line-height: 1.6; }
 
-    .facility-content h3 {
-      color: var(--text-primary);
-      font-size: 1.25rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .facility-content p {
-      color: var(--text-secondary);
-      line-height: 1.6;
-    }
-
-    /* Contact Section */
-    .contact-section {
-      padding: 3rem 0;
-    }
-
+    /* Contact Form */
     .contact-grid {
       display: grid;
       grid-template-columns: 1fr;
       gap: 2rem;
     }
+    @media (min-width: 1024px) { .contact-grid { grid-template-columns: 1fr 1fr; } }
 
-    @media (min-width: 1024px) {
-      .contact-grid {
-        grid-template-columns: 1fr 1fr;
-      }
-    }
-
-    .contact-form {
+    .contact-form, .contact-info {
       background: rgba(255, 255, 255, 0.02);
       padding: 2rem;
       border-radius: 1rem;
       border: 1px solid rgba(255, 255, 255, 0.05);
     }
 
-    .contact-form h2 {
-      color: var(--accent-dark);
-      font-size: 2rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .form-group {
-      margin-bottom: 1.5rem;
-    }
-
+    .form-group { margin-bottom: 1.5rem; }
     .form-group label {
       display: block;
       color: var(--text-secondary);
       margin-bottom: 0.5rem;
       font-weight: 500;
     }
-
-    .form-group input,
-    .form-group textarea {
+    .form-group input, .form-group textarea {
       width: 100%;
       padding: 0.75rem;
       background: var(--card);
@@ -541,17 +473,12 @@
       font-size: 1rem;
       font-family: inherit;
     }
-
-    .form-group input:focus,
-    .form-group textarea:focus {
+    .form-group input:focus, .form-group textarea:focus {
       outline: none;
       border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(91, 155, 213, 0.2);
     }
-
-    .form-group textarea {
-      min-height: 150px;
-      resize: vertical;
-    }
+    .form-group textarea { min-height: 150px; resize: vertical; }
 
     button[type="submit"] {
       width: 100%;
@@ -565,98 +492,56 @@
       cursor: pointer;
       transition: all 0.2s;
     }
-
     button[type="submit"]:hover {
-      background: var(--accent-dark);
+      background: var(--accent-hover);
       transform: translateY(-2px);
     }
 
-    .form-message {
-      margin-top: 1rem;
-      padding: 0.75rem;
-      border-radius: 0.5rem;
-      text-align: center;
-      display: none;
-    }
+    .form-message { margin-top: 1rem; padding: 0.75rem; border-radius: 0.5rem; text-align: center; display: none; }
+    .form-message.success { background: rgba(74, 222, 128, 0.1); color: #4ade80; display: block; }
+    .form-message.error { background: rgba(239, 68, 68, 0.1); color: #ef4444; display: block; }
 
-    .form-message.success {
-      background: rgba(74, 222, 128, 0.1);
-      color: #4ade80;
-      border: 1px solid rgba(74, 222, 128, 0.2);
-      display: block;
-    }
-
-    .form-message.error {
-      background: rgba(239, 68, 68, 0.1);
-      color: #ef4444;
-      border: 1px solid rgba(239, 68, 68, 0.2);
-      display: block;
-    }
-
-    .contact-info {
-      background: rgba(255, 255, 255, 0.02);
-      padding: 2rem;
-      border-radius: 1rem;
-      border: 1px solid rgba(255, 255, 255, 0.05);
-    }
-
-    .contact-info h2 {
-      color: var(--accent-dark);
-      font-size: 2rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .info-item {
-      margin-bottom: 2rem;
-    }
-
+    .info-item { margin-bottom: 2rem; }
     .info-item h3 {
-      color: var(--text-primary);
+      color: white;
       font-size: 1.25rem;
       margin-bottom: 0.75rem;
       display: flex;
       align-items: center;
       gap: 0.5rem;
+      font-weight: 600;
     }
-
+    .info-icon { font-size: 1.5rem; color: var(--accent); }
     .info-item p, .info-item a {
       color: var(--text-secondary);
       line-height: 1.8;
       font-size: 1.05rem;
       text-decoration: none;
     }
-
-    .info-item a:hover {
-      color: var(--accent-dark);
-    }
-
-    .info-icon {
-      font-size: 1.5rem;
-    }
+    .info-item a:hover { color: var(--accent-dark); }
 
     .map-placeholder {
       width: 100%;
       height: 300px;
-      background: var(--card);
+      background: linear-gradient(rgba(27, 36, 48, 0.8), rgba(27, 36, 48, 0.9)), url('https://images.unsplash.com/photo-1519996529931-a4556af27a3a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80');
+      background-size: cover;
       border-radius: 0.75rem;
       display: flex;
       align-items: center;
       justify-content: center;
       color: var(--muted);
-      font-size: 1.1rem;
       border: 1px solid rgba(255, 255, 255, 0.05);
       margin-top: 1.5rem;
     }
 
-    /* Footer */
+    /* Footer — ✅ Consistent with others */
     .site-footer {
-      background: #000;
+      background: rgba(0, 0, 0, 0.5);
       color: #9ca3af;
       margin-top: 3rem;
       border-top: 1px solid rgba(255, 255, 255, 0.05);
       padding: 1.5rem 0;
     }
-
     .footer-inner {
       display: flex;
       justify-content: space-between;
@@ -664,100 +549,47 @@
       flex-wrap: wrap;
       gap: 1rem;
     }
-
     .footer-inner h3 {
       color: white;
       font-size: 1rem;
       margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
     }
-
     .footer-nav {
       display: flex;
       gap: 1.5rem;
     }
-
     .footer-nav a {
       color: #9ca3af;
       text-decoration: none;
-      transition: color 0.3s;
       font-size: 0.875rem;
     }
-
-    .footer-nav a:hover {
-      color: #8ab9f7;
-    }
-
-    .footer-contact {
-      color: #9ca3af;
-      font-size: 0.875rem;
-      font-style: normal;
-    }
-
-    .footer-contact a {
-      color: #9ca3af;
-      text-decoration: none;
-      transition: color 0.3s;
-    }
-
-    .footer-contact a:hover {
-      color: #8ab9f7;
-    }
-
-    .footer-bottom {
-      text-align: center;
-      padding: 1rem 0;
-      border-top: 1px solid rgba(255, 255, 255, 0.05);
-      margin-top: 1rem;
-    }
-
-    .footer-bottom small {
-      font-size: 0.8rem;
-    }
+    .footer-nav a:hover { color: var(--accent-dark); }
+    .footer-contact a { color: #9ca3af; text-decoration: none; }
+    .footer-contact a:hover { color: var(--accent-dark); }
+    .footer-bottom { text-align: center; padding: 1rem 0; border-top: 1px solid rgba(255, 255, 255, 0.05); margin-top: 1rem; }
+    .footer-bottom small { font-size: 0.8rem; }
 
     /* Responsive */
     @media (min-width: 768px) {
-      .menu-toggle {
-        display: none;
-      }
-
-      .main-nav.desktop {
-        display: flex;
-      }
+      .menu-toggle { display: none; }
+      .main-nav.desktop { display: flex; }
     }
-
     @media (max-width: 767px) {
-      .menu-toggle {
-        display: block;
-      }
-
-      .main-nav.desktop {
-        display: none;
-      }
-
-      .hero-section h1 {
-        font-size: 2rem;
-      }
-
-      .hero-section .tagline {
-        font-size: 1.2rem;
-      }
-
-      .story-content h2,
-      .values-section h2,
-      .facilities-section h2 {
-        font-size: 1.75rem;
-      }
+      .menu-toggle { display: block; }
+      .main-nav.desktop { display: none; }
+      .hero-section h1 { font-size: 2rem; }
     }
   </style>
 </head>
 <body>
-  <!-- Notification Bell -->
+  <!-- Notifications -->
   <button class="notification-bell" id="notificationBell">
-    🔔
+    <i class='bx bxs-bell'></i>
     <span class="notification-badge" id="notificationBadge" style="display: none;">0</span>
   </button>
-
-  <!-- Notification Panel -->
   <div class="notification-panel" id="notificationPanel">
     <div class="notification-header">
       <h3>Notifications</h3>
@@ -767,89 +599,53 @@
       <div class="notification-empty">No new notifications</div>
     </div>
   </div>
-
-  <!-- Toast Container -->
   <div class="toast-container" id="toastContainer"></div>
 
- <!-- Header -->
+  <!-- ✅ Header — Identical to tracker.html -->
   <header class="site-header">
     <div class="header-inner">
-      <a href="index.html" class="logo">FITTCHECK</a>
+      <a href="index.html" class="logo">
+        <i class='bx bxs-dumbbell'></i>
+        FITTCHECK
+      </a>
       
       <!-- Desktop Navigation -->
       <nav class="main-nav desktop">
-        <a href="index.html" class="active">
-       <img src="pictures/home-button 1.png" alt="Home Icon" style="width:20px; height:20px;">
-          Home
-        </a>
-        <a href="classes.html">
-          <i class="icon-classes"></i>
-          Classes
-        </a>
-        <a href="trainers.html">
-          <i class="icon-trainers"></i>
-          Trainers
-        </a>
-        <a href="contact.html">
-          <i class="icon-about"></i>
-          About Us
-        </a>
-        <a href="tracker.html">
-          <i class="icon-tracker"></i>
-          Tracker
-        </a>
-        <button onclick="window.location.href='profile.html'" style="font-family: inherit;">
-          <i class="icon-profile"></i>
-          Profile
-        </button>
+        <a href="index.html" id="nav-home"><i class='bx bx-home'></i> Home</a>
+        <a href="classes.html" id="nav-classes"><i class='bx bx-dumbbell'></i> Classes</a>
+        <a href="trainers.html" id="nav-trainers"><i class='bx bx-user-check'></i> Trainers</a>
+        <a href="contact.html" id="nav-about" class="nav-active"><i class='bx bx-info-circle'></i> About Us</a>
+        <a href="tracker.html" id="nav-tracker"><i class='bx bx-trending-up'></i> Tracker</a>
+        <button onclick="window.location.href='profile.html'" id="nav-profile"><i class='bx bx-user'></i> Profile</button>
       </nav>
 
       <!-- Mobile Menu Toggle -->
-      <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">☰</button>
+      <button class="menu-toggle" id="menuToggle">☰</button>
       
       <!-- Mobile Navigation -->
       <nav class="main-nav mobile" id="mobileNav">
-        <a href="index.html" class="active">
-          <i class="icon-home"></i>
-          Home
-        </a>
-        <a href="classes.html">
-          <i class="icon-classes"></i>
-          Classes
-        </a>
-        <a href="trainers.html">
-          <i class="icon-trainers"></i>
-          Trainers
-        </a>
-        <a href="contact.html">
-          <i class="icon-about"></i>
-          About Us
-        </a>
-        <a href="tracker.html">
-          <i class="icon-tracker"></i>
-          Tracker
-        </a>
-        <button onclick="window.location.href='profile.html'" style="font-family: inherit; width: 100%; justify-content: flex-start;">
-          <i class="icon-profile"></i>
-          Profile
-        </button>
+        <a href="index.html" id="nav-home-mobile"><i class='bx bx-home'></i> Home</a>
+        <a href="classes.html" id="nav-classes-mobile"><i class='bx bx-dumbbell'></i> Classes</a>
+        <a href="trainers.html" id="nav-trainers-mobile"><i class='bx bx-user-check'></i> Trainers</a>
+        <a href="contact.html" id="nav-about-mobile" class="nav-active"><i class='bx bx-info-circle'></i> About Us</a>
+        <a href="tracker.html" id="nav-tracker-mobile"><i class='bx bx-trending-up'></i> Tracker</a>
+        <button onclick="window.location.href='profile.html'" id="nav-profile-mobile"><i class='bx bx-user'></i> Profile</button>
       </nav>
     </div>
   </header>
 
-  <!-- Main Content -->
   <main>
-    <!-- Hero Section -->
+    <!-- Hero -->
     <section class="hero-section container">
       <h1>About FITTCHECK</h1>
       <p class="tagline">Strong. Focused. Driven.</p>
       <p>We're more than just a gym — we're a community dedicated to transforming lives through fitness, wellness, and unwavering support.</p>
     </section>
 
-    <!-- Story Section -->
+    <!-- Story -->
     <section class="story-section container">
       <div class="story-grid">
-        <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxneW0lMjBjb21tdW5pdHl8ZW58MXx8fHwxNzYyMzkxODY2fDA&ixlib=rb-4.1.0&q=80&w=1080" alt="Our gym community" class="story-image">
+        <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80" alt="Our gym community" class="story-image">
         <div class="story-content">
           <h2>Our Story</h2>
           <p>Founded in 2015, FITTCHECK was born from a simple vision: to create a fitness space where everyone—regardless of their fitness level—feels welcomed, motivated, and empowered to reach their goals.</p>
@@ -859,7 +655,7 @@
       </div>
     </section>
 
-    <!-- Stats Section -->
+    <!-- Stats -->
     <section class="stats-section">
       <div class="container">
         <div class="stats-grid">
@@ -883,69 +679,69 @@
       </div>
     </section>
 
-    <!-- Values Section -->
+    <!-- Values -->
     <section class="values-section container">
       <h2>Our Core Values</h2>
       <div class="values-grid">
         <div class="value-card">
-          <div class="value-icon">💪</div>
+          <div class="value-icon"><i class='bx bx-target-lock'></i></div>
           <h3>Commitment</h3>
           <p>We're dedicated to your success and committed to providing the best training, equipment, and support to help you achieve your fitness goals.</p>
         </div>
         <div class="value-card">
-          <div class="value-icon">🤝</div>
+          <div class="value-icon"><i class='bx bx-group'></i></div>
           <h3>Community</h3>
           <p>Our strength lies in our community. We foster an inclusive, supportive environment where everyone motivates and uplifts each other.</p>
         </div>
         <div class="value-card">
-          <div class="value-icon">🎯</div>
+          <div class="value-icon"><i class='bx bx-award'></i></div>
           <h3>Excellence</h3>
           <p>We strive for excellence in everything we do—from our trainers' expertise to our facility maintenance and member experience.</p>
         </div>
       </div>
     </section>
 
-    <!-- Facilities Section -->
+    <!-- Facilities -->
     <section class="facilities-section container">
       <h2>World-Class Facilities</h2>
       <div class="facilities-grid">
         <div class="facility-card">
-          <div class="facility-icon">🏋️</div>
+          <div class="facility-icon"><i class='bx bx-dumbbell'></i></div>
           <div class="facility-content">
             <h3>Strength Training Zone</h3>
             <p>Fully equipped with free weights, power racks, benches, and Olympic lifting platforms.</p>
           </div>
         </div>
         <div class="facility-card">
-          <div class="facility-icon">🏃</div>
+          <div class="facility-icon"><i class='bx bx-run'></i></div>
           <div class="facility-content">
             <h3>Cardio Area</h3>
             <p>State-of-the-art treadmills, ellipticals, bikes, and rowing machines with entertainment screens.</p>
           </div>
         </div>
         <div class="facility-card">
-          <div class="facility-icon">🧘</div>
+          <div class="facility-icon"><i class='bx bx-meditation'></i></div>
           <div class="facility-content">
             <h3>Yoga & Flexibility Studio</h3>
             <p>Spacious studio with natural lighting, perfect for yoga, Pilates, and stretching classes.</p>
           </div>
         </div>
         <div class="facility-card">
-          <div class="facility-icon">🥊</div>
+          <div class="facility-icon"><i class='bx bx-fist'></i></div>
           <div class="facility-content">
             <h3>Boxing & Combat Zone</h3>
             <p>Heavy bags, speed bags, and a dedicated ring for boxing and martial arts training.</p>
           </div>
         </div>
         <div class="facility-card">
-          <div class="facility-icon">🚿</div>
+          <div class="facility-icon"><i class='bx bx-shower'></i></div>
           <div class="facility-content">
             <h3>Locker Rooms & Showers</h3>
             <p>Clean, modern facilities with lockers, showers, and amenities for your comfort.</p>
           </div>
         </div>
         <div class="facility-card">
-          <div class="facility-icon">☕</div>
+          <div class="facility-icon"><i class='bx bx-juice'></i></div>
           <div class="facility-content">
             <h3>Juice Bar & Lounge</h3>
             <p>Refuel with healthy smoothies, protein shakes, and snacks in our relaxing lounge area.</p>
@@ -954,76 +750,50 @@
       </div>
     </section>
 
-    <!-- Contact Section -->
+    <!-- Contact -->
     <section class="contact-section container">
       <div class="contact-grid">
-        <!-- Contact Form -->
         <div class="contact-form">
           <h2>Get in Touch</h2>
           <form id="contactForm">
-            <div class="form-group">
-              <label for="name">Your Name</label>
-              <input type="text" id="name" name="name" required>
-            </div>
-            <div class="form-group">
-              <label for="email">Email Address</label>
-              <input type="email" id="email" name="email" required>
-            </div>
-            <div class="form-group">
-              <label for="phone">Phone Number (Optional)</label>
-              <input type="tel" id="phone" name="phone">
-            </div>
-            <div class="form-group">
-              <label for="message">Your Message</label>
-              <textarea id="message" name="message" required></textarea>
-            </div>
+            <div class="form-group"><label for="name">Your Name</label><input type="text" id="name" required></div>
+            <div class="form-group"><label for="email">Email Address</label><input type="email" id="email" required></div>
+            <div class="form-group"><label for="phone">Phone Number (Optional)</label><input type="tel" id="phone"></div>
+            <div class="form-group"><label for="message">Your Message</label><textarea id="message" required></textarea></div>
             <button type="submit">Send Message</button>
             <div class="form-message" id="formMessage"></div>
           </form>
         </div>
-
-        <!-- Contact Info -->
         <div class="contact-info">
           <h2>Visit Us</h2>
-          
           <div class="info-item">
-            <h3><span class="info-icon">📍</span> Location</h3>
+            <h3><span class="info-icon"><i class='bx bx-map'></i></span> Location</h3>
             <p>Balingasag Brgy 2<br>Misamis Oriental, Philippines</p>
           </div>
-
           <div class="info-item">
-            <h3><span class="info-icon">📞</span> Phone</h3>
+            <h3><span class="info-icon"><i class='bx bx-phone'></i></span> Phone</h3>
             <p><a href="tel:+63923456789">(+63) 923-456-789</a></p>
           </div>
-
           <div class="info-item">
-            <h3><span class="info-icon">✉️</span> Email</h3>
+            <h3><span class="info-icon"><i class='bx bx-envelope'></i></span> Email</h3>
             <p><a href="mailto:hello@fittcheck.ph">hello@fittcheck.ph</a></p>
           </div>
-
           <div class="info-item">
-            <h3><span class="info-icon">🕐</span> Opening Hours</h3>
-            <p>
-              Monday - Friday: 5:00 AM - 11:00 PM<br>
-              Saturday - Sunday: 6:00 AM - 10:00 PM<br>
-              <em style="color: var(--muted); font-size: 0.95rem;">Open 7 days a week</em>
-            </p>
+            <h3><span class="info-icon"><i class='bx bx-time-five'></i></span> Opening Hours</h3>
+            <p>Mon–Fri: 5:00 AM – 11:00 PM<br>Sat–Sun: 6:00 AM – 10:00 PM</p>
           </div>
-
           <div class="map-placeholder">
-            🗺️ Map Location
+            <i class='bx bxl-google-maps' style="font-size: 3rem;"></i>
+            <div style="margin-top: 1rem;">Google Maps Location</div>
           </div>
         </div>
       </div>
     </section>
   </main>
 
-  <!-- Footer -->
   <footer class="site-footer">
     <div class="container footer-inner">
-      <div>
-        <h3>FITTCHECK</h3>
-      </div>
+      <h3><i class='bx bxs-dumbbell'></i> FITTCHECK</h3>
       <nav class="footer-nav">
         <a href="index.html">Home</a>
         <a href="classes.html">Classes</a>
@@ -1031,9 +801,7 @@
         <a href="contact.html">About Us</a>
         <a href="tracker.html">Tracker</a>
       </nav>
-      <address class="footer-contact">
-        <a href="mailto:hello@fittcheck.ph">hello@fittcheck.ph</a>
-      </address>
+      <address><a href="mailto:hello@fittcheck.ph"><i class='bx bx-envelope'></i> hello@fittcheck.ph</a></address>
     </div>
     <div class="footer-bottom container">
       <small>© <span id="year"></span> FITTCHECK. All rights reserved.</small>
@@ -1041,215 +809,100 @@
   </footer>
 
   <script>
-    // Check if user is logged in
-    window.addEventListener('DOMContentLoaded', function() {
-      const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
-      if (!isLoggedIn) {
-        window.location.href = 'login.html';
-        return;
-      }
-      initializeNotifications();
-    });
-
-    // Mobile menu toggle
-    const menuToggle = document.getElementById('menuToggle');
-    const mobileNav = document.getElementById('mobileNav');
-
-    menuToggle.addEventListener('click', function() {
-      mobileNav.classList.toggle('show');
-      this.textContent = mobileNav.classList.contains('show') ? '✕' : '☰';
-    });
-
-    // Close mobile menu when clicking outside
-    document.addEventListener('click', function(event) {
-      if (!event.target.closest('.header-inner')) {
-        mobileNav.classList.remove('show');
-        menuToggle.textContent = '☰';
-      }
-    });
-
-    // Logout function
-    function logout() {
-      if (confirm('Are you sure you want to logout?')) {
-        localStorage.removeItem('isLoggedIn');
-        window.location.href = 'login.html';
-      }
-    }
-
-    // Contact form handling
-    document.getElementById('contactForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      
-      const formMessage = document.getElementById('formMessage');
-      const name = document.getElementById('name').value;
-      const email = document.getElementById('email').value;
-      const message = document.getElementById('message').value;
-
-      if (name && email && message) {
-        formMessage.className = 'form-message success';
-        formMessage.textContent = 'Thank you for your message! We\'ll get back to you within one business day.';
-        
-        this.reset();
-        
-        // Show success notification
-        addNotification('Message sent successfully! We\'ll get back to you soon. 📧', 'success');
-        
-        setTimeout(() => {
-          formMessage.style.display = 'none';
-        }, 5000);
-      } else {
-        formMessage.className = 'form-message error';
-        formMessage.textContent = 'Please fill in all required fields.';
-      }
-    });
-
-    // Set current year
-    document.getElementById('year').textContent = new Date().getFullYear();
-
-    // Notification System
-    let notifications = [];
-
-    function initializeNotifications() {
-      checkMissedExercises();
-      setInterval(checkMissedExercises, 60 * 60 * 1000);
-      
-      const notificationBell = document.getElementById('notificationBell');
-      const notificationPanel = document.getElementById('notificationPanel');
-      
-      notificationBell.addEventListener('click', function(e) {
-        e.stopPropagation();
-        notificationPanel.classList.toggle('active');
-      });
-
-      document.addEventListener('click', function(e) {
-        if (!notificationPanel.contains(e.target) && e.target !== notificationBell) {
-          notificationPanel.classList.remove('active');
-        }
-      });
-
-      document.getElementById('clearAllBtn').addEventListener('click', clearAllNotifications);
-    }
-
-    function checkMissedExercises() {
-      const lastExercise = localStorage.getItem('lastExerciseDate');
-      const currentDate = new Date();
-      
-      if (lastExercise) {
-        const lastExerciseDate = new Date(lastExercise);
-        const daysDiff = Math.floor((currentDate.getTime() - lastExerciseDate.getTime()) / (1000 * 60 * 60 * 24));
-        
-        if (daysDiff >= 1) {
-          const message = `You haven't exercised in ${daysDiff} day${daysDiff > 1 ? 's' : ''}! Time to get back on track! 💪`;
-          addNotification(message, 'missed-exercise');
-        }
-      } else {
-        localStorage.setItem('lastExerciseDate', currentDate.toISOString());
-      }
-
-      const scheduledWorkouts = JSON.parse(localStorage.getItem('scheduledWorkouts') || '[]');
-      const today = currentDate.toDateString();
-      
-      const missedWorkouts = scheduledWorkouts.filter(workout => {
-        const workoutDate = new Date(workout.date).toDateString();
-        return workoutDate === today && !workout.completed;
-      });
-
-      if (missedWorkouts.length > 0) {
-        const message = `You have ${missedWorkouts.length} workout${missedWorkouts.length > 1 ? 's' : ''} scheduled for today! 🏋️`;
-        addNotification(message, 'reminder');
-      }
-    }
-
-    function addNotification(message, type) {
-      const existingNotification = notifications.find(n => n.message === message);
-      if (existingNotification) return;
-
-      const notification = {
-        id: Date.now(),
-        message: message,
-        type: type,
-        timestamp: new Date()
+    // ✅ Active Navigation — Same logic as tracker.html
+    function setActiveNavLink() {
+      const path = window.location.pathname;
+      const currentPage = path.split('/').pop() || 'index.html';
+      const navMap = {
+        'index.html': ['nav-home', 'nav-home-mobile'],
+        'classes.html': ['nav-classes', 'nav-classes-mobile'],
+        'trainers.html': ['nav-trainers', 'nav-trainers-mobile'],
+        'contact.html': ['nav-about', 'nav-about-mobile'],
+        'tracker.html': ['nav-tracker', 'nav-tracker-mobile'],
+        'profile.html': ['nav-profile', 'nav-profile-mobile']
       };
-
-      notifications.unshift(notification);
-      updateNotificationUI();
-      showToast(message);
+      // Remove active
+      document.querySelectorAll('.main-nav a, .main-nav button').forEach(el => 
+        el.classList.remove('nav-active')
+      );
+      // Add active
+      const targets = navMap[currentPage];
+      if (targets) {
+        targets.forEach(id => {
+          const el = document.getElementById(id);
+          if (el) el.classList.add('nav-active');
+        });
+      }
     }
 
+    // Notifications (simplified — shared logic)
+    let notifications = [];
+    function initializeNotifications() {
+      const bell = document.getElementById('notificationBell');
+      const panel = document.getElementById('notificationPanel');
+      bell.addEventListener('click', e => { e.stopPropagation(); panel.classList.toggle('active'); });
+      document.addEventListener('click', e => {
+        if (!panel.contains(e.target) && e.target !== bell) panel.classList.remove('active');
+      });
+      document.getElementById('clearAllBtn').addEventListener('click', () => {
+        notifications = []; updateNotificationUI();
+      });
+    }
+    function addNotification(msg, type) {
+      if (notifications.some(n => n.msg === msg)) return;
+      notifications.unshift({ id: Date.now(), msg, type, ts: new Date() });
+      updateNotificationUI();
+      showToast(msg);
+    }
     function updateNotificationUI() {
       const badge = document.getElementById('notificationBadge');
       const list = document.getElementById('notificationList');
-      
-      if (notifications.length > 0) {
+      if (notifications.length) {
         badge.textContent = notifications.length;
         badge.style.display = 'flex';
-        
-        list.innerHTML = notifications.map(n => `
-          <div class="notification-item">
-            <p>${n.message}</p>
-            <small>${new Date(n.timestamp).toLocaleTimeString()}</small>
-          </div>
-        `).join('');
+        list.innerHTML = notifications.map(n =>
+          `<div class="notification-item"><p>${n.msg}</p><small>${n.ts.toLocaleTimeString()}</small></div>`
+        ).join('');
       } else {
         badge.style.display = 'none';
         list.innerHTML = '<div class="notification-empty">No new notifications</div>';
       }
-
-      document.getElementById('clearAllBtn').style.display = notifications.length > 0 ? 'block' : 'none';
+    }
+    function showToast(msg) {
+      const c = document.getElementById('toastContainer');
+      const t = document.createElement('div');
+      t.className = 'toast';
+      t.innerHTML = `<p>🔔 ${msg}</p>`;
+      c.appendChild(t);
+      setTimeout(() => t.remove(), 5000);
     }
 
-    function showToast(message) {
-      const toastContainer = document.getElementById('toastContainer');
-      const toast = document.createElement('div');
-      toast.className = 'toast';
-      toast.innerHTML = `<p>🔔 ${message}</p>`;
-      
-      toastContainer.appendChild(toast);
-      
-      setTimeout(() => {
-        toast.remove();
-      }, 5000);
-    }
-
-    function clearAllNotifications() {
-      notifications = [];
-      updateNotificationUI();
-    }
-
-    // Smooth scroll for anchor links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-          target.scrollIntoView({
-            behavior: 'smooth',
-            block: 'start'
-          });
-        }
-      });
+    // Mobile menu
+    document.getElementById('menuToggle').addEventListener('click', function() {
+      const nav = document.getElementById('mobileNav');
+      nav.classList.toggle('show');
+      this.textContent = nav.classList.contains('show') ? '✕' : '☰';
+    });
+    document.addEventListener('click', e => {
+      if (!e.target.closest('.header-inner')) {
+        const nav = document.getElementById('mobileNav');
+        nav.classList.remove('show');
+        document.getElementById('menuToggle').textContent = '☰';
+      }
     });
 
-    // Add animation on scroll
-    const observerOptions = {
-      threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px'
-    };
+    // Contact form
+    document.getElementById('contactForm').addEventListener('submit', e => {
+      e.preventDefault();
+      addNotification('Message sent successfully! We\'ll get back to you soon. 📧', 'success');
+      document.getElementById('contactForm').reset();
+    });
 
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.style.opacity = '1';
-          entry.target.style.transform = 'translateY(0)';
-        }
-      });
-    }, observerOptions);
-
-    document.querySelectorAll('.value-card, .facility-card, .stat-item').forEach(el => {
-      el.style.opacity = '0';
-      el.style.transform = 'translateY(20px)';
-      el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-      observer.observe(el);
+    // Init
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('year').textContent = new Date().getFullYear();
+      initializeNotifications();
+      setActiveNavLink(); // ✅ Ensures "About Us" glows on contact.html
     });
   </script>
 </body>

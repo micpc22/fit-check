@@ -40,10 +40,9 @@
       margin-bottom: 1.5rem;
     }
 
-    .logo-container h1 {
-      color: #ffffff;
-      letter-spacing: 0.1em;
-      font-size: 2rem;
+    .logo-container img {
+      max-width: 100%;
+      height: auto;
     }
 
     .form-group {
@@ -76,10 +75,20 @@
 
     .password-field {
       position: relative;
+      margin-bottom: 1rem;
     }
 
     .password-field input {
+      width: 100%;
+      padding: 0.75rem 1rem;
       padding-right: 3rem;
+      border: 1px solid rgba(102, 155, 207, 0.3);
+      border-radius: 0.5rem;
+      font-size: 1rem;
+      transition: all 0.2s;
+      outline: none;
+      background: #0e1621;
+      color: #fff;
     }
 
     .toggle-password {
@@ -89,9 +98,9 @@
       transform: translateY(-50%);
       cursor: pointer;
       color: #a0a8b5;
-      transition: color 0.2s;
       font-size: 1.25rem;
       user-select: none;
+      transition: color 0.2s;
     }
 
     .toggle-password:hover {
@@ -240,7 +249,7 @@
     <div class="login-box">
       <!-- Logo -->
       <div class="logo-container">
-        <img src="pictures/577499689_914143981773593_6507500399188280325_n 1 (1).png" alt="">
+        <img src="pictures/577499689_914143981773593_6507500399188280325_n 1 (1).png" alt="FITTCHECK Logo">
       </div>
 
       <!-- Login Form -->
@@ -249,22 +258,20 @@
           <input
             type="text"
             id="loginEmail"
-            placeholder="Email or Phone Number"
+            placeholder="Email, Phone, or Username"
             required
           >
         </div>
 
         <!-- Password input with eye toggle -->
-        <div class="form-group">
-          <div class="password-field">
-            <input
-              type="password"
-              id="password"
-              placeholder="Password"
-              required
-            >
-            <span class="toggle-password" id="togglePassword">👁️</span>
-          </div>
+        <div class="password-field">
+          <input
+            type="password"
+            id="password"
+            placeholder="Password"
+            required
+          >
+          <span class="toggle-password" id="togglePassword">👁️</span>
         </div>
 
         <button type="submit" class="btn-login">Log In</button>
@@ -294,103 +301,102 @@
     </div>
   </div>
 
- <script>
-  // ===============================
-  // PASSWORD TOGGLE
-  // ===============================
-  const togglePassword = document.getElementById('togglePassword');
-  const passwordInput = document.getElementById('password');
-  let showPassword = false;
+  <script>
+    // ===============================
+    // PASSWORD TOGGLE
+    // ===============================
+    const togglePassword = document.getElementById('togglePassword');
+    const passwordInput = document.getElementById('password');
 
-  togglePassword.addEventListener('click', function () {
-    showPassword = !showPassword;
-    passwordInput.type = showPassword ? 'text' : 'password';
-    togglePassword.textContent = showPassword ? '🙈' : '👁️';
-  });
+    togglePassword.addEventListener('click', function () {
+      const isHidden = passwordInput.type === 'password';
+      passwordInput.type = isHidden ? 'text' : 'password';
+      togglePassword.textContent = isHidden ? '🙈' : '👁️';
+    });
 
-  // ===============================
-  // FORM SUBMIT
-  // ===============================
-  const loginForm = document.getElementById('loginForm');
-  const loginMsg = document.getElementById('loginMsg');
-  const modalOverlay = document.getElementById('modalOverlay');
+    // ===============================
+    // FORM SUBMIT
+    // ===============================
+    const loginForm = document.getElementById('loginForm');
+    const loginMsg = document.getElementById('loginMsg');
+    const modalOverlay = document.getElementById('modalOverlay');
 
-  loginForm.addEventListener('submit', function (e) {
-    e.preventDefault();
+    loginForm.addEventListener('submit', function (e) {
+      e.preventDefault();
 
-    const email = document.getElementById('loginEmail').value.trim();
-    const password = document.getElementById('password').value;
+      const email = document.getElementById('loginEmail').value.trim();
+      const password = document.getElementById('password').value;
 
-    loginMsg.textContent = '';
-    loginMsg.className = 'error-msg';
+      loginMsg.textContent = '';
+      loginMsg.className = 'error-msg';
 
-    // Basic validation
-    if (!email || !password) {
-      loginMsg.textContent = 'Please fill in all fields';
-      return;
-    }
+      // Basic validation
+      if (!email || !password) {
+        loginMsg.textContent = 'Please fill in all fields';
+        return;
+      }
 
-    // Check for admin login
-    if (email.toLowerCase() === 'admin' && password === 'admin') {
-      loginMsg.textContent = 'Admin login successful! Redirecting...';
+      // Check for admin login (admin username with admin password)
+      if (email.toLowerCase() === 'admin' && password === 'admin') {
+        loginMsg.textContent = 'Admin login successful! Redirecting...';
+        loginMsg.classList.add('success-msg');
+
+        // Store admin session
+        localStorage.setItem('userRole', 'admin');
+        localStorage.setItem('isLoggedIn', 'true');
+        localStorage.setItem('currentUserEmail', 'admin');
+
+        // Redirect to admin page after short delay
+        setTimeout(function () {
+          window.location.href = 'admin.html';
+        }, 1000);
+        return;
+      }
+
+      // Check if regular user is registered (using localStorage)
+      const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers') || '[]');
+      const user = registeredUsers.find(user =>
+        (user.email.toLowerCase() === email.toLowerCase() || user.phone === email) &&
+        user.password === password
+      );
+
+      if (!user) {
+        // Show modal dialog if not found
+        modalOverlay.classList.add('active');
+        return;
+      }
+
+      // If user exists, proceed with login
+      loginMsg.textContent = 'Login successful! Redirecting...';
       loginMsg.classList.add('success-msg');
 
-      // Store admin session
-      localStorage.setItem('userRole', 'admin');
+      // Store user session
+      localStorage.setItem('userRole', 'user');
       localStorage.setItem('isLoggedIn', 'true');
-      localStorage.setItem('currentUserEmail', 'admin');
+      localStorage.setItem('currentUserEmail', email);
 
-      // Redirect to admin page after short delay
+      // Redirect to onboarding page after short delay
       setTimeout(function () {
-        window.location.href = 'admin.html';
+        window.location.href = 'onboarding.html';
       }, 1000);
-      return;
-    }
+    });
 
-    // Check if regular user is registered (using localStorage)
-    const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers') || '[]');
-    const user = registeredUsers.find(user =>
-      (user.email.toLowerCase() === email.toLowerCase() || user.phone === email) &&
-      user.password === password
-    );
+    // ===============================
+    // MODAL ACTIONS
+    // ===============================
+    const modalBtn = document.getElementById('modalBtn');
 
-    if (!user) {
-      // Show modal dialog if not found
-      modalOverlay.classList.add('active');
-      return;
-    }
-
-    // If user exists, proceed with login
-    loginMsg.textContent = 'Login successful! Redirecting...';
-    loginMsg.classList.add('success-msg');
-
-    // Store user session
-    localStorage.setItem('userRole', 'user');
-    localStorage.setItem('isLoggedIn', 'true');
-    localStorage.setItem('currentUserEmail', email);
-
-    // Redirect to onboarding page after short delay
-    setTimeout(function () {
-      window.location.href = 'onboarding.html';
-    }, 1000);
-  });
-
-  // ===============================
-  // MODAL ACTIONS
-  // ===============================
-  const modalBtn = document.getElementById('modalBtn');
-
-  modalBtn.addEventListener('click', function () {
-    modalOverlay.classList.remove('active');
-    window.location.href = "register.html";
-  });
-
-  // Close modal when clicking outside
-  modalOverlay.addEventListener('click', function (e) {
-    if (e.target === modalOverlay) {
+    modalBtn.addEventListener('click', function () {
       modalOverlay.classList.remove('active');
-    }
-  });
-</script>
+      window.location.href = "register.html";
+    });
+
+    // Close modal when clicking outside
+    modalOverlay.addEventListener('click', function (e) {
+      if (e.target === modalOverlay) {
+        modalOverlay.classList.remove('active');
+      }
+    });
+  </script>
 </body>
 </html>
